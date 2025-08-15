@@ -1,78 +1,33 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import NavMenu, { type LinkItem } from "./NavMenu";
 
-export type HeaderProps = {
-  links?: LinkItem[];
-};
+export type LinkItem = { href: string; label: string };
+
+export type HeaderProps = { links?: LinkItem[] };
 
 const DEFAULT_LINKS: LinkItem[] = [
   { href: "/associations", label: "Associations" },
   { href: "/articles", label: "Articles" },
-  { href: "/calendar", label: "Agenda" },
-  { href: "/newspaper", label: "Journal" },
+  { href: "/calendar", label: "Calendar" },
+  { href: "/newspaper", label: "Newspaper" },
 ];
 
 export default function Header({ links = DEFAULT_LINKS }: HeaderProps) {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const navRef = useRef<HTMLElement | null>(null);
-  const toggleBtnRef = useRef<HTMLButtonElement | null>(null);
-
-  // Close menu on outside click
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (!menuOpen) return;
-      const target = event.target as Node | null;
-      if (
-        navRef.current &&
-        target &&
-        !navRef.current.contains(target) &&
-        toggleBtnRef.current &&
-        !toggleBtnRef.current.contains(target)
-      ) {
-        setMenuOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [menuOpen]);
-
   return (
     <header className="sticky top-0 z-10 border-b bg-white/80 backdrop-blur dark:bg-slate-900/80">
       <div className="container mx-auto flex items-center justify-between px-4 py-3">
-        <Link href="/" className="font-semibold">
+        <Link href="/en/" className="font-semibold">
           ConvergENS
         </Link>
-
-        <div className="flex items-center gap-3">
-          <button
-            ref={toggleBtnRef}
-            onClick={() => setMenuOpen((v) => !v)}
-            className="rounded-md border px-3 py-1 text-sm hover:bg-slate-50 dark:hover:bg-slate-800"
-            aria-expanded={menuOpen}
-            aria-controls="main-menu"
-            aria-label="Toggle navigation"
-          >
-            Menu
-          </button>
+        {links.map((link) => (
           <Link
-            href="/associations"
-            className="rounded-md bg-blue-600 px-3 py-1 text-sm font-medium text-white hover:bg-blue-500"
+            href={"/en/" + link.href}
+            key={link.href}
+            className="px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-slate-800"
           >
-            Découvrir
+            {link.label}
           </Link>
-        </div>
+        ))}
       </div>
-
-      <nav
-        id="main-menu"
-        ref={navRef as any}
-        className={`container mx-auto px-4 pb-3 ${menuOpen ? "block" : "hidden"}`}
-      >
-        <NavMenu links={links} onNavigateAction={() => setMenuOpen(false)} />
-      </nav>
     </header>
   );
 }

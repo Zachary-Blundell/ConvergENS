@@ -1,0 +1,9 @@
+export default async function articlePage({
+  params,
+}: {
+  params: Promise<{ articleSlug: string }>;
+}) {
+  const { articleSlug } = await params;
+
+  return <div>{articleSlug}</div>;
+}
