@@ -1,3 +1,6 @@
+//[local]/associations/[associationName]
+//association-page
+
 export default async function associationPage({
   params,
 }: {
