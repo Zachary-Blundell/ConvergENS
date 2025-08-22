@@ -1,0 +1,13 @@
+{
+  "Home": {
+    "header": "Welcome to the Home Page",
+    "paragraph": "This is a test of internationalisation (English and French) and of the dark mode feature. Switch languages or toggle dark mode to see it in action."
+  },
+  "404": {
+    "badgeLabel": "Information",
+    "title": "Page not found",
+    "description": "The page you are looking for doesn't exist. Here are some helpful links:",
+    "goBack": "Go back",
+    "home": "Take me home"
+  }
+}
