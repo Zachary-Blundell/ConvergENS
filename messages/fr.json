@@ -1,7 +1,41 @@
 {
   "Home": {
-    "header": "Bienvenue sur la page d’accueil",
-    "paragraph": "Ceci est un test de l’internationalisation (anglais et français) ainsi que du mode sombre. Changez de langue ou activez le mode sombre pour le voir en action."
+    "hero": {
+      "title": "Fédérons les <highlight>luttes</highlight> et les talents de l’ENS",
+      "cta": "Découvrir les associations"
+    },
+    "about": {
+      "row1": {
+        "title": "Rassembler les associations",
+        "body": "Convergence des Luttes met en réseau les clubs, syndicats et collectifs de l’ENS pour qu’ils se découvrent, collaborent et partagent leurs ressources au même endroit."
+      },
+      "row2": {
+        "title": "Publier et partager facilement",
+        "body": "Chaque collectif dispose d’un espace sécurisé où il peut tenir son profil à jour et publier articles ou actualités, sans compétence technique particulière."
+      },
+      "row3": {
+        "title": "Simple, accessible et à but non lucratif",
+        "body": "Le projet est porté bénévolement : une plateforme légère, à faible coût, respectueuse des standards d’accessibilité et ouverte à toutes les bonnes volontés."
+      }
+    },
+    "latest": {
+      "title": "Retrouvez nos dernières actions communes",
+      "card": {
+        "fallback": "Résumé court de l’initiative proposée par l’une des associations membres."
+      }
+    }
+  },
+  "Nav": {
+    "siteTitle": "ConvergENS",
+    "logoAlt": "Logo ConvergENS",
+    "associations": "Associations",
+    "articles": "Articles",
+    "calendar": "Calendrier",
+    "newspaper": "Journal",
+    "openMenu": "Ouvrir le menu",
+    "menuTitle": "Menu principal",
+    "menuDesc": "Navigation principale et paramètres",
+    "primaryNav": "Navigation principale"
   },
   "404": {
     "badgeLabel": "Information",

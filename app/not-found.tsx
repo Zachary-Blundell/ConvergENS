@@ -1,8 +1,6 @@
 import { useTranslations } from "next-intl";
 import "@/styles/globals.css";
-
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   const t = useTranslations("404");

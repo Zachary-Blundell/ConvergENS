@@ -1,7 +1,41 @@
 {
   "Home": {
-    "header": "Welcome to the Home Page",
-    "paragraph": "This is a test of internationalisation (English and French) and of the dark mode feature. Switch languages or toggle dark mode to see it in action."
+    "hero": {
+      "title": "Bringing together <highlight>movements</highlight> and the talents of ENS",
+      "cta": "Discover the associations"
+    },
+    "about": {
+      "row1": {
+        "title": "Bringing associations together",
+        "body": "Convergence des Luttes connects clubs, unions and collectives at the ENS so they can discover each other, collaborate, and share resources in one place."
+      },
+      "row2": {
+        "title": "Publish and share easily",
+        "body": "Each collective has a secure space where they can keep their profile up to date and publish articles or news, without any particular technical skills."
+      },
+      "row3": {
+        "title": "Simple, accessible and non‑profit",
+        "body": "The project is carried out on a voluntary basis: a lightweight platform with low cost, respectful of accessibility standards and open to all goodwill."
+      }
+    },
+    "latest": {
+      "title": "See our latest joint actions",
+      "card": {
+        "fallback": "Short summary of an initiative proposed by one of the member associations."
+      }
+    }
+  },
+  "Nav": {
+    "siteTitle": "ConvergENS",
+    "logoAlt": "ConvergENS Logo",
+    "associations": "Associations",
+    "articles": "Articles",
+    "calendar": "Calendar",
+    "newspaper": "Newspaper",
+    "openMenu": "Open menu",
+    "menuTitle": "Main menu",
+    "menuDesc": "Primary navigation and settings",
+    "primaryNav": "Primary navigation"
   },
   "404": {
     "badgeLabel": "Information",
