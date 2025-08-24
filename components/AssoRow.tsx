@@ -1,19 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import { prisma } from "@/lib/db";
 
-export type Association = {
-  name: string;
-  href: string;
-  logoSrc: string;
-};
+export default async function AssociationRows() {
+  const assoBadge = await prisma.association.findMany({
+    select: { name: true, slug: true, imagePath: true },
+    orderBy: { name: "asc" },
+  });
 
-export type AssociationRowsProps = {
-  items: Association[];
-  size?: number;
-};
+  const items = assoBadge.map((a) => ({
+    name: a.name,
+    href: `/associations/${a.slug}`,
+    logoSrc: a.imagePath ?? "/images/placeholder.png",
+  }));
 
-export default function AssociationRows({ items }: AssociationRowsProps) {
-  const size = 512;
   return (
     <div className="hidden sm:flex flex-wrap justify-center py-4 gap-2 bg-gray-100 dark:bg-gray-900">
       {items.map((a, n) => (
@@ -31,7 +31,7 @@ export default function AssociationRows({ items }: AssociationRowsProps) {
               src={a.logoSrc}
               alt={`${a.name} logo`}
               fill
-              className="object-contain p-2"
+              className="object-cover"
               sizes="(max-width: 1024px) 6rem, (max-width: 1280px) 7rem, 7rem"
             />
           </div>
