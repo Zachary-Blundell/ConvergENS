@@ -52,7 +52,7 @@ export default function NavBar() {
       {/* Left logo */}
       <Link href="/" className="flex items-center gap-2">
         <Image
-          src="/placeholder.png"
+          src="/images/placeholder.png"
           alt={t("logoAlt")}
           width={40}
           height={40}
