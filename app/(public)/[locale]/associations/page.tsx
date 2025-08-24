@@ -30,6 +30,7 @@ export default async function AssociationsPage() {
       ) : (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-center">
           {groups.map((g, n) => (
+            //TODO: change imagePath to not be null in the database
             <AssociationCard key={n} {...g} />
           ))}
         </div>
