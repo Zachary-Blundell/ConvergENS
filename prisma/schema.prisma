@@ -1,12 +1,20 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
-  output   = "../lib/generated/prisma"
 }
 
 datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
+}
+
+model Association {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  color     String   @default("#111827")
+  blurb     String   @default("")
+  slug      String   @unique
+  imagePath String?
+  socials   Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
