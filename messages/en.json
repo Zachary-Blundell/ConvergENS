@@ -25,6 +25,7 @@
       }
     }
   },
+
   "Nav": {
     "siteTitle": "ConvergENS",
     "logoAlt": "ConvergENS Logo",
@@ -37,6 +38,17 @@
     "menuDesc": "Primary navigation and settings",
     "primaryNav": "Primary navigation"
   },
+
+  "AssociationsPage": {
+    "associationsHeader": "Our Community",
+    "altLogo": "Logo {name}",
+    "viewPage": "View page",
+    "viewPageTitle": "View {name} page",
+    "viewPageAria": "View {name} page",
+    "noDescription": "No description available.",
+    "noAssociations": "No associations found."
+  },
+
   "404": {
     "badgeLabel": "Information",
     "title": "Page not found",

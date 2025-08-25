@@ -25,6 +25,7 @@
       }
     }
   },
+
   "Nav": {
     "siteTitle": "ConvergENS",
     "logoAlt": "Logo ConvergENS",
@@ -37,6 +38,17 @@
     "menuDesc": "Navigation principale et paramètres",
     "primaryNav": "Navigation principale"
   },
+
+  "AssociationsPage": {
+    "associationsHeader": "Notre collectif",
+    "altLogo": "Logo {name}",
+    "viewPage": "Voir la page",
+    "viewPageTitle": "Voir la page de {name}",
+    "viewPageAria": "Voir la page de {name}",
+    "noDescription": "Aucune description disponible.",
+    "noAssociations": "Pas d’associations trouvées."
+  },
+
   "404": {
     "badgeLabel": "Information",
     "title": "Page introuvable",
