@@ -7,14 +7,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum SocialPlatform {
+  twitter
+  facebook
+  instagram
+  youtube
+  tiktok
+  bluesky
+  mastodon
+  threads
+  linkedin
+  other
+}
+
 model Association {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  color     String   @default("#111827")
-  blurb     String   @default("")
-  slug      String   @unique
-  imagePath String?
-  socials   Json?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String       @id @default(cuid())
+  name         String       @unique
+  slug         String       @unique
+  summary      String       @default("")
+  color        String       @default("#111827")
+  description  String       @default("")
+  logoUrl      String?
+  contactEmail String?
+  phone        String?
+  website      String?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  socials      SocialLink[]
+}
+
+model SocialLink {
+  id             String          @id @default(cuid())
+  association    Association     @relation(fields: [associationId], references: [id], onDelete: Cascade)
+  associationId  String
+  platform       SocialPlatform
+  url            String
+  handle         String?
+  label          String?
+  isPrimary      Boolean         @default(false)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  @@unique([associationId, url])
+  @@index([associationId])
 }
