@@ -1,4 +1,5 @@
-// app/(private)/admin/associations/new/page.tsx (server component)
+// app/(private)/admin/associations/new/page.tsx
+// Server component: shell for the form
 import type { Metadata } from "next";
 import NewAssociationForm from "./NewAssociationForm";
 
