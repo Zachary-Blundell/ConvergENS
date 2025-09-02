@@ -4,6 +4,8 @@ import { prisma } from "@/lib/db";
 import { AssociationCard } from "@/components/AssociationCard";
 import { getTranslations } from "next-intl/server";
 
+const PLACEHOLDER_LOGO = "/images/placeholder.png";
+
 export default async function AssociationsPage() {
   const t = await getTranslations("AssociationsPage");
 
@@ -11,8 +13,8 @@ export default async function AssociationsPage() {
     select: {
       id: true,
       name: true,
-      blurb: true,
-      imagePath: true,
+      summary: true,
+      logoUrl: true,
       slug: true,
       color: true,
     },
@@ -26,13 +28,20 @@ export default async function AssociationsPage() {
       </h1>
       {groups.length === 0 ? (
         <p className="text-center text-slate-600 dark:text-slate-400">
-          t("noAssociations")
+          {t("noAssociations")}
         </p>
       ) : (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-center">
-          {groups.map((g, n) => (
-            //TODO: change imagePath to not be null in the database
-            <AssociationCard key={n} {...g} />
+          {groups.map((g) => (
+            <AssociationCard
+              key={g.id}
+              id={g.id}
+              name={g.name}
+              summary={g.summary} // maps blurb -> summary
+              logoUrl={g.logoUrl ?? PLACEHOLDER_LOGO} // make it non-null
+              slug={g.slug}
+              color={g.color}
+            />
           ))}
         </div>
       )}

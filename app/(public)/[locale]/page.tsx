@@ -1,6 +1,6 @@
 //[local]
 //main-page
-import AssociationRows from "@/components/AssoRow";
+// import AssociationRows from "@/components/AssoRow";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 
@@ -66,7 +66,7 @@ export default function HomePage() {
   /* ---------------- Menu: click-outside ---------------- */
   return (
     <div className="flex flex-col">
-      <AssociationRows />
+      {/* <AssociationRows /> */}
       {/* ---------------- Hero ---------------- */}
       <section
         className="h-[38rem] w-full bg-cover bg-center"

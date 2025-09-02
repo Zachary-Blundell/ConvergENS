@@ -1,6 +1,7 @@
 export interface AssociationFormData {
   name: string;
   slug: string;
+  color: string;
   summary: string;
   description: string;
   contactEmail?: string;

@@ -2,23 +2,9 @@
 
 import z from "zod";
 import { ActionResponse, AssociationFormData } from "./types";
-
-// Helper: "" -> undefined (and trim non-empty values)
-const EmptyToUndefined = z
-  .string()
-  .transform((v) => (v?.trim() === "" ? undefined : v.trim()));
-
-const AssociationSchema = z.object({
-  name: z.string().min(2).max(30),
-  slug: z.string().min(2).max(30),
-  summary: z.string(),
-  description: z.string(),
-  // logoUrl: EmptyToUndefined.pipe(z.string().url("URL invalide").optional()),
-  contactEmail: EmptyToUndefined.pipe(z.email().optional()),
-  phone: z.string().optional(),
-  website: EmptyToUndefined.pipe(z.string().url("URL invalide").optional()),
-  // socials: z.array(socialLinkSchema).optional(),
-});
+import { prisma } from "@/lib/db";
+import { Prisma } from "@prisma/client";
+import { AssociationSchema } from "@/schemas/association";
 
 export async function saveAssociation(
   prevState: ActionResponse | null,
@@ -26,16 +12,20 @@ export async function saveAssociation(
 ): Promise<ActionResponse> {
   // Simulate a delay for demonstration purposes
   await wait(1000);
+
   try {
     const rawData: AssociationFormData = {
       name: formData.get("name") as string,
       slug: formData.get("slug") as string,
+      color: formData.get("color") as string,
       summary: formData.get("summary") as string,
       description: formData.get("description") as string,
-      contactEmail: formData.get("contactEmail") as string,
-      phone: formData.get("phone") as string,
-      website: formData.get("website") as string,
+      contactEmail: (formData.get("contactEmail") as string) || undefined,
+      phone: (formData.get("phone") as string) || undefined,
+      website: (formData.get("website") as string) || undefined,
     };
+
+    // Server side validation
     const validatedData = AssociationSchema.safeParse(rawData);
     if (!validatedData.success) {
       const flattened = z.flattenError(validatedData.error);
@@ -43,10 +33,40 @@ export async function saveAssociation(
         success: false,
         message: "Échec de la validation.",
         errors: flattened.fieldErrors,
+        inputs: rawData,
       };
     }
 
-    // Here you would typically save the address to your database
+    // Data is valid, proceed to save to the database
+    const data = validatedData.data;
+    try {
+      await prisma.association.create({ data });
+      return {
+        success: true,
+        message: "Association enregistrée avec succès.",
+        // optionally return created slug/id for redirects
+        // data: { slug: created.slug },
+      };
+    } catch (e: unknown) {
+      // Prisma unique constraint
+      if (
+        e instanceof Prisma.PrismaClientKnownRequestError &&
+        e.code === "P2002"
+      ) {
+        const target = (e.meta?.target ?? []) as string[]; // e.g. ["slug"] or ["name"]
+        const errors: NonNullable<ActionResponse["errors"]> = {};
+        if (target.includes("slug")) errors.slug = ["Ce slug est déjà utilisé"];
+        if (target.includes("name")) errors.name = ["Ce nom est déjà utilisé"];
+
+        return {
+          success: false,
+          message: "Conflit de contrainte d’unicité.",
+          errors,
+          inputs: rawData,
+        };
+      }
+    }
+
     console.log("Association soumise !", validatedData.data);
     return {
       success: true,
