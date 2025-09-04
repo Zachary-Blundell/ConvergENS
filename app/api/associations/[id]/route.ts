@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient, SocialPlatform } from "@prisma/client";
+import { SocialPlatform } from "@prisma/client";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { errorToProblem } from "@/lib/http/errors";
 export const dynamic = "force-dynamic";
 
-// Reuse your social link schema
 const socialLinkSchema = z.object({
   platform: z.enum(SocialPlatform),
   url: z.url(),
@@ -25,14 +24,10 @@ const associationUpdateSchema = z.object({
   phone: z.string().optional(),
   website: z.url().optional(),
   // If provided, this will REPLACE all existing socials
+  // so I am forced to load all the old data with this one
   socials: z.array(socialLinkSchema).optional(),
 });
 
-/**
- * PATCH /api/associations/:id
- * - Partial update.
- * - If `socials` is present, we replace the entire socials list.
- */
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } },
@@ -86,46 +81,12 @@ export async function PATCH(
     });
 
     return NextResponse.json(updated, { status: 200 });
-  } catch (error: unknown) {
-    // Zod validation
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
-    }
-
-    if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === "P2025") {
-        return NextResponse.json(
-          { error: "Association not found" },
-          { status: 404 },
-        );
-      }
-      if (error.code === "P2002") {
-        const target = error.meta?.target;
-        const constraint = Array.isArray(target)
-          ? target.join(", ")
-          : typeof target === "string"
-            ? target
-            : "constraint";
-        return NextResponse.json(
-          { error: `Unique constraint failed on the ${constraint}` },
-          { status: 409 },
-        );
-      }
-      // Other Prisma known errors
-      return NextResponse.json({ error: error.message }, { status: 400 });
-    }
-
-    // Generic fallback
-    if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-    return NextResponse.json({ error: "Unknown error" }, { status: 500 });
+  } catch (err) {
+    console.error(`PATCH /api/associations/${params.id} error:`, err);
+    return errorToProblem(err);
   }
 }
 
-/**
- * DELETE /api/associations/:id
- */
 export async function DELETE(
   _req: NextRequest,
   { params }: { params: { id: string } },
@@ -133,19 +94,8 @@ export async function DELETE(
   try {
     await prisma.association.delete({ where: { id: params.id } });
     return new NextResponse(null, { status: 204 });
-  } catch (error: unknown) {
-    if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === "P2025") {
-        return NextResponse.json(
-          { error: "Association not found" },
-          { status: 404 },
-        );
-      }
-      return NextResponse.json({ error: error.message }, { status: 400 });
-    }
-    if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-    return NextResponse.json({ error: "Unknown error" }, { status: 500 });
+  } catch (err) {
+    console.error(`DELETE /api/associations/${params.id} error:`, err);
+    return errorToProblem(err);
   }
 }

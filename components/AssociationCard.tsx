@@ -3,17 +3,16 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 export function AssociationCard({
-  id,
   name,
-  blurb,
-  imagePath,
+  summary,
+  logoUrl,
   slug,
   color,
 }: {
   id: string;
   name: string;
-  blurb: string;
-  imagePath: string;
+  summary: string;
+  logoUrl: string;
   slug: string;
   color: string;
 }) {
@@ -28,7 +27,7 @@ export function AssociationCard({
           <Image
             height={192}
             width={384}
-            src={imagePath}
+            src={logoUrl}
             alt={t("altLogo", { name })}
             // className="object-contain w-full h-48 bg-gray-200 sm:h-48 sm:w-full"
             className="relative aspect-square rounded-full bg-white dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-700 shadow-sm overflow-hidden transition-transform duration-200 group-hover:scale-105
@@ -42,7 +41,9 @@ export function AssociationCard({
           </div>
         </div>
 
-        <p className="my-5 text-sm text-gray-600 dark:text-gray-400">{blurb}</p>
+        <p className="my-5 text-sm text-gray-600 dark:text-gray-400">
+          {summary}
+        </p>
         <Link
           href={"/associations/" + slug}
           title={t("viewPageTitle", { name })}

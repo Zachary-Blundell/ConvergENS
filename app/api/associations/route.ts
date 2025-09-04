@@ -61,18 +61,22 @@ export async function GET(req: NextRequest) {
       })
     : items;
 
-  return NextResponse.json({
-    items: filtered,
-    count: filtered.length,
-  });
+  return NextResponse.json({ items: filtered, count: filtered.length, });
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     const json = await req.json();
-    const data = associationSchema.parse(json);
 
-    const newAssociation = await prisma.association.create({
+    // Avoid throwing on invalid input
+    const parsed = associationSchema.safeParse(json);
+    if (!parsed.success) {
+      // Consistent 422 with field errors
+      throw parsed.error;
+    }
+
+    const data = parsed.data;
+    const created = await prisma.association.create({
       data: {
         ...data,
         socials: data.socials ? { create: data.socials } : undefined,
@@ -80,35 +84,9 @@ export async function POST(req: Request) {
       include: { socials: true },
     });
 
-    return NextResponse.json(newAssociation, { status: 201 });
-  } catch (error: unknown) {
-    // Zod validation errors
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.message }, { status: 400 });
-    }
-
-    // Prisma known errors (e.g., unique constraint)
-    if (error instanceof PrismaClientKnownRequestError) {
-      if (error.code === "P2002") {
-        const target = error.meta?.target;
-        const constraint = Array.isArray(target)
-          ? target.join(", ")
-          : typeof target === "string"
-            ? target
-            : "constraint";
-        return NextResponse.json(
-          { error: `Unique constraint failed on the ${constraint}` },
-          { status: 409 },
-        );
-      }
-      return NextResponse.json({ error: error.message }, { status: 400 });
-    }
-
-    // Generic fallback
-    if (error instanceof Error) {
-      return NextResponse.json({ error: error.message }, { status: 500 });
-    }
-
-    return NextResponse.json({ error: "Unknown error" }, { status: 500 });
+    return NextResponse.json(created, { status: 201 });
+  } catch (err) {
+    console.error("POST /api/associations error:", err);
+    return errorToProblem(err);
   }
 }
