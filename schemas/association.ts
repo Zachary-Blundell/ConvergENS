@@ -1,4 +1,10 @@
 import z from "zod";
+import { SocialPlatform } from "@prisma/client";
+
+export const SocialLinkSchema = z.object({
+  platform: z.enum(SocialPlatform),
+  url: z.url().trim(),
+});
 
 export const AssociationSchema = z.object({
   name: z.string().trim().min(2, "Au moins 2 caractères").max(30),
@@ -17,9 +23,9 @@ export const AssociationSchema = z.object({
     ),
   summary: z.string().trim(),
   description: z.string().trim(),
-  // logoUrl: EmptyToUndefined.pipe(z.string().url("URL invalide").optional()),
+  // logoUrl: z.url("URL invalide").optional(),
   contactEmail: z.email("Email invalide").optional(),
   phone: z.string().optional(),
   website: z.url("URL invalide").optional(),
-  // socials: z.array(socialLinkSchema).optional(),
+  socials: z.array(SocialLinkSchema).optional(),
 });

@@ -21,34 +21,38 @@ enum SocialPlatform {
 }
 
 model Association {
-  id           String       @id @default(cuid())
-  name         String       @unique
-  slug         String       @unique
-  summary      String       @default("")
-  color        String       @default("#111827")
-  description  String       @default("")
+  id           String   @id @default(cuid())
+  name         String   @unique
+  slug         String   @unique
+  summary      String   @default("")
+  color        String   @default("#111827")
+  description  String   @default("")
   logoUrl      String?
   contactEmail String?
   phone        String?
   website      String?
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  socials      SocialLink[]
+  socials SocialLink[]
 }
 
 model SocialLink {
-  id             String          @id @default(cuid())
-  association    Association     @relation(fields: [associationId], references: [id], onDelete: Cascade)
-  associationId  String
-  platform       SocialPlatform
-  url            String
-  handle         String?
-  label          String?
-  isPrimary      Boolean         @default(false)
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  id String @id @default(cuid())
 
-  @@unique([associationId, url])
+  // relation to Association
+  associationId String
+  association   Association @relation(fields: [associationId], references: [id], onDelete: Cascade)
+
+  platform SocialPlatform
+  url      String         @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Enforce one link per platform per association
+  @@unique([associationId, platform])
+  // Helpful indexes
   @@index([associationId])
+  @@index([platform])
 }
