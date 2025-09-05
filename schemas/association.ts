@@ -1,10 +1,5 @@
 import z from "zod";
 
-// Helper: "" -> undefined (and trim non-empty values)
-// const EmptyToUndefined = z
-//   .string()
-//   .transform((v) => (v?.trim() === "" ? undefined : v.trim()));
-
 export const AssociationSchema = z.object({
   name: z.string().trim().min(2, "Au moins 2 caractères").max(30),
   slug: z
