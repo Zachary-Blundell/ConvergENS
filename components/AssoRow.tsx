@@ -4,14 +4,14 @@ import { prisma } from "@/lib/db";
 
 export default async function AssociationRows() {
   const assoBadge = await prisma.association.findMany({
-    select: { name: true, slug: true, imagePath: true },
+    select: { name: true, slug: true, logoUrl: true },
     orderBy: { name: "asc" },
   });
 
   const items = assoBadge.map((a) => ({
     name: a.name,
     href: `/associations/${a.slug}`,
-    logoSrc: a.imagePath ?? "/images/placeholder.png",
+    logoSrc: a.logoUrl ?? "/images/placeholder.png",
   }));
 
   return (
