@@ -215,7 +215,7 @@ export default function AssociationForm() {
               )}
             />
 
-            {/* Couleur */}
+            {/* Color */}
             <FormField
               control={form.control}
               name="color"
@@ -297,77 +297,6 @@ export default function AssociationForm() {
                   <FormDescription>
                     Cette couleur sera utilisée pour les boutons, liens et
                     éléments d’accent.
-                  </FormDescription>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            {/* Color */}
-            <FormField
-              control={form.control}
-              name="color"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Primary Association Color</FormLabel>
-                  <FormControl>
-                    <div className="flex flex-wrap items-center gap-3">
-                      {/* Native color input */}
-                      <Input
-                        type="color"
-                        value={field.value}
-                        onChange={(e) =>
-                          form.setValue("color", e.target.value, {
-                            shouldValidate: true,
-                          })
-                        }
-                        className="h-10 w-14 p-1 cursor-pointer"
-                        aria-label="Pick brand color"
-                      />
-                      {/* Hex text input */}
-                      <Input
-                        value={field.value}
-                        onChange={(e) => field.onChange(e.target.value)}
-                        onBlur={field.onBlur}
-                        placeholder="#0ea5e9"
-                        pattern="#?[0-9a-fA-F]{3,6}"
-                        inputMode="text"
-                        className="max-w-[160px]"
-                        aria-label="Brand color hex"
-                      />
-                      {/* Preview chip with recommended text color */}
-                      <div
-                        className="h-10 px-3 rounded-md border flex items-center text-sm"
-                        style={{
-                          backgroundColor: color,
-                          color: recommendedText,
-                        }}
-                        aria-label="Contrast preview"
-                        title={`Contrast preview (${color} on ${recommendedText})`}
-                      >
-                        Preview
-                      </div>
-                      {/* Contrast info */}
-                      <div className="text-xs text-muted-foreground">
-                        <div>
-                          Contrast vs <span className="font-mono">#fff</span>:{" "}
-                          {isNaN(ratioWhite) ? "–" : `${ratioWhite}:1`}
-                        </div>
-                        <div>
-                          Contrast vs <span className="font-mono">#000</span>:{" "}
-                          {isNaN(ratioBlack) ? "–" : `${ratioBlack}:1`}
-                        </div>
-                        <div>
-                          Recommended text:{" "}
-                          <span className="font-mono">
-                            {recommendBlack ? "#000" : "#fff"}
-                          </span>{" "}
-                          · {aaPass}
-                        </div>
-                      </div>
-                    </div>
-                  </FormControl>
-                  <FormDescription>
-                    Used for accents, buttons, and highlights.
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
