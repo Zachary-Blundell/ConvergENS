@@ -13,6 +13,7 @@ const socialLinkSchema = z.object({
   isPrimary: z.boolean().optional(),
 });
 
+// For updates: everything optional (PATCH semantics)
 const associationUpdateSchema = z.object({
   name: z.string().min(1).optional(),
   slug: z.string().min(1).optional(),

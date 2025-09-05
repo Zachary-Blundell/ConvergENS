@@ -1,13 +1,12 @@
 // app/api/associations/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { SocialPlatform } from "@prisma/client";
+import { PrismaClient, SocialPlatform } from "@prisma/client";
 import { z } from "zod";
+import { PrismaClientKnownRequestError } from "@/lib/generated/prisma/runtime/library";
 import { prisma } from "@/lib/db";
-import { errorToProblem } from "@/lib/http/errors";
-
 export const dynamic = "force-dynamic";
 
-// Schemas
+// Define the schema for a social link
 const socialLinkSchema = z.object({
   platform: z.enum(SocialPlatform),
   url: z.url(),
@@ -16,6 +15,7 @@ const socialLinkSchema = z.object({
   isPrimary: z.boolean().optional(),
 });
 
+// Define the schema for an association
 const associationSchema = z.object({
   name: z.string().min(1),
   slug: z.string().min(1),
@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
       })
     : items;
 
-  return NextResponse.json({ items: filtered, count: filtered.length });
+  return NextResponse.json({ items: filtered, count: filtered.length, });
 }
 
 export async function POST(req: NextRequest) {
