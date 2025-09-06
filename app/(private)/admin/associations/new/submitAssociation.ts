@@ -3,9 +3,8 @@
 import z from "zod";
 import { ActionResponse, AssociationFormData, SocialLinkForm } from "./types";
 import { prisma } from "@/lib/db";
-import { Prisma, SocialLink, SocialPlatform } from "@prisma/client";
+import { Prisma, SocialPlatform } from "@prisma/client";
 import { AssociationSchema } from "@/schemas/association";
-import { create } from "domain";
 
 export async function saveAssociation(
   prevState: ActionResponse | null,
@@ -18,7 +17,7 @@ export async function saveAssociation(
   try {
     const platforms = formData.getAll("socialPlatform[]") as string[]; // ["twitter", ...]
     const urls = formData.getAll("socialUrl[]") as string[];
-    const thesocials: SocialLinkForm[] = platforms
+    const theSocials: SocialLinkForm[] = platforms
       .map((p, i) => ({
         platform: p as SocialPlatform,
         url: String(urls[i] ?? "").trim(),
@@ -34,7 +33,7 @@ export async function saveAssociation(
       contactEmail: (formData.get("contactEmail") as string) || undefined,
       phone: (formData.get("phone") as string) || undefined,
       website: (formData.get("website") as string) || undefined,
-      socials: thesocials.length ? thesocials : undefined,
+      socials: theSocials.length ? theSocials : undefined,
     };
 
     // Server side validation
