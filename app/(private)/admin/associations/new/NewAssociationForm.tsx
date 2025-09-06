@@ -4,7 +4,6 @@ import * as React from "react";
 import { useEffect, useTransition } from "react";
 import { useActionState } from "react";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Form } from "@/components/ui/form";
@@ -21,7 +20,6 @@ import { CheckCircle2 } from "lucide-react";
 
 import { saveAssociation } from "./submitAssociation";
 import type { ActionResponse } from "./types";
-import { AssociationSchema } from "@/schemas/association";
 import DescriptionField from "@/components/forms/Description";
 import SummaryField from "@/components/forms/Summary";
 import EmailField from "@/components/forms/Email";
@@ -31,8 +29,11 @@ import ColorField from "@/components/forms/Color";
 import SlugField from "@/components/forms/Slug";
 import NameField from "@/components/forms/Name";
 import SocialLinksField from "@/components/forms/SocialLinksField";
-
-type FormValues = z.infer<typeof AssociationSchema>;
+import LogoField from "@/components/forms/Logo";
+import {
+  AssociationCreateFormSchema,
+  AssociationCreateFormValues,
+} from "@/schemas/association-create-form";
 
 const initialState: ActionResponse = { success: false, message: "" };
 
@@ -44,9 +45,9 @@ export default function AssociationForm() {
 
   const [isTransPending, startTransition] = useTransition();
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(AssociationSchema),
-    mode: "onChange",
+  const form = useForm<AssociationCreateFormValues>({
+    resolver: zodResolver(AssociationCreateFormSchema),
+    // mode: "onChange",
     shouldUnregister: true,
     defaultValues: {
       name: "",
@@ -58,6 +59,7 @@ export default function AssociationForm() {
       phone: undefined,
       website: undefined,
       socials: [{ platform: "other", url: "" }],
+      logo: undefined,
     },
   });
 
@@ -66,7 +68,7 @@ export default function AssociationForm() {
     if (state?.inputs) {
       form.reset({
         ...form.getValues(),
-        ...(state.inputs as Partial<FormValues>),
+        ...(state.inputs as Partial<AssociationCreateFormValues>),
       });
     }
   }, [state?.inputs]);
@@ -78,11 +80,14 @@ export default function AssociationForm() {
       form.clearErrors();
       for (const [field, msgs] of Object.entries(state.errors)) {
         const message = Array.isArray(msgs) ? msgs[0] : String(msgs ?? "");
-        form.setError(field as keyof FormValues, { type: "server", message });
+        form.setError(field as keyof AssociationCreateFormValues, {
+          type: "server",
+          message,
+        });
       }
       // Optionally focus the first errored field
       const firstKey = Object.keys(state.errors)[0] as
-        | keyof FormValues
+        | keyof AssociationCreateFormValues
         | undefined;
       if (firstKey) form.setFocus(firstKey);
     }
@@ -93,10 +98,10 @@ export default function AssociationForm() {
     if (state?.success) form.reset();
   }, [state?.success, form]);
 
-  async function onSubmit(values: FormValues) {
+  async function onSubmit(values: AssociationCreateFormValues) {
     const fd = new FormData();
 
-    const { socials, ...rest } = values;
+    const { socials, logo, ...rest } = values;
 
     // primitives
     (Object.entries(rest) as [keyof typeof rest, any][]).forEach(([k, v]) => {
@@ -105,10 +110,15 @@ export default function AssociationForm() {
 
     // socials
     (socials ?? []).forEach((s) => {
-      if (!s?.url) return; // skip blank rows
+      if (!s?.url) return;
       fd.append("socialPlatform[]", String(s.platform ?? "other"));
       fd.append("socialUrl[]", s.url);
     });
+
+    // file
+    if (logo instanceof File) {
+      fd.append("logo", logo);
+    }
 
     startTransition(() => action(fd));
   }
@@ -127,8 +137,11 @@ export default function AssociationForm() {
             onSubmit={form.handleSubmit(onSubmit)}
             className="space-y-6"
             autoComplete="on"
+            encType="multipart/form-data"
           >
             <NameField />
+
+            <LogoField />
 
             <SlugField form={form} />
 

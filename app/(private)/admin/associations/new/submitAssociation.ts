@@ -4,7 +4,10 @@ import z from "zod";
 import { ActionResponse, AssociationFormData, SocialLinkForm } from "./types";
 import { prisma } from "@/lib/db";
 import { Prisma, SocialPlatform } from "@prisma/client";
-import { AssociationSchema } from "@/schemas/association";
+import { AssociationDBSchema } from "@/schemas/association";
+import path from "path";
+import { mkdir, writeFile } from "node:fs/promises";
+import { LogoFileSchema } from "@/schemas/logo";
 
 export async function saveAssociation(
   prevState: ActionResponse | null,
@@ -15,7 +18,7 @@ export async function saveAssociation(
   await wait(1000);
 
   try {
-    const platforms = formData.getAll("socialPlatform[]") as string[]; // ["twitter", ...]
+    const platforms = formData.getAll("socialPlatform[]") as string[];
     const urls = formData.getAll("socialUrl[]") as string[];
     const theSocials: SocialLinkForm[] = platforms
       .map((p, i) => ({
@@ -24,6 +27,7 @@ export async function saveAssociation(
       }))
       // keep pairs that have a URL (and optionally platform)
       .filter((s) => s.url.length > 0);
+
     const rawData: AssociationFormData = {
       name: formData.get("name") as string,
       slug: formData.get("slug") as string,
@@ -36,8 +40,53 @@ export async function saveAssociation(
       socials: theSocials.length ? theSocials : undefined,
     };
 
+    let logoUrl: string | undefined;
+    const file = formData.get("logo") as File | null;
+
+    console.log("form data: ", formData);
+    console.log("about to check the file");
+    if (file && file.size > 0) {
+      console.log("We have a file");
+      const validatedLogo = LogoFileSchema.safeParse(file);
+
+      if (!validatedLogo.success) {
+        const flattened = z.flattenError(validatedLogo.error);
+        const first =
+          validatedLogo.error.issues[0]?.message ?? "Logo invalide.";
+        return {
+          success: false,
+          message: first,
+          errors: flattened.fieldErrors,
+          inputs: rawData,
+        };
+      }
+
+      // ensure uploads dir exists
+      const uploadsDir = path.join(process.cwd(), "public", "uploads");
+      await mkdir(uploadsDir, { recursive: true });
+
+      // pick extension from mime or fallback to original name
+      const extFromMime: Record<string, string> = {
+        "image/jpg": "jpg",
+        "image/png": "png",
+        "image/jpeg": "jpg",
+        "image/webp": "webp",
+      };
+      const ext =
+        extFromMime[file.type] ||
+        (path.extname((file as any).name ?? "") || ".bin").slice(1);
+
+      const filename = `${crypto.randomUUID()}.${ext}`;
+      const filepath = path.join(uploadsDir, filename);
+
+      const buffer = Buffer.from(await file.arrayBuffer());
+      await writeFile(filepath, buffer);
+
+      logoUrl = `/uploads/${filename}`; // public URL
+    }
+
     // Server side validation
-    const validatedData = AssociationSchema.safeParse(rawData);
+    const validatedData = AssociationDBSchema.safeParse(rawData);
 
     if (!validatedData.success) {
       const flattened = z.flattenError(validatedData.error);
@@ -55,6 +104,7 @@ export async function saveAssociation(
       await prisma.association.create({
         data: {
           ...rest,
+          ...(logoUrl ? { logoUrl } : {}),
           ...(socials?.length ? { socials: { create: socials } } : {}),
         },
       });

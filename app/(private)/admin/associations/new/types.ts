@@ -7,6 +7,7 @@ export interface SocialLinkForm {
 
 export interface AssociationFormData {
   name: string;
+  logo?: File;
   slug: string;
   color: string;
   summary: string;

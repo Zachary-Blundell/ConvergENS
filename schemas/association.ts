@@ -6,8 +6,9 @@ export const SocialLinkSchema = z.object({
   url: z.url().trim(),
 });
 
-export const AssociationSchema = z.object({
+export const AssociationDBSchema = z.object({
   name: z.string().trim().min(2, "Au moins 2 caractères").max(30),
+  // logoUrl: z.url()
   slug: z
     .string()
     .trim()
@@ -23,9 +24,10 @@ export const AssociationSchema = z.object({
     ),
   summary: z.string().trim(),
   description: z.string().trim(),
-  // logoUrl: z.url("URL invalide").optional(),
   contactEmail: z.email("Email invalide").optional(),
   phone: z.string().optional(),
   website: z.url("URL invalide").optional(),
   socials: z.array(SocialLinkSchema).optional(),
 });
+
+export type AssociationDBInput = z.infer<typeof AssociationDBSchema>;
