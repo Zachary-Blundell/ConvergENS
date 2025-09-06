@@ -1,19 +1,30 @@
 "use server";
 
 import z from "zod";
-import { ActionResponse, AssociationFormData } from "./types";
+import { ActionResponse, AssociationFormData, SocialLinkForm } from "./types";
 import { prisma } from "@/lib/db";
-import { Prisma } from "@prisma/client";
+import { Prisma, SocialLink, SocialPlatform } from "@prisma/client";
 import { AssociationSchema } from "@/schemas/association";
+import { create } from "domain";
 
 export async function saveAssociation(
   prevState: ActionResponse | null,
   formData: FormData,
 ): Promise<ActionResponse> {
   // Simulate a delay for demonstration purposes
+  //TODO: remove this
   await wait(1000);
 
   try {
+    const platforms = formData.getAll("socialPlatform[]") as string[]; // ["twitter", ...]
+    const urls = formData.getAll("socialUrl[]") as string[];
+    const thesocials: SocialLinkForm[] = platforms
+      .map((p, i) => ({
+        platform: p as SocialPlatform,
+        url: String(urls[i] ?? "").trim(),
+      }))
+      // keep pairs that have a URL (and optionally platform)
+      .filter((s) => s.url.length > 0);
     const rawData: AssociationFormData = {
       name: formData.get("name") as string,
       slug: formData.get("slug") as string,
@@ -23,10 +34,12 @@ export async function saveAssociation(
       contactEmail: (formData.get("contactEmail") as string) || undefined,
       phone: (formData.get("phone") as string) || undefined,
       website: (formData.get("website") as string) || undefined,
+      socials: thesocials.length ? thesocials : undefined,
     };
 
     // Server side validation
     const validatedData = AssociationSchema.safeParse(rawData);
+
     if (!validatedData.success) {
       const flattened = z.flattenError(validatedData.error);
       return {
@@ -38,14 +51,18 @@ export async function saveAssociation(
     }
 
     // Data is valid, proceed to save to the database
-    const data = validatedData.data;
+    const { socials, ...rest } = validatedData.data;
     try {
-      await prisma.association.create({ data });
+      await prisma.association.create({
+        data: {
+          ...rest,
+          ...(socials?.length ? { socials: { create: socials } } : {}),
+        },
+      });
+
       return {
         success: true,
         message: "Association enregistrée avec succès.",
-        // optionally return created slug/id for redirects
-        // data: { slug: created.slug },
       };
     } catch (e: unknown) {
       // Prisma unique constraint

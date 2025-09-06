@@ -30,6 +30,16 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle2 } from "lucide-react";
 
+import { useFieldArray, Controller } from "react-hook-form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Plus, Trash2 } from "lucide-react";
+
 import { saveAssociation } from "./submitAssociation";
 import type { ActionResponse } from "./types";
 import { AssociationSchema } from "@/schemas/association";
@@ -37,6 +47,139 @@ import { AssociationSchema } from "@/schemas/association";
 type FormValues = z.infer<typeof AssociationSchema>;
 
 const initialState: ActionResponse = { success: false, message: "" };
+
+// keep values aligned with your enum names
+const SOCIAL_OPTIONS = [
+  { value: "twitter", label: "Twitter / X" },
+  { value: "facebook", label: "Facebook" },
+  { value: "instagram", label: "Instagram" },
+  { value: "youtube", label: "YouTube" },
+  { value: "tiktok", label: "TikTok" },
+  { value: "bluesky", label: "Bluesky" },
+  { value: "mastodon", label: "Mastodon" },
+  { value: "threads", label: "Threads" },
+  { value: "linkedin", label: "LinkedIn" },
+  { value: "other", label: "Autre" },
+] as const;
+
+function SocialLinksField({
+  form,
+}: {
+  form: ReturnType<typeof useForm<FormValues>>;
+}) {
+  const { control, setValue, watch, formState } = form;
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "socials",
+  });
+
+  // ensure at least one empty row
+  React.useEffect(() => {
+    if (fields.length === 0) append({ platform: "other", url: "" });
+  }, []);
+
+  const socialsErrors = formState.errors?.socials as
+    | Array<{ platform?: { message?: string }; url?: { message?: string } }>
+    | undefined;
+
+  return (
+    <FormField
+      control={control}
+      name="socials"
+      render={() => (
+        <FormItem>
+          <FormLabel>Réseaux sociaux</FormLabel>
+          <div className="space-y-3">
+            {fields.map((field, idx) => {
+              const platformName = `socials.${idx}.platform` as const;
+              const urlName = `socials.${idx}.url` as const;
+              const rowError = socialsErrors?.[idx];
+
+              return (
+                <div
+                  key={field.id}
+                  className="grid grid-cols-1 md:grid-cols-[14rem_1fr_auto] items-start gap-2 rounded-xl border p-3"
+                >
+                  {/* Platform */}
+                  <Controller
+                    control={control}
+                    name={platformName}
+                    render={({ field }) => (
+                      <Select
+                        value={field.value ?? "other"}
+                        onValueChange={(val) => field.onChange(val)}
+                      >
+                        <SelectTrigger className="h-10">
+                          <SelectValue placeholder="Plateforme" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {SOCIAL_OPTIONS.map((opt) => (
+                            <SelectItem key={opt.value} value={opt.value}>
+                              {opt.label}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  />
+
+                  {/* URL */}
+                  <Controller
+                    control={control}
+                    name={urlName}
+                    render={({ field }) => (
+                      <Input
+                        type="url"
+                        inputMode="url"
+                        placeholder="https://…"
+                        className="h-10"
+                        {...field}
+                      />
+                    )}
+                  />
+
+                  {/* Remove */}
+                  <div className="flex justify-end">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      className="h-10 w-10"
+                      onClick={() => remove(idx)}
+                      aria-label="Supprimer ce lien"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+
+                  {/* Row-level errors (optional) */}
+                  {(rowError?.platform?.message || rowError?.url?.message) && (
+                    <div className="col-span-full text-sm text-destructive">
+                      {rowError?.platform?.message ?? rowError?.url?.message}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+
+            <Button
+              type="button"
+              variant="secondary"
+              onClick={() => append({ platform: "other", url: "" })}
+            >
+              <Plus className="mr-2 h-4 w-4" />
+              Ajouter un lien
+            </Button>
+          </div>
+          <FormDescription className="mt-1">
+            Ajoutez un ou plusieurs profils (URL du profil public).
+          </FormDescription>
+          <FormMessage />
+        </FormItem>
+      )}
+    />
+  );
+}
 
 export default function AssociationForm() {
   const [state, action, isPending] = useActionState(
@@ -58,6 +201,7 @@ export default function AssociationForm() {
       contactEmail: undefined,
       phone: undefined,
       website: undefined,
+      socials: [{ platform: "other", url: "" }],
     },
   });
 
@@ -397,6 +541,7 @@ export default function AssociationForm() {
                 </FormItem>
               )}
             />
+            <SocialLinksField form={form} />
 
             {/* Global server action message */}
             {state?.message && (
