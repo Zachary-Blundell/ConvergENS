@@ -40,13 +40,23 @@ export async function saveAssociation(
       socials: theSocials.length ? theSocials : undefined,
     };
 
+    // Server side validation
+    const validatedData = AssociationDBSchema.safeParse(rawData);
+    if (!validatedData.success) {
+      const flattened = z.flattenError(validatedData.error);
+      return {
+        success: false,
+        message: "Échec de la validation.",
+        errors: flattened.fieldErrors,
+        inputs: rawData,
+      };
+    }
+
+    // Logo
     let logoUrl: string | undefined;
     const file = formData.get("logo") as File | null;
 
-    console.log("form data: ", formData);
-    console.log("about to check the file");
     if (file && file.size > 0) {
-      console.log("We have a file");
       const validatedLogo = LogoFileSchema.safeParse(file);
 
       if (!validatedLogo.success) {
@@ -83,19 +93,6 @@ export async function saveAssociation(
       await writeFile(filepath, buffer);
 
       logoUrl = `/uploads/${filename}`; // public URL
-    }
-
-    // Server side validation
-    const validatedData = AssociationDBSchema.safeParse(rawData);
-
-    if (!validatedData.success) {
-      const flattened = z.flattenError(validatedData.error);
-      return {
-        success: false,
-        message: "Échec de la validation.",
-        errors: flattened.fieldErrors,
-        inputs: rawData,
-      };
     }
 
     // Data is valid, proceed to save to the database
