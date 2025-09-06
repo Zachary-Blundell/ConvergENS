@@ -2,7 +2,7 @@
 import * as React from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
 import z from "zod";
-import { AssociationSchema } from "@/schemas/association";
+import { AssociationDBSchema } from "@/schemas/association";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { Plus, Trash2 } from "lucide-react";
 
-type FormValues = z.infer<typeof AssociationSchema>;
+type FormValues = z.infer<typeof AssociationDBSchema>;
 
 const SOCIAL_OPTIONS = [
   { value: "twitter", label: "Twitter / X" },

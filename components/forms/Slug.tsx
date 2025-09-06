@@ -10,10 +10,10 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import z from "zod";
-import { AssociationSchema } from "@/schemas/association";
+import { AssociationDBSchema } from "@/schemas/association";
 import { Input } from "../ui/input";
 
-type FormValues = z.infer<typeof AssociationSchema>;
+type FormValues = z.infer<typeof AssociationDBSchema>;
 
 export default function SlugField({
   form,

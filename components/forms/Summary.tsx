@@ -10,9 +10,9 @@ import {
 } from "@/components/ui/form";
 import { Textarea } from "../ui/textarea";
 import z from "zod";
-import { AssociationSchema } from "@/schemas/association";
+import { AssociationDBSchema } from "@/schemas/association";
 
-type FormValues = z.infer<typeof AssociationSchema>;
+type FormValues = z.infer<typeof AssociationDBSchema>;
 
 export default function SummaryField({
   form,
