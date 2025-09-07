@@ -4,6 +4,23 @@
       "title": "Fédérons les <highlight>luttes</highlight> et les talents de l’ENS",
       "cta": "Découvrir les associations"
     },
+    "whatIs": {
+      "title": "Qu’est-ce que ConvergENS ?",
+      "body": "ConvergENS est le collectif qui rassemble les associations et clubs engagés de l’École normale supérieure (ENS), en lien avec les partis et les syndicats étudiants.\nIl est né d’une double frustration : d’un côté, des bureaux associatifs souvent restreints qui plient sous la charge bénévole ; de l’autre, des nouveaux et nouvelles bénévoles contraint·es de choisir entre des luttes qui leur parlent tout autant.\nConvergENS offre un espace commun pour suivre l’actualité de chaque organisation et garder le lien. Depuis l’ENS, en nous rassemblant, nous faisons émerger des lignes de convergence – et nous discutons aussi des clivages – entre nos luttes."
+    },
+    "objectives": {
+      "title": "Nos objectifs",
+      "intro": "Notre objectif principal est de promouvoir une éducation horizontale à la citoyenneté, qui passe non seulement par les urnes, mais aussi par l’action syndicale, associative et partisane.\nPour cela, nous :",
+      "items": {
+        "shareExperiences": "organisons des moments de partage d’expériences entre bénévoles pour prévenir l’épuisement militant ;",
+        "poolResources": "mutualisons nos moyens et portons des plaidoyers communs (notamment auprès de la direction de l’ENS) ;",
+        "createSpaces": "créons des espaces de discussion et de débat inter-organisations pour partager nos actualités militantes et nous coordonner."
+      }
+    },
+    "howItWorks": {
+      "title": "Comment fonctionne ConvergENS ?",
+      "body": "ConvergENS n’est pas une structure qui chapeaute ses membres, mais un collectif qui les rassemble. Les associations et clubs sont décisionnaires et votent en Assemblée générale sur tout ce qui concerne le collectif (prochains événements, accueil de nouveaux membres, etc.). Les partis et syndicats sont membres invité·es : ils et elles contribuent notamment à Agora (le journal de ConvergENS) et à ses conférences de lancement.\nPour rejoindre ConvergENS, il suffit de s’investir dans une organisation membre (ou invitée) et d’en devenir le ou la représentant·e au sein du collectif."
+    },
     "about": {
       "row1": {
         "title": "Rassembler les associations",

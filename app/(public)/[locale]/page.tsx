@@ -3,6 +3,7 @@
 import AssociationRows from "@/components/AssoRow";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+// import "@/styles/scroll.css";
 
 type Group = {
   id: string;
@@ -69,7 +70,7 @@ export default function HomePage() {
       <AssociationRows />
       {/* ---------------- Hero ---------------- */}
       <section
-        className="h-[38rem] w-full bg-cover bg-center"
+        className="bg-brand scroll-fade-out h-svh w-full bg-cover bg-center"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=1600&q=80')",
@@ -77,16 +78,16 @@ export default function HomePage() {
       >
         <div className="flex h-full w-full items-center justify-center bg-gray-900/50">
           <div className="px-4 text-center">
-            <h1 className="text-[clamp(1.5rem,_5vw,_4rem)] tracking-tight font-extrabold text-white drop-shadow-md leading-tight">
+            <h1 className="font-sans bg-blue-600 text-[clamp(1.5rem,_5vw,_4rem)] ">
               {t.rich("hero.title", {
                 highlight: (chunks) => (
-                  <span className="text-blue-400">{chunks}</span>
+                  <span className="text-highlight">{chunks}</span>
                 ),
               })}
             </h1>
             <Link
               href="/associations"
-              className="mt-6 inline-block rounded-md bg-blue-600 px-6 py-3 text-sm font-medium uppercase text-white transition-colors duration-300 hover:bg-blue-500 focus:outline-none"
+              className="mt-6 inline-block rounded-md bg-highlight px-6 py-3 text-sm font-medium uppercase text-white transition-colors duration-300 hover:bg-blue-500 focus:outline-none"
             >
               {t("hero.cta")}
             </Link>
@@ -94,11 +95,52 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ---------------- What is ConvergENS? ---------------- */}
+      <section id="what-is" className="bg-brand w-full px-4 py-16">
+        <div className="mx-auto max-w-3xl space-y-4">
+          <h2 className="scroll-fade-out text-5xl font-semibold text-center text-slate-900 dark:text-slate-100">
+            {t("whatIs.title")}
+          </h2>
+          <p className="scroll-fade-out text-xl leading-relaxed text-justify text-slate-700 dark:text-slate-300 whitespace-pre-line">
+            {t("whatIs.body")}
+          </p>
+        </div>
+      </section>
+      {/* ---------------- Objectives ---------------- */}
+      <section id="objectives" className="container mx-auto px-4 py-16">
+        <div className="mx-auto max-w-3xl space-y-6">
+          <h2 className="text-3xl font-semibold text-slate-900 dark:text-slate-100 text-center">
+            {t("objectives.title")}
+          </h2>
+
+          <p className="leading-relaxed text-slate-700 dark:text-slate-300 whitespace-pre-line text-center">
+            {t("objectives.intro")}
+          </p>
+
+          <ul className="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+            <li>{t("objectives.items.shareExperiences")}</li>
+            <li>{t("objectives.items.poolResources")}</li>
+            <li>{t("objectives.items.createSpaces")}</li>
+          </ul>
+        </div>
+      </section>
+
+      {/* ---------------- How ConvergENS works ---------------- */}
+      <section id="how" className="container mx-auto px-4 py-16">
+        <div className="mx-auto max-w-3xl text-center space-y-4">
+          <h2 className="text-3xl font-semibold text-slate-900 dark:text-slate-100">
+            {t("howItWorks.title")}
+          </h2>
+          <p className="leading-relaxed text-slate-700 dark:text-slate-300 whitespace-pre-line">
+            {t("howItWorks.body")}
+          </p>
+        </div>
+      </section>
       {/* ---------------- About grid ---------------- */}
       <section className="container mx-auto space-y-20 px-4 py-16">
         {/* Row 1 – image left, text right */}
         <div className="grid items-center gap-10 sm:grid-cols-2">
-          <div className="aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700" />
+          <div className="scroll-fade-in aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700" />
           <div className="space-y-4">
             <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100">
               {t("about.row1.title")}
@@ -119,12 +161,12 @@ export default function HomePage() {
               {t("about.row2.body")}
             </p>
           </div>
-          <div className="order-1 aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700 sm:order-2" />
+          <div className="scroll-fade-in order-1 aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700 sm:order-2" />
         </div>
 
         {/* Row 3 – image left, text right */}
         <div className="grid items-center gap-10 sm:grid-cols-2">
-          <div className="aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700" />
+          <div className="scroll-fade-in aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700" />
           <div className="space-y-4">
             <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100">
               {t("about.row3.title")}
