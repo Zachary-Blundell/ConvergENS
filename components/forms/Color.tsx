@@ -1,4 +1,4 @@
-/* Color */
+/* Color; */
 import { useForm } from "react-hook-form";
 import {
   FormControl,
