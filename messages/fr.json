@@ -23,16 +23,19 @@
     },
     "about": {
       "row1": {
-        "title": "Rassembler les associations",
-        "body": "Convergence des Luttes met en réseau les clubs, syndicats et collectifs de l’ENS pour qu’ils se découvrent, collaborent et partagent leurs ressources au même endroit."
+        "title": "Bibliothèque & Kiosque militants",
+        "body": "Un arpentage (lecture collective suivie d’une discussion) chaque mois.",
+        "imageAlt": "Bibliothèque et kiosque militants"
       },
       "row2": {
-        "title": "Publier et partager facilement",
-        "body": "Chaque collectif dispose d’un espace sécurisé où il peut tenir son profil à jour et publier articles ou actualités, sans compétence technique particulière."
+        "title": "AGORA",
+        "body": "Le journal de ConvergENS, accompagné de ses conférences de lancement.",
+        "imageAlt": "Couverture d’AGORA"
       },
       "row3": {
-        "title": "Simple, accessible et à but non lucratif",
-        "body": "Le projet est porté bénévolement : une plateforme légère, à faible coût, respectueuse des standards d’accessibilité et ouverte à toutes les bonnes volontés."
+        "title": "Calendrier collectif",
+        "body": "Toutes les activités militantes de l’ENS au même endroit.",
+        "imageAlt": "Calendrier collectif"
       }
     },
     "latest": {
@@ -54,6 +57,26 @@
     "menuTitle": "Menu principal",
     "menuDesc": "Navigation principale et paramètres",
     "primaryNav": "Navigation principale"
+  },
+
+  "Footer": {
+    "tagline": "ConvergENS & initiatives étudiantes.",
+    "sitemap": {
+      "ariaLabel": "Plan du site",
+      "title": "Plan du site",
+      "links": {
+        "sitemap": "Plan du site",
+        "associations": "Associations",
+        "events": "Événements",
+        "contact": "Contact"
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "convergens@laposte.net"
+    },
+    "disclaimer": "Chaque collectif est responsable des pages qui lui sont dédiées. Les positions exprimées par chacun d’eux n’engagent donc aucun des autres collectifs. Ainsi, les associations et syndicats restent complètement indépendants des collectifs partisans invités à participer aux activités de ConvergENS.",
+    "copyright": "© {year} {site}. Tous droits réservés."
   },
 
   "AssociationsPage": {

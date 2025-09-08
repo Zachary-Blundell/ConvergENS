@@ -23,16 +23,19 @@
     },
     "about": {
       "row1": {
-        "title": "Bringing associations together",
-        "body": "Convergence des Luttes connects clubs, unions and collectives at the ENS so they can discover each other, collaborate, and share resources in one place."
+        "title": "Activist Library & Kiosk",
+        "body": "A collective reading session (\"arpentage\") followed by a discussion every month.",
+        "imageAlt": "Activist library and kiosk"
       },
       "row2": {
-        "title": "Publish and share easily",
-        "body": "Each collective has a secure space where they can keep their profile up to date and publish articles or news, without any particular technical skills."
+        "title": "AGORA",
+        "body": "ConvergENS' newspaper, accompanied by its launch talks.",
+        "imageAlt": "AGORA cover"
       },
       "row3": {
-        "title": "Simple, accessible and non‑profit",
-        "body": "The project is carried out on a voluntary basis: a lightweight platform with low cost, respectful of accessibility standards and open to all goodwill."
+        "title": "Collective calendar",
+        "body": "All activist activities at ENS in one place.",
+        "imageAlt": "Collective calendar"
       }
     },
     "latest": {
@@ -54,6 +57,25 @@
     "menuTitle": "Main menu",
     "menuDesc": "Primary navigation and settings",
     "primaryNav": "Primary navigation"
+  },
+  "Footer": {
+    "tagline": "ConvergENS & student initiatives.",
+    "sitemap": {
+      "ariaLabel": "Sitemap",
+      "title": "Sitemap",
+      "links": {
+        "sitemap": "Sitemap",
+        "associations": "Associations",
+        "events": "Events",
+        "contact": "Contact"
+      }
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "convergens@laposte.net"
+    },
+    "disclaimer": "Each collective is responsible for the pages dedicated to it. The positions expressed by each of them do not bind the other collectives. Thus, the associations and unions remain completely independent of the partisan collectives invited to take part in ConvergENS activities.",
+    "copyright": "© {year} {site}. All rights reserved."
   },
 
   "AssociationsPage": {
