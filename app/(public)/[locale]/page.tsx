@@ -16,7 +16,7 @@ function Section({ id, title, paragraph, children }: SectionProps) {
   return (
     <section id={id} className="py-12 sm:py-16 lg:py-24 w-full flex">
       <div
-        className="p-5 scroll-fade my-auto mx-auto max-w-3xl bg-surface-2 rounded-xl border-1 border-outline border-t-outline-highlight
+        className="scroll-fade my-auto mx-auto max-w-3xl bg-surface-2 border-1 border-outline border-t-outline-highlight
        bg-linear-to-t from-surface-1 to-surface-2 rounded-xl p-6 shadow-lg "
       >
         <h2 className="text-5xl text-center mb-8 text-highlight dark:text-highlight">
