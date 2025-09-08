@@ -1,20 +1,191 @@
 // components/Footer.tsx
+import { Link } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
+import Image from "next/image";
+
 export default function Footer() {
+  const tNav = useTranslations("Nav");
+  const t = useTranslations("Footer");
+
   return (
-    <footer className="border-t">
-      <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8 text-sm text-gray-600">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} YourApp. All rights reserved.</p>
-          <nav className="flex gap-4">
-            <a className="hover:underline" href="https://example.com">
-              Docs
+    <footer className="border-t border-[hsl(var(--border))] bg-[hsl(var(--surface-2))] text-[hsl(var(--fg-strong))]">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-12 md:grid-cols-3">
+        {/* Brand */}
+        <div className="space-y-4">
+          <Link href="/" className="flex items-center gap-2">
+            <Image
+              src="/images/placeholder.png"
+              alt={tNav("logoAlt")}
+              width={40}
+              height={40}
+              className="rounded-md"
+            />
+            <span className="font-heading text-lg">{tNav("siteTitle")}</span>
+          </Link>
+
+          <p className="text-sm text-[hsl(var(--fg-muted))]">{t("tagline")}</p>
+        </div>
+
+        {/* Sitemap */}
+        <nav
+          aria-label={t("sitemap.ariaLabel")}
+          className="md:justify-self-center"
+        >
+          <h4 className="text-s font-medium uppercase tracking-wide text-[hsl(var(--fg-muted))]">
+            {t("sitemap.title")}
+          </h4>
+          <ul className="mt-4 space-y-2 text-sm">
+            <li>
+              <Link
+                href="/plan-du-site"
+                className="text-highlight-600 hover:text-highlight-700 hover:underline"
+              >
+                {t("sitemap.links.sitemap")}
+              </Link>
+            </li>
+            <li>
+              <Link href="/associations" className="hover:underline">
+                {t("sitemap.links.associations")}
+              </Link>
+            </li>
+            <li>
+              <Link href="/evenements" className="hover:underline">
+                {t("sitemap.links.events")}
+              </Link>
+            </li>
+            <li>
+              <Link href="/contact" className="hover:underline">
+                {t("sitemap.links.contact")}
+              </Link>
+            </li>
+          </ul>
+        </nav>
+
+        {/* Contact */}
+        <div className="md:justify-self-end">
+          <h4 className="text-s font-medium uppercase tracking-wide text-[hsl(var(--fg-muted))]">
+            {t("contact.title")}
+          </h4>
+          <address className="mt-4 not-italic">
+            <a
+              href={`mailto:${t("contact.email")}`}
+              className="inline-flex items-center gap-2 hover:underline"
+            >
+              <span className="i-lucide-mail h-4 w-4" aria-hidden="true" />
+              {t("contact.email")}
             </a>
-            <a className="hover:underline" href="https://example.com">
-              Privacy
-            </a>
-          </nav>
+          </address>
+        </div>
+      </div>
+
+      {/* Disclaimer + small print */}
+      <div className="border-t border-[hsl(var(--border))]">
+        <div className="mx-auto max-w-7xl px-6 py-6">
+          <p className="text-xs leading-relaxed text-[hsl(var(--fg-muted))]">
+            {t("disclaimer")}
+          </p>
+          <p className="mt-3 text-xs text-[hsl(var(--fg-muted))]">
+            {t("copyright", {
+              year: new Date().getFullYear(),
+              site: tNav("siteTitle"),
+            })}
+          </p>
         </div>
       </div>
     </footer>
   );
 }
+//
+// import { Link } from "@/i18n/navigation";
+// import { useTranslations } from "next-intl";
+// import Image from "next/image";
+//
+// // components/Footer.tsx
+// export default function Footer() {
+//   const t = useTranslations("Nav");
+//
+//   return (
+//     <footer className="border-t border-[hsl(var(--border))] bg-[hsl(var(--surface-2))] text-[hsl(var(--fg-strong))]">
+//       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-12 md:grid-cols-3">
+//         {/* Brand */}
+//         <div className="space-y-4">
+//           <Link href="/" className="flex items-center gap-2">
+//             <Image
+//               src="/images/placeholder.png"
+//               alt={t("logoAlt")}
+//               width={40}
+//               height={40}
+//               className="rounded-md"
+//             />
+//             <span className="font-heading text-lg">{t("siteTitle")}</span>
+//           </Link>
+//
+//           <p className="text-sm text-[hsl(var(--fg-muted))]">
+//             ConvergencENS &amp; initiatives étudiantes.
+//           </p>
+//         </div>
+//
+//         {/* Plan du site */}
+//         <nav aria-label="Plan du site" className="md:justify-self-center">
+//           <h4 className="text-s font-medium uppercase tracking-wide text-[hsl(var(--fg-muted))]">
+//             Plan du site
+//           </h4>
+//           <ul className="mt-4 space-y-2 text-sm">
+//             <li>
+//               <Link
+//                 href="/plan-du-site"
+//                 className="text-highlight-600 hover:text-highlight-700 hover:underline"
+//               >
+//                 Plan du site
+//               </Link>
+//             </li>
+//             <li>
+//               <Link href="/associations" className="hover:underline">
+//                 Associations
+//               </Link>
+//             </li>
+//             <li>
+//               <Link href="/evenements" className="hover:underline">
+//                 Événements
+//               </Link>
+//             </li>
+//             <li>
+//               <Link href="/contact" className="hover:underline">
+//                 Contact
+//               </Link>
+//             </li>
+//           </ul>
+//         </nav>
+//
+//         {/* Contact */}
+//         <div className="md:justify-self-end">
+//           <h4 className="text-s font-medium uppercase tracking-wide text-[hsl(var(--fg-muted))]">
+//             Contact
+//           </h4>
+//           <address className="mt-4 not-italic">
+//             <a href="mailto:convergens@laposte.net">
+//               <span className="i-lucide-mail h-4 w-4" aria-hidden="true" />
+//               convergens@laposte.net
+//             </a>
+//           </address>
+//         </div>
+//       </div>
+//
+//       {/* Disclaimer + small print */}
+//       <div className="border-t border-[hsl(var(--border))]">
+//         <div className="mx-auto max-w-7xl px-6 py-6">
+//           <p className="text-xs leading-relaxed text-[hsl(var(--fg-muted))]">
+//             Chaque collectif est responsable des pages qui lui sont dédiées.
+//             Les positions exprimées par chacun d’eux n’engage donc aucun des
+//             autres collectifs. Ainsi, les associations et syndicats restent
+//             complètement indépendants des collectifs partisans invités à
+//             participer aux activités de ConvergENS.
+//           </p>
+//           <p className="mt-3 text-xs text-[hsl(var(--fg-muted))]">
+//             © {new Date().getFullYear()} ConvergENS. Tous droits réservés.
+//           </p>
+//         </div>
+//       </div>
+//     </footer>
+//   );
+// }

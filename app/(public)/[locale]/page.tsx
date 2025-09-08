@@ -3,82 +3,53 @@
 import AssociationRows from "@/components/AssoRow";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-// import "@/styles/scroll.css";
+import "@/styles/scroll.css";
+import { Group, GROUPS } from "./fakedate";
 
-type Group = {
+type SectionProps = React.PropsWithChildren<{
   id: string;
-  name: string;
-  blurb?: string;
-  image?: string;
-};
+  title: React.ReactNode;
+  paragraph: React.ReactNode;
+}>;
 
-/* ---------------- Demo data ---------------- */
-const GROUPS: Group[] = [
-  {
-    id: "1",
-    name: "Syndicat Étudiant ENS",
-    blurb:
-      "Mobilisations étudiantes, entraide et défense des droits sur le campus.",
-    image:
-      "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?auto=format&fit=crop&w=1200&q=60",
-  },
-  {
-    id: "2",
-    name: "Club Climat ENS",
-    blurb:
-      "Ateliers, conférences et actions concrètes pour la transition écologique.",
-    image:
-      "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=60",
-  },
-  {
-    id: "3",
-    name: "Collectif Accessibilité",
-    blurb:
-      "Rendre l’ENS plus inclusive : accessibilité numérique et des lieux.",
-    image:
-      "https://images.unsplash.com/photo-1504274066651-8d31a536b11a?auto=format&fit=crop&w=1200&q=60",
-  },
-  {
-    id: "4",
-    name: "Club Presse & Journal",
-    blurb:
-      "Rédaction du journal étudiant, enquêtes et couverture des événements.",
-    image:
-      "https://images.unsplash.com/photo-1457694587812-e8bf29a43845?auto=format&fit=crop&w=1200&q=60",
-  },
-  {
-    id: "5",
-    name: "Atelier Informatique Libre",
-    blurb: "Install parties, sensibilisation aux logiciels libres et sécurité.",
-    image:
-      "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=60",
-  },
-  {
-    id: "6",
-    name: "Groupe Culture & Arts",
-    blurb: "Expos, concerts et ateliers ouverts à toutes et tous.",
-    image:
-      "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=1200&q=60",
-  },
-];
+function Section({ id, title, paragraph, children }: SectionProps) {
+  return (
+    <section id={id} className="py-12 sm:py-16 lg:py-24 w-full flex">
+      <div
+        className="p-5 scroll-fade my-auto mx-auto max-w-3xl bg-surface-2 rounded-xl border-1 border-outline border-t-outline-highlight
+       bg-linear-to-t from-surface-1 to-surface-2 rounded-xl p-6 shadow-lg "
+      >
+        <h2 className="text-5xl text-center mb-8 text-highlight dark:text-highlight">
+          {title}
+        </h2>
+        <p className="text-xl leading-relaxed text-justify text-fg-primary whitespace-pre-line">
+          {paragraph}
+        </p>
+        {children}
+      </div>
+    </section>
+  );
+}
 
 export default function HomePage() {
   const t = useTranslations("Home");
   /* ---------------- Menu: click-outside ---------------- */
   return (
     <div className="flex flex-col">
+      {/* ---------------- Association Rows---------------- */}
       <AssociationRows />
+
       {/* ---------------- Hero ---------------- */}
       <section
-        className="bg-brand scroll-fade-out h-svh w-full bg-cover bg-center"
+        className="h-svh w-full bg-cover bg-center"
         style={{
           backgroundImage:
             "url('https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=1600&q=80')",
         }}
       >
-        <div className="flex h-full w-full items-center justify-center bg-gray-900/50">
+        <div className="flex h-full w-full items-center justify-center">
           <div className="px-4 text-center">
-            <h1 className="font-sans bg-blue-600 text-[clamp(1.5rem,_5vw,_4rem)] ">
+            <h1 className="text-[clamp(2.5rem,_5vw,_4rem)] text-white bg-stone-800/40 backdrop-blur-sm px-4 rounded-lg border-0">
               {t.rich("hero.title", {
                 highlight: (chunks) => (
                   <span className="text-highlight">{chunks}</span>
@@ -87,7 +58,7 @@ export default function HomePage() {
             </h1>
             <Link
               href="/associations"
-              className="mt-6 inline-block rounded-md bg-highlight px-6 py-3 text-sm font-medium uppercase text-white transition-colors duration-300 hover:bg-blue-500 focus:outline-none"
+              className="mt-6 inline-block rounded-md bg-highlight px-6 py-3 text-sm font-medium uppercase text-white transition-colors duration-300 hover:bg-highlight-400 focus:outline-none"
             >
               {t("hero.cta")}
             </Link>
@@ -96,53 +67,25 @@ export default function HomePage() {
       </section>
 
       {/* ---------------- What is ConvergENS? ---------------- */}
-      <section id="what-is" className="bg-brand w-full px-4 py-16">
-        <div className="mx-auto max-w-3xl space-y-4">
-          <h2 className="scroll-fade-out text-5xl font-semibold text-center text-slate-900 dark:text-slate-100">
-            {t("whatIs.title")}
-          </h2>
-          <p className="scroll-fade-out text-xl leading-relaxed text-justify text-slate-700 dark:text-slate-300 whitespace-pre-line">
-            {t("whatIs.body")}
-          </p>
-        </div>
-      </section>
-      {/* ---------------- Objectives ---------------- */}
-      <section id="objectives" className="container mx-auto px-4 py-16">
-        <div className="mx-auto max-w-3xl space-y-6">
-          <h2 className="text-3xl font-semibold text-slate-900 dark:text-slate-100 text-center">
-            {t("objectives.title")}
-          </h2>
-
-          <p className="leading-relaxed text-slate-700 dark:text-slate-300 whitespace-pre-line text-center">
-            {t("objectives.intro")}
-          </p>
-
-          <ul className="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
-            <li>{t("objectives.items.shareExperiences")}</li>
-            <li>{t("objectives.items.poolResources")}</li>
-            <li>{t("objectives.items.createSpaces")}</li>
-          </ul>
-        </div>
-      </section>
+      <Section
+        id="what-is"
+        title={t("whatIs.title")}
+        paragraph={t("whatIs.body")}
+      />
 
       {/* ---------------- How ConvergENS works ---------------- */}
-      <section id="how" className="container mx-auto px-4 py-16">
-        <div className="mx-auto max-w-3xl text-center space-y-4">
-          <h2 className="text-3xl font-semibold text-slate-900 dark:text-slate-100">
-            {t("howItWorks.title")}
-          </h2>
-          <p className="leading-relaxed text-slate-700 dark:text-slate-300 whitespace-pre-line">
-            {t("howItWorks.body")}
-          </p>
-        </div>
-      </section>
+      <Section
+        id="how"
+        title={t("howItWorks.title")}
+        paragraph={t("howItWorks.body")}
+      />
       {/* ---------------- About grid ---------------- */}
       <section className="container mx-auto space-y-20 px-4 py-16">
         {/* Row 1 – image left, text right */}
         <div className="grid items-center gap-10 sm:grid-cols-2">
           <div className="scroll-fade-in aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700" />
           <div className="space-y-4">
-            <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100">
+            <h2 className="text-2xl text-slate-800 dark:text-slate-100">
               {t("about.row1.title")}
             </h2>
             <p className="leading-relaxed text-slate-700 dark:text-slate-300">
@@ -154,7 +97,7 @@ export default function HomePage() {
         {/* Row 2 – text left, image right */}
         <div className="grid items-center gap-10 sm:grid-cols-2">
           <div className="order-2 space-y-4 sm:order-1">
-            <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100">
+            <h2 className="text-2xl text-slate-800 dark:text-slate-100">
               {t("about.row2.title")}
             </h2>
             <p className="leading-relaxed text-slate-700 dark:text-slate-300">
@@ -168,7 +111,7 @@ export default function HomePage() {
         <div className="grid items-center gap-10 sm:grid-cols-2">
           <div className="scroll-fade-in aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700" />
           <div className="space-y-4">
-            <h2 className="text-2xl font-semibold text-slate-800 dark:text-slate-100">
+            <h2 className="text-2xl text-slate-800 dark:text-slate-100">
               {t("about.row3.title")}
             </h2>
             <p className="leading-relaxed text-slate-700 dark:text-slate-300">
@@ -178,17 +121,30 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ---------------- Objectives ---------------- */}
+      <Section
+        id="objectives"
+        title={t("objectives.title")}
+        paragraph={t("objectives.intro")}
+      >
+        <ul className="list-disc pl-5 space-y-2 text-slate-700 dark:text-slate-300">
+          <li>{t("objectives.items.shareExperiences")}</li>
+          <li>{t("objectives.items.poolResources")}</li>
+          <li>{t("objectives.items.createSpaces")}</li>
+        </ul>
+      </Section>
+
       {/* ---------------- Latest actions (uses GROUPS) ---------------- */}
-      <section className="border-t border-blue-300 bg-blue-100 py-16 dark:border-blue-700 dark:bg-blue-900">
+      <section className="border-t border-highlight-300 bg-highlight-100 py-16 dark:border-highlight-700 dark:bg-highlight-900">
         <div className="container mx-auto px-4">
-          <h2 className="mb-12 text-center text-2xl font-semibold text-slate-800 dark:text-slate-100">
+          <h2 className="mb-12 text-center text-2xl text-slate-800 dark:text-slate-100">
             {t("latest.title")}
           </h2>
           <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {GROUPS.slice(0, 3).map((g: Group) => (
               <article
                 key={g.id}
-                className="flex flex-col rounded-md bg-white p-6 text-center shadow-sm dark:bg-slate-800"
+                className="flex flex-col rounded-md bg-surface-2 p-6 text-center shadow-sm"
               >
                 <div
                   className="mb-4 aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700"
@@ -202,7 +158,7 @@ export default function HomePage() {
                       : undefined
                   }
                 />
-                <h3 className="mb-2 font-semibold">{g.name}</h3>
+                <h3 className="mb-2 ">{g.name}</h3>
                 <p className="text-sm text-slate-600 dark:text-slate-300">
                   {g.blurb ?? t("latest.card.fallback")}
                 </p>

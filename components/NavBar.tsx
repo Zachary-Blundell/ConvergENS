@@ -45,8 +45,8 @@ export default function NavBar() {
 
   return (
     <nav
-      className="sticky top-0 z-50 flex w-full items-center justify-between px-4 py-2 border-b
-             bg-gray-100/70 dark:bg-black/70 backdrop-blur-sm"
+      className="sticky top-0 z-50 flex w-full items-center justify-between px-4 py-2 border-b-1 border-surface-3
+             bg-surface-2/70 backdrop-blur-sm"
       aria-label={t("primaryNav", { default: "Primary" })}
     >
       {/* Left logo */}
@@ -58,7 +58,9 @@ export default function NavBar() {
           height={40}
           className="rounded-md"
         />
-        <span className="font-semibold text-lg">{t("siteTitle")}</span>
+        <span className="font-heading text-highlight text-lg">
+          {t("siteTitle")}
+        </span>
       </Link>
 
       {/* Desktop nav (hide below 800px) */}
@@ -139,7 +141,7 @@ function MobileMenu() {
                   key={link.href}
                   href={link.href}
                   aria-current={isActive ? "page" : undefined}
-                  className="rounded-md px-3 py-2 text-base hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  className="rounded-md px-3 py-2 text-fg-primary hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {t(link.labelKey)}
                 </Link>

@@ -15,7 +15,7 @@ export default async function AssociationRows() {
   }));
 
   return (
-    <div className="hidden sm:flex flex-wrap justify-center py-4 gap-2 bg-gray-100 dark:bg-gray-900">
+    <div className="hidden sm:flex flex-wrap justify-center py-4 gap-2">
       {items.map((a, n) => (
         <Link
           key={`${a.name}-${n}`}
