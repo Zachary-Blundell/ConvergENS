@@ -62,7 +62,7 @@ export default function ColorField({
   const ratioBlack = safeRatio(() => contrastRatio(color, "#000000"));
   const recommendBlack = ratioBlack >= ratioWhite;
   const recommendedText = recommendBlack ? "#000000" : "#ffffff";
-  const recommendedRatio = recommendBlack ? ratioBlack : ratioWhite;
+
   return (
     <FormField
       control={form.control}
