@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "YourApp",
@@ -25,10 +26,11 @@ export default async function RootLayout({
   console.log("Locale:", locale);
   console.log("Locales in routing:", routing.locales);
   return (
-    <main id="main" className="flex-1">
+    <main id="main" className="flex-1 bg-surface-1">
       <NextIntlClientProvider>
         <NavBar />
         {children}
+        <Footer />
       </NextIntlClientProvider>
     </main>
   );
