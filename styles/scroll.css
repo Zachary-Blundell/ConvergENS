@@ -1,11 +1,46 @@
 @media (prefers-reduced-motion: no-preference) {
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .scroll-fade {
+      /* knobs you can tweak */
+      --rise: 24px;
+      --lift: 8px;
+
+      animation: fade-in-out 1s linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%; /* map enter→exit to 0→100% */
+      will-change: opacity, transform;
+    }
+
+    @keyframes fade-in-out {
+      0% {
+        opacity: 0;
+        transform: translateY(var(--rise)) scale(0.75);
+      }
+      30% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      70% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(calc(-1 * var(--lift))) scale(0.92);
+      }
+    }
+  }
+
   .scroll-fade-in {
     opacity: 0;
     transform: scale(0.8);
     animation: fade-in 600ms linear both;
     animation-timeline: view();
     animation-range: entry 0% cover 40%;
-    /* animation-range: entry; */
+    animation-range: entry;
   }
 
   @keyframes fade-in {
@@ -25,5 +60,23 @@
     to {
       opacity: 0;
     }
+  }
+}
+
+/* graceful fallback */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-fade {
+    opacity: 1;
+    transform: none;
+  }
+
+  .scroll-fade-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .scroll-fade-out {
+    opacity: 1;
+    transform: none;
   }
 }

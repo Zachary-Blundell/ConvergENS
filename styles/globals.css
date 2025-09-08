@@ -9,11 +9,110 @@ html {
 }
 
 /* Headings */
+h1,
+h2,
+h3,
+.font-heading {
+  font-family: var(--font-heading);
+}
 
-@theme {
-  /* brand */
-  --color-highlight: #ff621f;
+/* ---------- Light mode (default) ---------- */
+:root {
+  /* backgrounds */
+  --surface-1: 0 0% 88%; /* bg-dark   #E0E0E0 */
+  --surface-2: 0 0% 93%; /* bg-mid    #EDEDED */
+  --surface-3: 0 0% 98%; /* bg-light  #FAFAFA */
+
+  /* text */
+  --fg-primary: 0 0% 5%; /* text       #0D0D0D */
+  --fg-muted: 0 0% 30%; /* text-muted #404040 */
+
+  --outline: var(--surface-2); /* boarder */
+  --outline-highlight: 0 0% 100%; /* boarder */
+
+  color-scheme: light dark;
+}
+
+/* ---------- Dark mode (explicit override) ---------- */
+.dark {
+  --surface-1: 0 0% 2%; /* bg-dark   #050505 */
+  --surface-2: 0 0% 7%; /* bg-mid    #121212 */
+  --surface-3: 0 0% 12%; /* bg-light  #1F1F1F */
+
+  --fg-primary: 0 0% 95%; /* text       #F2F2F2 */
+  --fg-muted: 0 0% 75%; /* text-muted #BFBFBF */
+
+  --outline: 0 0% 30%; /* boarder */
+  --outline-highlight: 0 0% 60%; /* boarder */
+}
+
+@theme inline {
+  --color-surface-1: hsl(var(--surface-1));
+  --color-surface-2: hsl(var(--surface-2));
+  --color-surface-3: hsl(var(--surface-3));
+
+  --color-fg-primary: hsl(var(--fg-primary));
+  --color-fg-muted: hsl(var(--fg-muted));
+
+  --color-outline: hsl(var(--outline));
+  --color-outline-highlight: hsl(var(--outline-highlight));
+
+  /* gradient */
+
   --color-highlight-soft: #ff985d;
+  --color-highlight: #ff621f;
+
+  --color-highlight-50: color-mix(
+    in oklch,
+    white 55%,
+    var(--color-highlight) 45%
+  );
+  --color-highlight-100: color-mix(
+    in oklch,
+    white 40%,
+    var(--color-highlight) 60%
+  );
+  --color-highlight-200: color-mix(
+    in oklch,
+    white 30%,
+    var(--color-highlight) 70%
+  );
+  --color-highlight-300: color-mix(
+    in oklch,
+    white 20%,
+    var(--color-highlight) 80%
+  );
+  --color-highlight-400: color-mix(
+    in oklch,
+    white 10%,
+    var(--color-highlight) 90%
+  );
+  --color-highlight-500: var(--color-highlight);
+  --color-highlight-600: color-mix(
+    in oklch,
+    black 10%,
+    var(--color-highlight) 90%
+  );
+  --color-highlight-700: color-mix(
+    in oklch,
+    black 20%,
+    var(--color-highlight) 80%
+  );
+  --color-highlight-800: color-mix(
+    in oklch,
+    black 30%,
+    var(--color-highlight) 70%
+  );
+  --color-highlight-900: color-mix(
+    in oklch,
+    black 40%,
+    var(--color-highlight) 60%
+  );
+  --color-highlight-950: color-mix(
+    in oklch,
+    black 55%,
+    var(--color-highlight) 45%
+  );
 }
 
 /*---break---*/
@@ -124,20 +223,3 @@ html {
   --sidebar-ring: oklch(0.556 0 0);
 }
 /*---break---*/
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-  h1 {
-    @apply text-2xl font-bold;
-  }
-  h2 {
-    @apply text-xl font-bold;
-  }
-  h3 {
-    @apply text-lg font-bold;
-  }
-}
