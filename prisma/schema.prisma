@@ -7,6 +7,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum Role {
+  ORGANIZER @map("organizer")
+  ADMIN     @map("admin")
+}
+
+model Organizer {
+  id           String @id @default(uuid())
+  email        String @unique
+  passwordHash String
+  role         Role   @default(ORGANIZER)
+
+  // 1:1 (each organizer can own at most one association)
+  association Association?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("ORGANIZER")
+}
+
 enum SocialPlatform {
   twitter
   facebook
@@ -21,11 +41,14 @@ enum SocialPlatform {
 }
 
 model Association {
-  id           String   @id @default(cuid())
+  id          String    @id @default(cuid())
+  organizerId String    @unique
+  organizer   Organizer @relation(fields: [organizerId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
   name         String   @unique
   slug         String   @unique
   summary      String   @default("")
-  color        String   @default("#111827")
+  color        String   @default("#ffffff")
   description  String   @default("")
   logoUrl      String?
   contactEmail String?
@@ -35,6 +58,8 @@ model Association {
   updatedAt    DateTime @updatedAt
 
   socials SocialLink[]
+
+  @@map("ASSOCIATION")
 }
 
 model SocialLink {
