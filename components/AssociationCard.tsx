@@ -19,7 +19,7 @@ export function AssociationCard({
   const t = useTranslations("AssociationsPage");
 
   return (
-    <div className="flex flex-col w-full overflow-hidden bg-white rounded-lg shadow-lg dark:bg-gray-800 sm:flex-col sm:max-w-md transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 ">
+    <div className="flex flex-col w-full overflow-hidden bg-surface-2 rounded-lg shadow-lg sm:flex-col sm:max-w-md transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110 ">
       {/* Content column*/}
       <div className="flex flex-col justify-between flex-1 p-4">
         {/* Logo name row*/}
@@ -29,21 +29,16 @@ export function AssociationCard({
             width={384}
             src={logoUrl}
             alt={t("altLogo", { name })}
-            // className="object-contain w-full h-48 bg-gray-200 sm:h-48 sm:w-full"
-            className="relative aspect-square rounded-full bg-white dark:bg-gray-800 ring-1 ring-gray-200 dark:ring-gray-700 shadow-sm overflow-hidden transition-transform duration-200 group-hover:scale-105
+            className="relative aspect-square rounded-full bg-surface-2 ring-1 ring-outline shadow-sm overflow-hidden transition-transform duration-200 group-hover:scale-105
                 w-40"
           />
 
           <div className="flex justify-center items-center w-full ">
-            <h3 className="text-center text-xl font-bold text-gray-800 dark:text-white">
-              {name}
-            </h3>
+            <h3 className="text-center text-xl text-fg-primary">{name}</h3>
           </div>
         </div>
 
-        <p className="my-5 text-sm text-gray-600 dark:text-gray-400">
-          {summary}
-        </p>
+        <p className="my-5 text-sm text-fg-muted">{summary}</p>
         <Link
           href={"/associations/" + slug}
           title={t("viewPageTitle", { name })}
