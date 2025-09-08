@@ -79,6 +79,35 @@
     "copyright": "© {year} {site}. Tous droits réservés."
   },
 
+  "Newspaper": {
+    "meta": {
+      "title": "Agora – Le journal de ConvergENS",
+      "description": "Agora est la revue bi-annuelle du collectif ConvergENS : éclairages écologistes, féministes, antiracistes, anticolonialistes, à partir des pratiques militantes."
+    },
+    "banner": {
+      "alt": "Trois exemplaires du journal Agora",
+      "title": "Agora",
+      "subtitle": "Le journal de ConvergENS"
+    },
+    "about": {
+      "headingSrOnly": "À propos d’Agora",
+      "p1": "est une revue à laquelle contribuent l'ensemble des membres et membres invités du collectif ConvergENS.",
+      "p2": "Bi-annuelle, elle offre à chaque organisation l'occasion d'éclairer un objet commun depuis sa position particulière : luttes écologistes, féministes, antiracistes, anticolonialistes... Notre ligne éditoriale est claire : plutôt que de produire un discours abstrait ou purement idéologique, nous partons de nos pratiques militantes et de nos difficultés quotidiennes pour nourrir une réflexion collective.",
+      "p3": "Chaque numéro s'accompagne d'une conférence de lancement, moment de débat et de mise en discussion publique des textes."
+    },
+    "issue3": {
+      "heading": "Numéro 3 — Le Travail (été 2025)",
+      "cover": {
+        "alt": "Couverture du numéro 3 d'Agora : Le Travail",
+        "figcaptionSrOnly": "Photo de la Une du dernier numéro (Le Travail)"
+      },
+      "quote": "« rejeter la conversion de nos recherches académiques en marchandises produites par le travail, et exiger du temps pour des activités créant plus de liens avec les travailleurs et travailleuses de l'école, qui rendent possibles nos études. »",
+      "preview": "Aperçu",
+      "read": "Lire à prix libre",
+      "note": "N'importe quel don via le formulaire suivant donne accès à la version numérique des trois premiers numéros, dont le tout dernier."
+    }
+  },
+
   "AssociationsPage": {
     "associationsHeader": "Notre collectif",
     "altLogo": "Logo {name}",

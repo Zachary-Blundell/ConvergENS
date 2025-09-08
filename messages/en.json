@@ -78,6 +78,35 @@
     "copyright": "© {year} {site}. All rights reserved."
   },
 
+  "Newspaper": {
+    "meta": {
+      "title": "Agora – The ConvergENS Journal",
+      "description": "Agora is the biannual review of the ConvergENS collective: ecological, feminist, anti-racist and anti-colonialist perspectives rooted in activist practice."
+    },
+    "banner": {
+      "alt": "Three copies of the newspaper Agora",
+      "title": "Agora",
+      "subtitle": "The ConvergENS Journal"
+    },
+    "about": {
+      "headingSrOnly": "About Agora",
+      "p1": "is a review to which all members and invited members of the ConvergENS collective contribute.",
+      "p2": "Published twice a year, it gives each organization the opportunity to shed light on a shared theme from its own standpoint: ecological, feminist, anti-racist and anti-colonialist struggles. Our editorial line is clear: rather than producing abstract or purely ideological discourse, we start from our activist practices and everyday difficulties to nourish a collective reflection.",
+      "p3": "Each issue is accompanied by a launch talk—a time for debate and public discussion of the texts."
+    },
+    "issue3": {
+      "heading": "Issue 3 — Work (Summer 2025)",
+      "cover": {
+        "alt": "Cover of Agora issue 3: Work",
+        "figcaptionSrOnly": "Front-page photo of the latest issue (Work)"
+      },
+      "quote": "“to reject the conversion of our academic research into commodities produced by labor, and to demand time for activities that build stronger ties with the workers of the school, who make our studies possible.”",
+      "preview": "Preview",
+      "read": "Read pay-what-you-want",
+      "note": "Any donation via the following form grants access to the digital versions of the first three issues, including the latest one."
+    }
+  },
+
   "AssociationsPage": {
     "associationsHeader": "Our Community",
     "altLogo": "Logo {name}",
