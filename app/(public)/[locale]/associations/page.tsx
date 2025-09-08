@@ -23,13 +23,11 @@ export default async function AssociationsPage() {
 
   return (
     <div className="container px-4 py-12 mx-auto">
-      <h1 className="mb-10 text-3xl font-bold text-center">
+      <h1 className="mb-10 text-5xl text-center text-highlight">
         {t("associationsHeader")}
       </h1>
       {groups.length === 0 ? (
-        <p className="text-center text-slate-600 dark:text-slate-400">
-          {t("noAssociations")}
-        </p>
+        <p className="text-center text-fg-primary">{t("noAssociations")}</p>
       ) : (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-center">
           {groups.map((g) => (
