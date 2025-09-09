@@ -72,7 +72,7 @@ export default async function AdminDashboardPage() {
     <main className="container mx-auto px-4 py-10">
       <div className="mb-8 flex items-start justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">
+          <h1 className="text-3xl tracking-tight">
             Tableau de bord — Administration
           </h1>
           <p className="text-sm text-muted-foreground">
