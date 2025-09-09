@@ -19,8 +19,8 @@ h3,
 /* ---------- Light mode (default) ---------- */
 :root {
   /* backgrounds */
-  --surface-1: 0 0% 88%; /* bg-dark   #E0E0E0 */
-  --surface-2: 0 0% 93%; /* bg-mid    #EDEDED */
+  --surface-1: 0 0% 83%; /* bg-dark   #E0E0E0 */
+  --surface-2: 0 0% 90%; /* bg-mid    #EDEDED */
   --surface-3: 0 0% 98%; /* bg-light  #FAFAFA */
 
   /* text */
