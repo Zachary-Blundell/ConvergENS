@@ -7,15 +7,11 @@ export const metadata: Metadata = {
   description: "A crisp Next.js + Tailwind starter",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
-  params,
 }: {
   children: React.ReactNode;
-  params: { locale: string };
 }) {
-  const { locale } = await params;
-
   return (
     <main id="main" className="min-h-dvh flex flex-col bg-surface-1">
       <NavBarAdmin />

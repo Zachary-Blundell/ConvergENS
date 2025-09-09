@@ -95,6 +95,8 @@ export async function saveAssociation(
       logoUrl = `/uploads/${filename}`; // public URL
     }
 
+    const organizerId = "1";
+
     // Data is valid, proceed to save to the database
     const { socials, ...rest } = validatedData.data;
     try {
@@ -102,7 +104,17 @@ export async function saveAssociation(
         data: {
           ...rest,
           ...(logoUrl ? { logoUrl } : {}),
-          ...(socials?.length ? { socials: { create: socials } } : {}),
+          ...(socials?.length
+            ? {
+                socials: {
+                  create: socials.map((s) => ({
+                    platform: s.platform,
+                    url: s.url,
+                  })),
+                },
+              }
+            : {}),
+          organizer: { connect: { id: organizerId } },
         },
       });
 

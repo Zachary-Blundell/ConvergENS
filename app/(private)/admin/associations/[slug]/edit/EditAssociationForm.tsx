@@ -110,7 +110,7 @@ export default function EditAssociationForm({
       fd.append("logo", logo);
     }
 
-    startTransition(() => action(fd));
+    startTransition(() => action());
   }
 
   return (

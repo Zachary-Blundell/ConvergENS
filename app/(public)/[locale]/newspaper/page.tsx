@@ -3,9 +3,8 @@
 import Image from "next/image";
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
+import { Link } from "@/src/i18n/navigation";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Newspaper");
