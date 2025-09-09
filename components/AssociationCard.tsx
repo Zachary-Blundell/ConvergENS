@@ -1,4 +1,4 @@
-import { Link } from "@/i18n/navigation";
+import { Link } from "@/src/i18n/navigation";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React from "react";

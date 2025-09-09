@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/navigation-menu";
 import ThemeToggle from "./ThemeToggle";
 import LocaleSwitcher from "./LocaleSwitcher";
-import { Link } from "@/i18n/navigation";
 import {
   Sheet,
   SheetContent,
@@ -23,6 +22,7 @@ import {
 import { HiMenuAlt3 } from "react-icons/hi";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { usePathname } from "next/navigation";
+import { Link } from "@/src/i18n/navigation";
 
 /** i18n keys */
 type LinkKey = "associations" | "articles" | "calendar" | "newspaper";

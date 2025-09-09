@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
-const nextConfig: NextConfig = {
-  /* config options here */
+const nextConfig: NextConfig = {};
+
+module.exports = {
+  output: "standalone",
 };
 
 const withNextIntl = createNextIntlPlugin();
