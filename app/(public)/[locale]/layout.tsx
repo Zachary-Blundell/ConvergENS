@@ -23,8 +23,6 @@ export default async function RootLayout({
     notFound();
   }
 
-  console.log("Locale:", locale);
-  console.log("Locales in routing:", routing.locales);
   return (
     <main id="main" className="min-h-dvh flex flex-col bg-surface-1">
       <NextIntlClientProvider>
