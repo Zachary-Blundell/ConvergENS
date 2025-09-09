@@ -96,7 +96,7 @@ export function AssociationCard({
       {/* Content */}
       <div className="flex flex-col sm:flex-none justify-between flex-1 p-4">
         <div className="flex justify-center items-center w-full">
-          <h3 className="text-center text-xl text-fg-primary">{name}</h3>
+          <h3 className="text-center text-xl text-fg-primary px-15">{name}</h3>
         </div>
 
         <p className="my-5 text-sm text-fg-muted">{summary}</p>
