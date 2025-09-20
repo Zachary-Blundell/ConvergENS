@@ -4,7 +4,7 @@ import Image from "next/image";
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { getLocale, getTranslations } from "next-intl/server";
-import { Link } from "@/src/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Newspaper");
@@ -24,7 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function NewspaperPage() {
   const t = await getTranslations("Newspaper");
   const lang = await getLocale();
-  const isEn = lang === "en";
+  const isEn = lang === "en-US";
 
   return (
     <main className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 py-12 space-y-16">

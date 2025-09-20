@@ -1,4 +1,4 @@
-import { Link } from "@/src/i18n/navigation";
+import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React from "react";
@@ -7,6 +7,8 @@ export function AssociationCard({
   name,
   summary,
   logoUrl,
+  logoW,
+  logoH,
   slug,
   color,
 }: {
@@ -14,6 +16,8 @@ export function AssociationCard({
   name: string;
   summary: string;
   logoUrl: string;
+  logoW: number;
+  logoH: number;
   slug: string;
   color: string;
 }) {
@@ -74,19 +78,19 @@ export function AssociationCard({
       {/* Mobile logo (centered, inside flow) */}
       <div className="sm:hidden -mt-10 mb-2 flex justify-center">
         <Image
-          height={96}
-          width={96}
+          height={logoH}
+          width={logoW}
           src={logoUrl}
           alt={t("altLogo", { name })}
-          className="h-24 w-24 rounded-full bg-surface-2 ring-2 ring-outline shadow-lg transition-transform duration-200"
+          // className="h-24 w-24 bg-surface-2 ring-2 ring-outline shadow-lg transition-transform duration-200"
         />
       </div>
 
       {/* Desktop/Tablet floating logo */}
       <div className="hidden sm:block absolute -top-12 -left-6 z-10">
         <Image
-          height={96}
-          width={96}
+          height={logoH}
+          width={logoW}
           src={logoUrl}
           alt={t("altLogo", { name })}
           className="h-24 w-24 rounded-full bg-surface-2 ring-2 ring-outline shadow-lg transition-transform duration-200 group-hover:scale-105"

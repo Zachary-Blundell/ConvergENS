@@ -1,6 +1,6 @@
 "use client";
 
-import { usePathname, useRouter } from "@/src/i18n/navigation";
+import { usePathname, useRouter } from "@/i18n/navigation";
 import { useLocale } from "next-intl";
 import {
   Select,
@@ -32,8 +32,8 @@ export default function LocaleSwitcher() {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value="fr">FR</SelectItem>
-          <SelectItem value="en">EN</SelectItem>
+          <SelectItem value="fr-FR">FR</SelectItem>
+          <SelectItem value="en-US">EN</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

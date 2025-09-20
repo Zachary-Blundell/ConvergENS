@@ -1,64 +1,92 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-/*---break---*/
+
+/* ----- Tailwind helpers ----- */
 @custom-variant dark (&:is(.dark *));
 
-/* Base text */
-html {
-  font-family: var(--font-sans), system-ui, sans-serif;
+/* ===== Base (site-wide) ===== */
+@layer base {
+  html {
+    font-family: var(--font-sans), system-ui, sans-serif;
+  }
+
+  :root {
+    /* Light mode tokens */
+    /* backgrounds */
+    --surface-1: 0 0% 83%; /* #E0E0E0 */
+    --surface-2: 0 0% 90%; /* #EDEDED */
+    --surface-3: 0 0% 98%; /* #FAFAFA */
+    /* text */
+    --fg-primary: 0 0% 5%; /* #0D0D0D */
+    --fg-muted: 0 0% 30%; /* #404040 */
+    /* borders */
+    --outline: var(--surface-2);
+    --outline-highlight: 0 0% 100%;
+    color-scheme: light dark;
+
+    /* heading scale  */
+    --fs-h1: clamp(2.25rem, 4vw, 3rem);
+    --fs-h2: clamp(2rem, 3.2vw, 2.5rem);
+    --fs-h3: clamp(1.5rem, 2.2vw, 1.875rem);
+    --fs-h4: 1.375rem;
+    --fs-h5: 1.125rem;
+    --fs-h6: 1rem;
+  }
+
+  /* Dark mode tokens */
+  .dark {
+    --surface-1: 0 0% 2%; /* #050505 */
+    --surface-2: 0 0% 7%; /* #121212 */
+    --surface-3: 0 0% 12%; /* #1F1F1F */
+    --fg-primary: 0 0% 95%; /* #F2F2F2 */
+    --fg-muted: 0 0% 75%; /* #BFBFBF */
+    --outline: 0 0% 30%;
+    --outline-highlight: 0 0% 60%;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    margin: 0; /* reset */
+    font-family: var(--font-heading);
+  }
+
+  h1 {
+    font-size: var(--fs-h1);
+  }
+  h2 {
+    font-size: var(--fs-h2);
+  }
+  h3 {
+    font-size: var(--fs-h3);
+  }
+  h4 {
+    font-size: var(--fs-h4);
+  }
+  h5 {
+    font-size: var(--fs-h5);
+  }
+  h6 {
+    font-size: var(--fs-h6);
+  }
 }
 
-/* Headings */
-h1,
-h2,
-h3,
-.font-heading {
-  font-family: var(--font-heading);
-}
-
-/* ---------- Light mode (default) ---------- */
-:root {
-  /* backgrounds */
-  --surface-1: 0 0% 83%; /* bg-dark   #E0E0E0 */
-  --surface-2: 0 0% 90%; /* bg-mid    #EDEDED */
-  --surface-3: 0 0% 98%; /* bg-light  #FAFAFA */
-
-  /* text */
-  --fg-primary: 0 0% 5%; /* text       #0D0D0D */
-  --fg-muted: 0 0% 30%; /* text-muted #404040 */
-
-  --outline: var(--surface-2); /* boarder */
-  --outline-highlight: 0 0% 100%; /* boarder */
-
-  color-scheme: light dark;
-}
-
-/* ---------- Dark mode (explicit override) ---------- */
-.dark {
-  --surface-1: 0 0% 2%; /* bg-dark   #050505 */
-  --surface-2: 0 0% 7%; /* bg-mid    #121212 */
-  --surface-3: 0 0% 12%; /* bg-light  #1F1F1F */
-
-  --fg-primary: 0 0% 95%; /* text       #F2F2F2 */
-  --fg-muted: 0 0% 75%; /* text-muted #BFBFBF */
-
-  --outline: 0 0% 30%; /* boarder */
-  --outline-highlight: 0 0% 60%; /* boarder */
-}
-
+/* Map tokens to color vars (kept as-is) */
 @theme inline {
   --color-surface-1: hsl(var(--surface-1));
   --color-surface-2: hsl(var(--surface-2));
   --color-surface-3: hsl(var(--surface-3));
-
   --color-fg-primary: hsl(var(--fg-primary));
   --color-fg-muted: hsl(var(--fg-muted));
-
   --color-outline: hsl(var(--outline));
   --color-outline-highlight: hsl(var(--outline-highlight));
 
-  /* gradient */
-
+  /* brand/highlight ramp */
   --color-highlight-soft: #ff985d;
   --color-highlight: #ff621f;
 
@@ -115,6 +143,228 @@ h3,
   );
 }
 
+/* ===== Components (scoped to CMS) ===== */
+@layer components {
+  /* CMS container vars */
+  .cms-content {
+    --cms-font-size: 1rem;
+    --cms-leading: 1.7;
+
+    /* only colors we keep */
+    --cms-border: var(--color-outline);
+    --cms-link: var(--color-highlight-500);
+    --cms-link-visited: var(--color-highlight-700);
+
+    font-size: var(--cms-font-size);
+    line-height: var(--cms-leading);
+  }
+
+  /* CMS headings (font + sizes) */
+  .cms-content :is(h1, h2, h3, h4, h5, h6),
+  .cms-content .font-heading {
+    font-family: var(--font-heading);
+  }
+  .cms-content :is(h1, h2, h3, h4, h5, h6) {
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    margin: 0;
+  }
+  .cms-content h1 {
+    font-size: var(--fs-h1);
+    margin-top: 0.5em;
+  }
+  .cms-content h2 {
+    font-size: var(--fs-h2);
+    margin-top: 1.1em;
+  }
+  .cms-content h3 {
+    font-size: var(--fs-h3);
+    margin-top: 1em;
+  }
+  .cms-content h4 {
+    font-size: var(--fs-h4);
+    margin-top: 0.9em;
+  }
+  .cms-content h5 {
+    font-size: var(--fs-h5);
+    margin-top: 0.8em;
+  }
+  .cms-content h6 {
+    font-size: var(--fs-h6);
+    margin-top: 0.8em;
+  }
+
+  /* rhythm */
+  .cms-content > * + * {
+    margin-top: 1em;
+  }
+
+  /* text + inline */
+  .cms-content p {
+    margin: 10;
+  }
+  .cms-content strong {
+    font-weight: 700;
+  }
+  .cms-content em {
+    font-style: italic;
+  }
+  .cms-content small {
+    font-size: 0.875em;
+  }
+  .cms-content abbr[title] {
+    text-decoration: underline dotted;
+    cursor: help;
+  }
+
+  /* links */
+  .cms-content a {
+    color: var(--cms-link);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .cms-content a:visited {
+    color: var(--cms-link-visited);
+  }
+  .cms-content a:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* blockquote / hr */
+  .cms-content blockquote {
+    margin: 0;
+    padding: 0.75em 1em;
+    border-left: 4px solid var(--cms-border);
+  }
+  .cms-content hr {
+    border: 0;
+    border-top: 1px solid var(--cms-border);
+    margin: 2rem 0;
+  }
+
+  /* media */
+  .cms-content img,
+  .cms-content video,
+  .cms-content canvas,
+  .cms-content svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  .cms-content figure {
+    margin: 0;
+  }
+  .cms-content figcaption {
+    font-size: 0.875em;
+    margin-top: 0.5em;
+    text-align: center;
+  }
+
+  /* embeds */
+  .cms-content iframe {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    border: 0;
+  }
+
+  /* tables (full grid) */
+  .cms-content .table-wrap {
+    overflow-x: auto;
+  }
+  .cms-content table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--cms-border);
+  }
+  .cms-content th,
+  .cms-content td {
+    padding: 0.5em 0.75em;
+    border: 1px solid var(--cms-border);
+    vertical-align: top;
+  }
+  .cms-content thead th {
+    font-weight: 700;
+  }
+
+  /* Restore list markers inside CMS content */
+  .cms-content ul,
+  .cms-content ol {
+    display: block; /* just in case something set flex/grid */
+    list-style-position: outside; /* or 'inside' if you prefer */
+    margin: 0;
+    padding-left: 1.5em; /* indent so markers have room */
+  }
+
+  /* Bulleted lists */
+  .cms-content ul {
+    list-style-type: disc;
+  }
+  .cms-content ul ul {
+    list-style-type: circle;
+  }
+  .cms-content ul ul ul {
+    list-style-type: square;
+  }
+
+  /* Numbered lists */
+  .cms-content ol {
+    list-style-type: decimal;
+  }
+  .cms-content ol ol {
+    list-style-type: lower-alpha;
+  }
+  .cms-content ol ol ol {
+    list-style-type: lower-roman;
+  }
+
+  /* Optional: tighten spacing between items */
+  .cms-content li {
+    margin-top: 0.25em;
+  }
+
+  /* alignment helpers */
+  .cms-content .text-center {
+    text-align: center;
+  }
+  .cms-content .text-right {
+    text-align: right;
+  }
+  .cms-content .text-left {
+    text-align: left;
+  }
+
+  /* Center image when parent has inline text-align:center */
+  .cms-content :is(p, div, figure)[style*="text-align:center"] > img,
+  .cms-content :is(p, div, figure)[style*="text-align: center"] > img {
+    margin-left: auto;
+    margin-right: auto; /* centers a block */
+  }
+
+  /* Right-align */
+  .cms-content :is(p, div, figure)[style*="text-align:right"] > img,
+  .cms-content :is(p, div, figure)[style*="text-align: right"] > img {
+    margin-left: auto; /* pushes block image to the right */
+    margin-right: 0;
+  }
+
+  /* Left-align (explicit) */
+  .cms-content :is(p, div, figure)[style*="text-align:left"] > img,
+  .cms-content :is(p, div, figure)[style*="text-align: left"] > img {
+    margin-left: 0;
+    margin-right: auto;
+  }
+}
+
+/* Dark-mode link hue tweak (optional) */
+/* @media (prefers-color-scheme: dark) { */
+/*   .cms-content { */
+/*     --cms-link: var(--color-highlight-400); */
+/*     --cms-link-visited: var(--color-highlight-600); */
+/*   } */
+/* } */
+/*eof */
 /*---break---*/
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);

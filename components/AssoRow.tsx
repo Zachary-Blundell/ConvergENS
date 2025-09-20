@@ -1,9 +1,11 @@
+import { getAssociationBadges } from "@/lib/cms/associations";
 import Image from "next/image";
 import Link from "next/link";
-import { prisma } from "@/lib/db";
 
 export default async function AssociationRows() {
-  const assoBadge = await prisma.association.findMany({
+  const assoBadge = await getAssociationBadges();
+
+  ({
     select: { name: true, slug: true, logoUrl: true },
     orderBy: { name: "asc" },
   });
