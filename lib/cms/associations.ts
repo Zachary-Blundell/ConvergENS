@@ -32,7 +32,6 @@ export type AssociationTranslation = {
 
 export type AssociationRaw = {
   id: string;
-  status?: string | null;
   name?: string | null;
   slug?: string | null;
   color?: string | null;
@@ -46,7 +45,6 @@ export type AssociationRaw = {
 
 export type AssociationFlat = {
   id: string;
-  status?: string | null;
   name: string;
   slug: string;
   color: string | null;
@@ -74,6 +72,9 @@ export async function getAssociationsRaw(
   const req: any = {
     ...options,
     fields,
+    filter: {
+      status: { _eq: "published" },
+    },
   };
 
   if (includeTranslations) {
@@ -102,7 +103,6 @@ export async function getAssociations(
     const tr = pickTranslation(i.translations, locale);
     const result = {
       id: String(i.id),
-      status: String(i.status),
       name: String(i.name ?? ""),
       slug: String(i.slug ?? ""),
       color: i.color ?? null,
@@ -137,63 +137,6 @@ export async function getAssociationBadges(): Promise<AssociationFlat[]> {
   });
 }
 
-// export async function getAssociationBySlug(
-//   slug: string,
-//   locale = DEFAULT_LOCALE,
-// ) {
-//   // Just get everything
-//   const rows = await directus.request<AssociationRaw[]>(
-//     readItem("associations", {
-//       fields: [
-//         "id",
-//         "status",
-//         "name",
-//         "slug",
-//         "color",
-//         "email",
-//         "phone",
-//         "website",
-//         { logo: ["id", "width", "height"] },
-//         { translations: ["languages_code", "summary", "description"] },
-//         { socials: ["platform", "url"] },
-//       ],
-//       filter: { slug: { _eq: slug }, status: { _eq: "published" } },
-//       limit: 1,
-//       deep: {
-//         translations: {
-//           _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
-//           _limit: 2,
-//         },
-//       },
-//     }),
-//   );
-//
-//   const i = rows[0];
-//   if (!i) return null;
-//
-//   // Flatten
-//   const tr = pickTranslation(i.translations, locale);
-//
-//   const assoc: AssociationFlat = {
-//     id: i.id,
-//     status: i.status,
-//     name: i.name,
-//     slug: i.slug,
-//     summary: tr?.summary ?? null,
-//     description: tr?.description ?? null,
-//     color: i.color ?? null,
-//     logoUrl: buildAssetUrl(i.logo) ?? PLACEHOLDER_LOGO,
-//     logoWidth: i.logo?.width ?? null,
-//     logoHeight: i.logo?.height ?? null,
-//     email: i.email ?? null,
-//     phone: i.phone ?? null,
-//     website: i.website ?? null,
-//     socials: i.socials ?? [],
-//   };
-//
-//   return assoc;
-// }
-
 export async function getAssociationBySlug(
   slug: string,
   locale = DEFAULT_LOCALE,
@@ -216,7 +159,6 @@ export async function getAssociationBySlug(
     readItem("associations", id, {
       fields: [
         "id",
-        "status",
         "name",
         "slug",
         "color",
@@ -235,16 +177,13 @@ export async function getAssociationBySlug(
       },
     }),
   );
-
-  // (optional safety) if status changed between calls, you can bail out:
-  if (i?.status !== "published") return null;
+  log("here is i: ", i);
 
   // Flatten
   const tr = pickTranslation(i.translations, locale);
 
   return {
     id: String(i.id),
-    status: i.status ?? null,
     name: String(i.name ?? ""),
     slug: String(i.slug ?? ""),
     summary: tr?.summary ?? null,

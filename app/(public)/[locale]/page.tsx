@@ -4,7 +4,6 @@
 import AssociationRows from "@/components/AssoRow";
 import Link from "next/link";
 import "@/styles/scroll.css";
-import { log } from "console";
 import reactStringReplace from "react-string-replace";
 import { getLocale, getTranslations } from "next-intl/server";
 import { getHome } from "@/lib/cms/homepage";
@@ -47,15 +46,12 @@ export default async function HomePage() {
   const locale = await getLocale();
   // const tFallback = await getTranslations("Home");
 
-  log("locale", locale);
   const home = await getHome(locale);
   // const home = await getHome("fr-FR");
 
-  log(home);
   const t = home.translations[0];
 
   const apiImageUrl = process.env.DIRECTUS_API_ENDPOINT + "/assets";
-  log(apiImageUrl);
 
   return (
     <div className="flex flex-col">

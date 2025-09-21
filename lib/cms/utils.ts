@@ -1,3 +1,4 @@
+//lib/cms/utils.ts
 export const DEFAULT_LOCALE = "fr-FR";
 export const PLACEHOLDER_LOGO = "/images/placeholder.png";
 
@@ -12,6 +13,12 @@ export type ItemsQuery = {
   page?: number;
   deep?: Record<string, any>;
 };
+
+export type Eq<T> = { _eq: T };
+export type In<T> = { _in: readonly T[] };
+export type Some<T> = { _some: T };
+export type Id = string | number;
+export type Locale = "fr-FR" | "en-US"; // or just `string` if you prefer
 
 /* shared helpers */
 
