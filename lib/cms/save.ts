@@ -1,5 +1,5 @@
 // lib/cms/articles.ts
-import { readItem, readItems } from "@directus/sdk";
+import { readItems } from "@directus/sdk";
 import { directus } from "../directus";
 import {
   buildAssetUrl,
@@ -9,34 +9,31 @@ import {
   PLACEHOLDER_LOGO,
 } from "./utils";
 import { log } from "console";
-import { TagTranslation } from "./tags";
 
 /**
  * Ensure minimal fields are always requested if nothing is provided.
  * Card needs: cover, title (localized), tag (localized), association (basic)
  */
 
-// function withRequiredMinFields(fields: any[] | undefined): any[] {
-//   const base = fields ?? [
-//     "id",
-//     "published_at",
-//     { cover: ["id", "width", "height"] },
-//     {
-//       association: [
-//         "id",
-//         "name",
-//         "slug",
-//         "color",
-//         { logo: ["id", "width", "height"] },
-//       ],
-//     },
-//     { tag: ["id", "color", { translations: ["languages_code", "name"] }] },
-//     { translations: ["languages_code", "title", "body"] },
-//   ];
-//   return [...base];
-// }
-
-export const perPage: number = 3;
+function withRequiredMinFields(fields: any[] | undefined): any[] {
+  const base = fields ?? [
+    "id",
+    "published_at",
+    { cover: ["id", "width", "height"] },
+    {
+      association: [
+        "id",
+        "name",
+        "slug",
+        "color",
+        { logo: ["id", "width", "height"] },
+      ],
+    },
+    { tag: ["id", "color", { translations: ["languages_code", "name"] }] },
+    { translations: ["languages_code", "title", "body"] },
+  ];
+  return [...base];
+}
 
 export type ArticleTranslation = {
   languages_code: string;
@@ -44,19 +41,24 @@ export type ArticleTranslation = {
   body?: string | null; // body in schema but not needed for the card grid
 };
 
+export type TagTranslation = {
+  languages_code: string;
+  name?: string | null;
+};
+
 export type ArticleRaw = {
-  id?: string;
+  id: string;
   published_at?: string | null;
   cover?: { id: string; width?: number | null; height?: number | null } | null;
   association?: {
-    id?: string;
+    id: string;
     name?: string | null;
     slug?: string | null;
     color?: string | null;
     logo?: { id: string; width?: number | null; height?: number | null } | null;
   } | null;
   tag?: {
-    id?: string;
+    id: string;
     color?: string | null;
     translations?: TagTranslation[];
   } | null;
@@ -67,7 +69,7 @@ export type ArticleFlat = {
   //flattened
   id: string;
   title: string;
-  body: string;
+  body?: string;
   // cover
   coverUrl: string | null;
   coverWidth: number | null;
@@ -90,20 +92,6 @@ export type ArticleFlat = {
   };
   published_at?: string | null;
 };
-
-export async function getArticlesRaw(req?: ItemsQuery): Promise<ArticleRaw[]> {
-  if (!req) {
-    // if req is not defined return everything
-    req = {
-      fields: ["*"],
-    };
-  }
-
-  log("here is the req: ", req);
-  const rows = await directus.request<any[]>(readItems("articles", req));
-  log("here are the new rows: ", rows);
-  return rows as ArticleRaw[];
-}
 
 export type ArticleCard = {
   //flattened
@@ -132,65 +120,135 @@ export type ArticleCard = {
   published_at?: string | null;
 };
 
-export async function getArticleCount(): Promise<number> {
-  const req: ItemsQuery = {
-    aggregate: { count: "*" },
+export async function getArticlesRaw(
+  options: ItemsQuery = {},
+  locale: string | null,
+): Promise<ArticleRaw[]> {
+  const fields = withRequiredMinFields(options.fields as any[] | undefined);
+
+  // base: only published
+  const base = { status: { _eq: "published" } } as NonNullable<
+    ItemsQuery["filter"]
+  >;
+
+  // if caller passed a filter, AND it with base; else just base
+  const filter: ItemsQuery["filter"] = options.filter
+    ? { _and: [base, options.filter] }
+    : base;
+
+  const req: any = {
+    ...options,
+    fields,
+    filter,
   };
-  const count: Array<{ count: string }> = await directus.request<any[]>(
-    readItems("articles", req),
+
+  req.deep = {
+    translations: {
+      _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+      _limit: 2,
+    },
+    tags: {
+      translations: {
+        _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+        _limit: 2,
+      },
+    },
+  };
+
+  req.aggregate = { count: "*" };
+  log("here is the req: ", req);
+  const rows = await directus.request<any[]>(readItems("articles", req));
+  log("here are the new rows: ", rows);
+  return rows as ArticleRaw[];
+}
+
+export async function getAllArticles(locale?: string): Promise<ArticleFlat[]> {
+  const rows = await getArticlesRaw(
+    {
+      fields: [
+        "id",
+        "published_at",
+        { cover: ["id", "width", "height"] },
+        {
+          association: [
+            "id",
+            "name",
+            "slug",
+            "color",
+            { logo: ["id", "width", "height"] },
+          ],
+        },
+        { tag: ["id", "color", { translations: ["languages_code", "name"] }] },
+        { translations: ["languages_code", "title", "body"] },
+      ],
+    },
+    locale,
   );
 
-  return parseInt(count[0].count);
+  return rows.map((i) => {
+    const articleTr = pickTranslation(i.translations, locale);
+    const tagTr = pickTranslation(i.tag.translations, locale);
+    const result = {
+      id: String(i.id),
+      title: String(articleTr?.title ?? null),
+      body: String(articleTr?.body ?? null),
+
+      coverUrl: buildAssetUrl(i.cover.id) ?? PLACEHOLDER_LOGO,
+      coverWidth: Number(i.cover.width),
+      coverHeight: Number(i.cover.height),
+      tag: {
+        id: i.tag.id,
+        color: i.tag.color,
+        name: tagTr.name,
+      },
+      association: {
+        id: i.association.id,
+        name: i.association.name,
+        slug: i.association.slug,
+        color: i.association.color,
+        logoUrl: buildAssetUrl(i.association.logo.id) ?? PLACEHOLDER_LOGO,
+        logoWidth: i.association.logo.width,
+        logoHeight: i.association.logo.height,
+      },
+      published_at: String(i.published_at),
+    };
+    return result;
+  });
 }
 
 export async function getArticleCards(
-  locale: string,
   page: number,
-  tagId?: string,
-): Promise<ArticleCard[]> {
+  locale: string,
+): Promise<ArticleFlat[]> {
   // we get everything but the body text
-  const req: ItemsQuery = {
-    fields: [
-      "id",
-      "published_at",
-      { cover: ["id", "width", "height"] },
-      {
-        association: [
-          "id",
-          "name",
-          "slug",
-          "color",
-          { logo: ["id", "width", "height"] },
-        ],
-      },
-      { tag: ["id", "color", { translations: ["languages_code", "name"] }] },
-      { translations: ["languages_code", "title"] },
-    ],
-    filter: {
-      tag: { id: { _eq: tagId } },
-    },
-    deep: {
-      translations: {
-        _filter: {
-          languages_code: {
-            _eq: locale,
-          },
+  const rows = await getArticlesRaw(
+    {
+      fields: [
+        "id",
+        "published_at",
+        { cover: ["id", "width", "height"] },
+        {
+          association: [
+            "id",
+            "name",
+            "slug",
+            "color",
+            { logo: ["id", "width", "height"] },
+          ],
         },
-      },
-      tags: {
-        translations: {
-          _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
-          _limit: 2,
-        },
-      },
+        { tag: ["id", "color", { translations: ["languages_code", "name"] }] },
+        { translations: ["languages_code", "title"] },
+      ],
+      page: page,
+      limit: 3,
+      // filter:{
+      //   "tag ": { _in: tags }
+      // }
     },
-    page,
-    limit: perPage,
-  };
+    locale,
+  );
 
-  const rows = await getArticlesRaw(req);
-
-  return rows.map((i: ArticleRaw): ArticleCard => {
+  return rows.map((i) => {
     const articleTr = pickTranslation(i.translations, locale);
     const tagTr = pickTranslation(i.tag.translations, locale);
     const result = {
@@ -216,142 +274,9 @@ export async function getArticleCards(
       },
       published_at: String(i.published_at),
     };
-    log(result);
     return result;
   });
 }
-
-export async function getArticle(
-  articleId: string,
-  locale: string,
-): Promise<ArticleFlat> {
-  // we get everything but the body text
-  const req: ItemsQuery = {
-    fields: [
-      "id",
-      "published_at",
-      { cover: ["id", "width", "height"] },
-      {
-        association: [
-          "id",
-          "name",
-          "slug",
-          "color",
-          { logo: ["id", "width", "height"] },
-        ],
-      },
-      { tag: ["id", "color", { translations: ["languages_code", "name"] }] },
-      { translations: ["languages_code", "title", "body"] },
-    ],
-    deep: {
-      translations: {
-        _filter: {
-          languages_code: {
-            _eq: locale,
-          },
-        },
-      },
-      tags: {
-        translations: {
-          _filter: { languages_code: { _in: [locale] } },
-        },
-      },
-    },
-  };
-
-  const articleRaw: ArticleRaw = await directus.request<ArticleRaw>(
-    readItem("articles", articleId, req),
-  );
-
-  const articleTr = pickTranslation(articleRaw.translations, locale);
-  const tagTr = pickTranslation(articleRaw.tag.translations, locale);
-  const article: ArticleFlat = {
-    id: String(articleRaw.id),
-    title: String(articleTr?.title ?? null),
-    body: String(articleTr?.body ?? null),
-
-    coverUrl: buildAssetUrl(articleRaw.cover.id) ?? PLACEHOLDER_LOGO,
-    coverWidth: Number(articleRaw.cover.width),
-    coverHeight: Number(articleRaw.cover.height),
-    tag: {
-      id: articleRaw.tag.id,
-      name: tagTr.name,
-      color: articleRaw.tag.color,
-    },
-    association: {
-      id: articleRaw.association.id,
-      name: articleRaw.association.name,
-      slug: articleRaw.association.slug,
-      color: articleRaw.association.color,
-      logoUrl:
-        buildAssetUrl(articleRaw.association.logo.id) ?? PLACEHOLDER_LOGO,
-      logoWidth: articleRaw.association.logo.width,
-      logoHeight: articleRaw.association.logo.height,
-    },
-    published_at: String(articleRaw.published_at),
-  };
-  // });
-  //
-  return article;
-}
-
-//
-//
-//
-// export async function getAllArticles(locale?: string): Promise<ArticleFlat[]> {
-//   const rows = await getArticlesRaw(
-//     {
-//       fields: [
-//         "id",
-//         "published_at",
-//         { cover: ["id", "width", "height"] },
-//         {
-//           association: [
-//             "id",
-//             "name",
-//             "slug",
-//             "color",
-//             { logo: ["id", "width", "height"] },
-//           ],
-//         },
-//         { tag: ["id", "color", { translations: ["languages_code", "name"] }] },
-//         { translations: ["languages_code", "title", "body"] },
-//       ],
-//     },
-//     locale,
-//   );
-//
-//   return rows.map((i) => {
-//     const articleTr = pickTranslation(i.translations, locale);
-//     const tagTr = pickTranslation(i.tag.translations, locale);
-//     const result = {
-//       id: String(i.id),
-//       title: String(articleTr?.title ?? null),
-//       body: String(articleTr?.body ?? null),
-//
-//       coverUrl: buildAssetUrl(i.cover.id) ?? PLACEHOLDER_LOGO,
-//       coverWidth: Number(i.cover.width),
-//       coverHeight: Number(i.cover.height),
-//       tag: {
-//         id: i.tag.id,
-//         color: i.tag.color,
-//         name: tagTr.name,
-//       },
-//       association: {
-//         id: i.association.id,
-//         name: i.association.name,
-//         slug: i.association.slug,
-//         color: i.association.color,
-//         logoUrl: buildAssetUrl(i.association.logo.id) ?? PLACEHOLDER_LOGO,
-//         logoWidth: i.association.logo.width,
-//         logoHeight: i.association.logo.height,
-//       },
-//       published_at: String(i.published_at),
-//     };
-//     return result;
-//   });
-// }
-//
 
 // export type GetArticlesParams = {
 //   page?: number; // 1-based
