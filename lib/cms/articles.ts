@@ -11,7 +11,7 @@ import {
 import { log } from "console";
 import { TagTranslation } from "./tags";
 
-export const perPage: number = 10;
+export const perPage: number = 12;
 
 export type ArticleTranslation = {
   languages_code: string;
@@ -234,39 +234,68 @@ export async function getArticle(
       },
     },
   };
+  try {
+    const articleRaw: ArticleRaw = await directus.request<ArticleRaw>(
+      readItem("articles", articleId, req),
+    );
 
-  const articleRaw: ArticleRaw = await directus.request<ArticleRaw>(
-    readItem("articles", articleId, req),
-  );
+    if (!articleRaw) return null;
 
-  log("here is the raw article from getArticle: ", articleRaw);
-  const articleTr = pickTranslation(articleRaw.translations, locale);
-  const tagTr = pickTranslation(articleRaw.tag.translations, locale);
-  const article: ArticleFlat = {
-    id: String(articleRaw.id),
-    title: String(articleTr?.title ?? null),
-    body: String(articleTr?.body ?? null),
+    const articleTr = pickTranslation(articleRaw.translations, locale);
+    const tagTr = articleRaw.tag
+      ? pickTranslation(articleRaw.tag.translations, locale)
+      : null;
 
-    coverUrl: buildAssetUrl(articleRaw.cover.id) ?? PLACEHOLDER_LOGO,
-    coverWidth: Number(articleRaw.cover.width),
-    coverHeight: Number(articleRaw.cover.height),
-    tag: {
-      id: articleRaw.tag.id,
-      name: tagTr.name,
-      color: articleRaw.tag.color,
-    },
-    collective: {
-      id: articleRaw.collective.id,
-      name: articleRaw.collective.name,
-      slug: articleRaw.collective.slug,
-      color: articleRaw.collective.color,
-      logoUrl: buildAssetUrl(articleRaw.collective.logo.id) ?? PLACEHOLDER_LOGO,
-      logoWidth: articleRaw.collective.logo.width,
-      logoHeight: articleRaw.collective.logo.height,
-    },
-    published_at: String(articleRaw.published_at),
-  };
-  // });
-  //
-  return article;
+    const coverId = articleRaw.cover?.id ?? null;
+    const coverUrl = coverId ? buildAssetUrl(coverId) : PLACEHOLDER_LOGO;
+
+    const logoId = articleRaw.collective?.logo?.id ?? null;
+    const logoUrl = logoId ? buildAssetUrl(logoId) : PLACEHOLDER_LOGO;
+
+    const article: ArticleFlat = {
+      id: String(articleRaw.id),
+      title: String(articleTr?.title ?? ""),
+      body: String(articleTr?.body ?? ""),
+
+      coverUrl,
+      coverWidth: Number(articleRaw.cover?.width ?? 0),
+      coverHeight: Number(articleRaw.cover?.height ?? 0),
+
+      tag: {
+        id: articleRaw.tag?.id ?? null,
+        name: tagTr?.name ?? null,
+        color: articleRaw.tag?.color ?? null,
+      },
+
+      collective: {
+        id: articleRaw.collective?.id ?? null,
+        name: articleRaw.collective?.name ?? "",
+        slug: articleRaw.collective?.slug ?? "",
+        color: articleRaw.collective?.color ?? null,
+        logoUrl,
+        logoWidth: Number(articleRaw.collective?.logo?.width ?? 0),
+        logoHeight: Number(articleRaw.collective?.logo?.height ?? 0),
+      },
+
+      published_at: String(articleRaw.published_at ?? ""),
+    };
+
+    return article;
+  } catch (err: any) {
+    // Detect Directus "record not found" (SDK/REST variants)
+    const code =
+      err?.errors?.[0]?.extensions?.code ||
+      err?.response?.status ||
+      err?.status;
+
+    // Common patterns: 404, or Directus code like "RECORD_NOT_FOUND"
+    const isNotFound =
+      code === 404 ||
+      code === "RECORD_NOT_FOUND" ||
+      err?.message?.toLowerCase?.().includes("not found");
+
+    if (isNotFound) return null;
+
+    return null;
+  }
 }
