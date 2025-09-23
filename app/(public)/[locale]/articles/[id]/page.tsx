@@ -23,6 +23,7 @@ import Link from "next/link";
 import Image from "next/image";
 import HtmlContent from "@/components/HtmlContent";
 import { getArticle } from "@/lib/cms/articles";
+import { notFound } from "next/navigation";
 
 function formatDate(iso: string, locale: string) {
   try {
@@ -43,6 +44,7 @@ export default async function ArticlePage({
 }) {
   const { locale, id } = await params;
   const article = await getArticle(id, locale);
+  if (!article) notFound(); // from next/navigation
 
   return (
     <main className="mx-auto max-w-4xl p-6">
