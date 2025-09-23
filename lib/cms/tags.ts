@@ -10,11 +10,11 @@ export type TagTranslation = {
   name?: string | null;
 };
 export type TagRaw = {
-  id: string;
+  id: string | number;
   color: string;
   translations: TagTranslation[];
 };
-export type TagUI = { id: string; label: string; color: string };
+export type TagUI = { id: string | number; label: string; color: string };
 
 export async function getAllTags(locale: string): Promise<TagRaw[]> {
   const req: ItemsQuery = {
