@@ -39,7 +39,7 @@ export default function Footer() {
           <ul className="mt-4 space-y-2 text-sm">
             <li>
               <Link
-                href="/plan-du-site"
+                href="/sitemap"
                 className="text-highlight-600 hover:text-highlight-700 hover:underline"
               >
                 {t("sitemap.links.sitemap")}
