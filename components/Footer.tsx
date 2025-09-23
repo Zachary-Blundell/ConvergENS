@@ -46,8 +46,8 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/associations" className="hover:underline">
-                {t("sitemap.links.associations")}
+              <Link href="/collectives" className="hover:underline">
+                {t("sitemap.links.collectives")}
               </Link>
             </li>
             <li>

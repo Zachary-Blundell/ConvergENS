@@ -1,12 +1,12 @@
 //[local]/page.tsx
 // homepage
 
-import AssociationRows from "@/components/AssoRow";
 import Link from "next/link";
 import "@/styles/scroll.css";
 import reactStringReplace from "react-string-replace";
 import { getLocale, getTranslations } from "next-intl/server";
 import { getHome } from "@/lib/cms/homepage";
+import CollectiveRows from "@/components/CollectivesRow";
 
 type SectionProps = React.PropsWithChildren<{
   id: string;
@@ -55,8 +55,8 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col">
-      {/* ---------------- Association Rows---------------- */}
-      <AssociationRows />
+      {/* ---------------- Collective Rows---------------- */}
+      <CollectiveRows />
 
       {/* ---------------- Hero ---------------- */}
       <section
@@ -71,7 +71,7 @@ export default async function HomePage() {
               {renderHighlightOnly(t.hero_title)}
             </h1>
             <Link
-              href="/associations"
+              href="/collectives"
               className="mt-6 inline-block rounded-md bg-highlight px-6 py-3 text-sm font-medium uppercase text-white transition-colors duration-300 hover:bg-highlight-400 focus:outline-none"
             >
               {t?.hero_cta}

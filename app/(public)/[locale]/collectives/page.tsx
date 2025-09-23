@@ -1,20 +1,18 @@
-// app/[locale]/associations/page.tsx
+// app/[locale]/collectives/page.tsx
 import { getTranslations } from "next-intl/server";
-import { AssociationCard } from "@/components/AssociationCard";
-import { getAssociations } from "@/lib/cms/associations";
+import { getCollectives } from "@/lib/cms/collectives";
 import { log } from "console";
+import { CollectiveCard } from "@/components/CollectiveCard";
 
-// export const revalidate = 300; // revalidate every 5 minutes (tune as needed)
-
-export default async function AssociationsPage({
+export default async function CollectivesPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
 
-  const t = await getTranslations("AssociationsPage");
-  const associations = await getAssociations(
+  const t = await getTranslations("CollectivesPage");
+  const collectives = await getCollectives(
     {
       fields: [
         "id",
@@ -32,19 +30,19 @@ export default async function AssociationsPage({
     locale,
   );
 
-  log(associations);
+  log(collectives);
 
   return (
     <div className="container px-4 py-12 mx-auto">
       <h1 className="mb-10 text-5xl text-center text-highlight">
-        {t("associationsHeader")}
+        {t("collectivesHeader")}
       </h1>
-      {associations.length === 0 ? (
-        <p className="text-center text-fg-primary">{t("noAssociations")}</p>
+      {collectives.length === 0 ? (
+        <p className="text-center text-fg-primary">{t("noCollectives")}</p>
       ) : (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-center">
-          {associations.map((asso) => (
-            <AssociationCard
+          {collectives.map((asso) => (
+            <CollectiveCard
               key={asso.id}
               id={asso.id}
               name={asso.name}

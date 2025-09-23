@@ -1,4 +1,4 @@
-// lib/cms/associations.ts
+// lib/cms/collectives.ts
 import { readItem, readItems } from "@directus/sdk";
 import { directus } from "../directus";
 import {
@@ -19,19 +19,19 @@ function withRequiredMinFields(fields: any[] | undefined): any[] {
     "slug",
     "color",
     { logo: ["id", "height", "width"] },
-    { association: ["id"] },
+    { collective: ["id"] },
   ];
   return [...base];
 }
 
-export type AssociationTranslation = {
+export type CollectiveTranslation = {
   languages_code: string;
   summary?: string | null;
   description?: string | null;
 };
 
-export type AssociationRaw = {
-  id: string;
+export type CollectiveRaw = {
+  id: string | number;
   name?: string | null;
   slug?: string | null;
   color?: string | null;
@@ -39,11 +39,11 @@ export type AssociationRaw = {
   email?: string | null;
   phone?: string | null;
   website?: string | null;
-  translations?: AssociationTranslation[];
+  translations?: CollectiveTranslation[];
   socials?: { platform: string; url: string }[];
 };
 
-export type AssociationFlat = {
+export type CollectiveFlat = {
   id: string;
   name: string;
   slug: string;
@@ -61,10 +61,16 @@ export type AssociationFlat = {
   socials?: { platform: string; url: string }[];
 };
 
-export async function getAssociationsRaw(
+export type CollectiveUI = {
+  id: string | number;
+  name: string;
+  color: string;
+};
+
+export async function getCollectivesRaw(
   options: ItemsQuery = {},
   locale?: string | null,
-): Promise<AssociationRaw[]> {
+): Promise<CollectiveRaw[]> {
   const includeTranslations = Boolean(locale);
 
   const fields = withRequiredMinFields(options.fields as any[] | undefined);
@@ -90,15 +96,15 @@ export async function getAssociationsRaw(
     req.deep = options.deep;
   }
 
-  const rows = await directus.request<any[]>(readItems("associations", req));
-  return rows as AssociationRaw[];
+  const rows = await directus.request<any[]>(readItems("collectives", req));
+  return rows as CollectiveRaw[];
 }
 
-export async function getAssociations(
+export async function getCollectives(
   options: ItemsQuery = {},
   locale?: string,
-): Promise<AssociationFlat[]> {
-  const rows = await getAssociationsRaw(options, locale);
+): Promise<CollectiveFlat[]> {
+  const rows = await getCollectivesRaw(options, locale);
   return rows.map((i) => {
     const tr = pickTranslation(i.translations, locale);
     const result = {
@@ -119,8 +125,8 @@ export async function getAssociations(
   });
 }
 
-export async function getAssociationBadges(): Promise<AssociationFlat[]> {
-  const rows = await getAssociationsRaw({
+export async function getCollectiveBadges(): Promise<CollectiveFlat[]> {
+  const rows = await getCollectivesRaw({
     /* id, name, slug, color, and logo should be included by default see utils.ts*/
   });
   return rows.map((i) => {
@@ -137,14 +143,33 @@ export async function getAssociationBadges(): Promise<AssociationFlat[]> {
   });
 }
 
-export async function getAssociationBySlug(
+export async function getAllCollectivesForUI(
+  locale: string,
+): Promise<CollectiveUI[]> {
+  const req: ItemsQuery = {
+    fields: ["id", "name", "color"],
+  };
+
+  const rawCollective = await directus.request<CollectiveRaw[]>(
+    readItems("collectives", req),
+  );
+
+  return rawCollective.map((c) => {
+    return {
+      id: c.id,
+      name: c.name,
+      color: c.color,
+    };
+  });
+}
+export async function getCollectiveBySlug(
   slug: string,
   locale = DEFAULT_LOCALE,
-): Promise<AssociationFlat | null> {
+): Promise<CollectiveFlat | null> {
   // 1) Find the primary key by slug (and published)
   log("here is the slug searched", slug);
   const found = await directus.request<{ id: string }[]>(
-    readItems("associations", {
+    readItems("collectives", {
       fields: ["id"],
       filter: { slug: { _eq: slug }, status: { _eq: "published" } },
       limit: 1,
@@ -155,8 +180,8 @@ export async function getAssociationBySlug(
   if (!id) return null;
 
   // 2) Fetch the single item by primary key
-  const i = await directus.request<AssociationRaw>(
-    readItem("associations", id, {
+  const i = await directus.request<CollectiveRaw>(
+    readItem("collectives", id, {
       fields: [
         "id",
         "name",

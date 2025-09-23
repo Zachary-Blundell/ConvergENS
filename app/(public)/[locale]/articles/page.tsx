@@ -10,26 +10,40 @@ import { ArticleCardGrid } from "@/components/ArticleCard";
 import { getAllTagsForUI } from "@/lib/cms/tags";
 import FiltersBar from "./FiltersBar";
 import Pagination from "@/components/Pagination";
+import { getAllCollectivesForUI } from "@/lib/cms/collectives";
+import { log } from "console";
 
 export default async function Page({
   params,
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ page: string; tag: string }>;
+  searchParams: Promise<{ page: string; tag: string; collective: string }>;
 }) {
   const { locale } = await params;
-  const { page, tag } = await searchParams;
+  const { page, tag, collective } = await searchParams;
 
   const currentPage = page ? parseInt(page) : 1;
+  const currentTag = tag ? parseInt(tag) : null;
+  const currentCollective = collective ? parseInt(collective) : null;
+  // const currentTag = tag;
+  // const currentCollective = collective;
 
   const articles = await getArticleCards(locale, currentPage, tag);
   const articleCount = await getArticleCount();
-  const tagOptions = await getAllTagsForUI(locale);
 
+  const tagOptions = await getAllTagsForUI(locale);
+  const collectiveOptions = await getAllCollectivesForUI(locale);
+
+  log("current page and tag", page, tag);
   return (
     <main className="flex flex-col gap-6 p-6">
-      <FiltersBar tags={tagOptions} selectedTag={tag} />
+      <FiltersBar
+        collectives={collectiveOptions}
+        tags={tagOptions}
+        selectedTag={currentTag}
+        selectedCollective={currentCollective}
+      />
       <ArticleCardGrid items={articles} />
       <Pagination
         perPage={perPage}

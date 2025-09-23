@@ -3,7 +3,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import React from "react";
 
-export function AssociationCard({
+export function CollectiveCard({
   name,
   summary,
   logoUrl,
@@ -21,7 +21,7 @@ export function AssociationCard({
   slug: string;
   color: string;
 }) {
-  const t = useTranslations("AssociationsPage");
+  const t = useTranslations("CollectivesPage");
 
   // ---------- Contrast helpers ----------
   function hexToRgb(hex: string) {
@@ -106,7 +106,7 @@ export function AssociationCard({
         <p className="my-5 text-sm text-fg-muted">{summary}</p>
 
         <Link
-          href={"/associations/" + slug}
+          href={"/collectives/" + slug}
           title={t("viewPageTitle", { name })}
           aria-label={t("viewPageAria", { name })}
           className="

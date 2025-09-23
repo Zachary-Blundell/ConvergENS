@@ -22,7 +22,7 @@ export type ArticleCardData = {
     name: string | null;
     color: string | null;
   };
-  association: {
+  collective: {
     id: string | null;
     name: string | null;
     slug: string | null;
@@ -75,10 +75,12 @@ export default function ArticleCard({
       router.push(linkHref);
     }
   };
-  // Use association color for the ring around the logo
-  const assoRingColor = article.association?.color ?? null;
-  const ringVars = assoRingColor
-    ? ({ ["--tw-ring-color" as any]: assoRingColor } as React.CSSProperties)
+  // Use collective color for the ring around the logo
+  const collectiveRingColor = article.collective?.color ?? null;
+  const ringVars = collectiveRingColor
+    ? ({
+        ["--tw-ring-color" as any]: collectiveRingColor,
+      } as React.CSSProperties)
     : undefined;
 
   return (
@@ -129,20 +131,20 @@ export default function ArticleCard({
       {/* Body */}
       <div className="flex flex-col flex-1 gap-3 p-4 ">
         <h3 className="line-clamp-2 text-fg-primary ">{article.title}</h3>
-        {/* Association chip */}
-        {/* {(article.association?.name || article.association?.slug) && ( */}
+        {/* Collective chip */}
+        {/* {(article.collective?.name || article.collective?.slug) && ( */}
         <div className="mt-auto inline-flex gap-2 text-2xl text-fg-muted">
-          {article.association.logoUrl ? (
+          {article.collective.logoUrl ? (
             <span
               className={cn(
                 "relative inline-block h-8 w-8 overflow-hidden rounded-full ring-2 ring-offset-1 ring-offset-white dark:ring-offset-zinc-900",
-                assoRingColor ? undefined : "ring-outline",
+                collectiveRingColor ? undefined : "ring-outline",
               )}
               style={ringVars}
             >
               <Image
-                src={article.association.logoUrl}
-                alt={article.association.name ?? "Association logo"}
+                src={article.collective.logoUrl}
+                alt={article.collective.name ?? "Collective logo"}
                 fill
                 sizes="24px"
                 className="object-cover"
@@ -152,23 +154,23 @@ export default function ArticleCard({
             <span
               className="inline-block h-2.5 w-2.5 rounded-full"
               style={{
-                backgroundColor: article.association.color ?? "#e5e7eb",
+                backgroundColor: article.collective.color ?? "#e5e7eb",
               }}
               aria-hidden
             />
           )}
 
-          {article.association.slug ? (
+          {article.collective.slug ? (
             <Link
-              href={`/associations/${article.association.slug}`}
+              href={`/collectives/${article.collective.slug}`}
               onClick={(e) => e.stopPropagation()}
               onKeyDown={(e) => e.stopPropagation()}
               className="hover:underline relative z-10"
             >
-              {article.association.name ?? article.association.slug}
+              {article.collective.name ?? article.collective.slug}
             </Link>
           ) : (
-            <span>{article.association.name ?? "Association"}</span>
+            <span>{article.collective.name ?? "Collective"}</span>
           )}
         </div>
         {/* )} */}

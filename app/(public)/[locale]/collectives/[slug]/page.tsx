@@ -1,5 +1,5 @@
-// app/[locale]/associations/[assoSlug]/page.tsx
-import { getAssociationBySlug } from "@/lib/cms/associations";
+// app/[locale]/collectives/[slug]/page.tsx
+import { getCollectiveBySlug } from "@/lib/cms/collectives";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -8,13 +8,13 @@ import { Separator } from "@radix-ui/react-select";
 import { log } from "console";
 import HtmlContent from "@/components/HtmlContent";
 
-export default async function AssociationPage({
+export default async function CollectivePage({
   params,
 }: {
-  params: Promise<{ assoSlug: string; locale: string }>;
+  params: Promise<{ slug: string; locale: string }>;
 }) {
-  const { assoSlug, locale } = await params;
-  const assoc = await getAssociationBySlug(assoSlug, locale);
+  const { slug, locale } = await params;
+  const assoc = await getCollectiveBySlug(slug, locale);
   log(assoc);
 
   if (!assoc) notFound();

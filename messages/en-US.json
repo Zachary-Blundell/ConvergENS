@@ -2,15 +2,15 @@
   "Home": {
     "hero": {
       "title": "Bringing together <highlight>movements</highlight> and the talents of ENS",
-      "cta": "Discover the associations"
+      "cta": "Discover the collectives"
     },
     "whatIs": {
       "title": "What is ConvergENS?",
-      "body": "ConvergENS is the collective that brings together the engaged associations and clubs of the École normale supérieure (ENS), in connection with student parties and unions.\nIt arose from a double frustration: on the one hand, often small association boards bending under the weight of volunteer work; on the other, new volunteers forced to choose between causes that speak to them just as much.\nConvergENS provides a shared space to follow each organization’s updates and keep the connection. From within the ENS, by coming together, we surface lines of convergence — and we also discuss the divides — across our struggles."
+      "body": "ConvergENS is the collective that brings together the engaged collectives and clubs of the École normale supérieure (ENS), in connection with student parties and unions.\nIt arose from a double frustration: on the one hand, often small collective boards bending under the weight of volunteer work; on the other, new volunteers forced to choose between causes that speak to them just as much.\nConvergENS provides a shared space to follow each organization’s updates and keep the connection. From within the ENS, by coming together, we surface lines of convergence — and we also discuss the divides — across our struggles."
     },
     "objectives": {
       "title": "Our Objectives",
-      "intro": "Our main objective is to promote a horizontal education in citizenship—not only through the ballot box, but also through union, association, and party action.\nTo do this, we:",
+      "intro": "Our main objective is to promote a horizontal education in citizenship—not only through the ballot box, but also through union, collective, and party action.\nTo do this, we:",
       "items": {
         "shareExperiences": "organize experience-sharing sessions among volunteers to prevent activist burnout;",
         "poolResources": "pool our resources and carry shared advocacy (notably with the ENS leadership);",
@@ -19,7 +19,7 @@
     },
     "howItWorks": {
       "title": "How does ConvergENS work?",
-      "body": "ConvergENS is not an umbrella structure over its members, but a collective that brings them together. Associations and clubs are the decision-makers and vote in the General Assembly on everything concerning the collective (upcoming events, welcoming new members, etc.). Parties and unions are invited members: they contribute in particular to Agora (ConvergENS’ journal) and to its launch conferences.\nTo join ConvergENS, simply get involved in a member (or invited) organization and become its representative within the collective."
+      "body": "ConvergENS is not an umbrella structure over its members, but a collective that brings them together. Collectives and clubs are the decision-makers and vote in the General Assembly on everything concerning the collective (upcoming events, welcoming new members, etc.). Parties and unions are invited members: they contribute in particular to Agora (ConvergENS’ journal) and to its launch conferences.\nTo join ConvergENS, simply get involved in a member (or invited) organization and become its representative within the collective."
     },
     "about": {
       "row1": {
@@ -41,7 +41,7 @@
     "latest": {
       "title": "See our latest joint actions",
       "card": {
-        "fallback": "Short summary of an initiative proposed by one of the member associations."
+        "fallback": "Short summary of an initiative proposed by one of the member collectives."
       }
     }
   },
@@ -49,7 +49,7 @@
   "Nav": {
     "siteTitle": "ConvergENS",
     "logoAlt": "ConvergENS Logo",
-    "associations": "Associations",
+    "collectives": "Collectives",
     "articles": "Articles",
     "calendar": "Calendar",
     "newspaper": "Newspaper",
@@ -65,7 +65,7 @@
       "title": "Sitemap",
       "links": {
         "sitemap": "Sitemap",
-        "associations": "Associations",
+        "collectives": "Collectives",
         "events": "Events",
         "contact": "Contact"
       }
@@ -74,7 +74,7 @@
       "title": "Contact",
       "email": "convergens@laposte.net"
     },
-    "disclaimer": "Each collective is responsible for the pages dedicated to it. The positions expressed by each of them do not bind the other collectives. Thus, the associations and unions remain completely independent of the partisan collectives invited to take part in ConvergENS activities.",
+    "disclaimer": "Each collective is responsible for the pages dedicated to it. The positions expressed by each of them do not bind the other collectives. Thus, the collectives and unions remain completely independent of the partisan collectives invited to take part in ConvergENS activities.",
     "copyright": "© {year} {site}. All rights reserved."
   },
 
@@ -107,14 +107,14 @@
     }
   },
 
-  "AssociationsPage": {
-    "associationsHeader": "Our Community",
+  "CollectivesPage": {
+    "collectivesHeader": "Our Community",
     "altLogo": "Logo {name}",
     "viewPage": "View page",
     "viewPageTitle": "View {name} page",
     "viewPageAria": "View {name} page",
     "noDescription": "No description available.",
-    "noAssociations": "No associations found."
+    "noCollectives": "No collectives found."
   },
 
   "404": {

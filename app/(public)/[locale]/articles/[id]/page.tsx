@@ -78,27 +78,27 @@ export default async function ArticlePage({
           {/* Title */}
           <h1 className="text-4xl text-fg-primary">{article.title}</h1>
 
-          {/* Meta: Association + Date */}
+          {/* Meta: Collective + Date */}
           <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-fg-muted">
             <Link
-              href={`/${locale}/associations/${article.association.slug}`}
+              href={`/${locale}/collectives/${article.collective.slug}`}
               className="inline-flex items-center gap-2 hover:underline"
             >
               <span
                 className="relative inline-block h-7 w-7 overflow-hidden rounded-full ring-2 ring-offset-1 ring-offset-white dark:ring-offset-zinc-900"
                 style={{
-                  ["--tw-ring-color" as any]: article.association.color,
+                  ["--tw-ring-color" as any]: article.collective.color,
                 }}
               >
                 <Image
-                  src={article.association.logoUrl}
-                  alt={`${article.association.name} logo`}
+                  src={article.collective.logoUrl}
+                  alt={`${article.collective.name} logo`}
                   fill
                   sizes="28px"
                   className="object-cover"
                 />
               </span>
-              <span>{article.association.name}</span>
+              <span>{article.collective.name}</span>
             </Link>
 
             <span aria-hidden>•</span>

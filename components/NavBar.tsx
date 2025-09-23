@@ -25,7 +25,7 @@ import { usePathname } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 
 /** i18n keys */
-type LinkKey = "associations" | "articles" | "calendar" | "newspaper";
+type LinkKey = "collectives" | "articles" | "calendar" | "newspaper";
 
 export type LinkItem = {
   href: `/${string}`;
@@ -33,7 +33,7 @@ export type LinkItem = {
 };
 
 export const DEFAULT_LINKS: readonly LinkItem[] = [
-  { href: "/associations", labelKey: "associations" },
+  { href: "/collectives", labelKey: "collectives" },
   { href: "/articles", labelKey: "articles" },
   { href: "/calendar", labelKey: "calendar" },
   { href: "/newspaper", labelKey: "newspaper" },
