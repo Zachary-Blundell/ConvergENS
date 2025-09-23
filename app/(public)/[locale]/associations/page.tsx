@@ -4,7 +4,7 @@ import { AssociationCard } from "@/components/AssociationCard";
 import { getAssociations } from "@/lib/cms/associations";
 import { log } from "console";
 
-export const revalidate = 300; // revalidate every 5 minutes (tune as needed)
+// export const revalidate = 300; // revalidate every 5 minutes (tune as needed)
 
 export default async function AssociationsPage({
   params,
