@@ -44,6 +44,10 @@
     --outline-highlight: 0 0% 60%;
   }
 
+  .font-heading {
+    font-family: var(--font-heading);
+  }
+
   h1,
   h2,
   h3,
