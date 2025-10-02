@@ -1,18 +1,18 @@
 //[local]/page.tsx
 // homepage
 
-import Link from "next/link";
-import "@/styles/scroll.css";
-import reactStringReplace from "react-string-replace";
-import { getLocale, getTranslations } from "next-intl/server";
-import { getHome } from "@/lib/cms/homepage";
-import CollectiveRows from "@/components/CollectivesRow";
+import Link from 'next/link'
+import '@/styles/scroll.css'
+import reactStringReplace from 'react-string-replace'
+import { getLocale, getTranslations } from 'next-intl/server'
+import { getHome } from '@/lib/cms/homepage'
+import CollectiveRows from '@/components/CollectivesRow'
 
 type SectionProps = React.PropsWithChildren<{
-  id: string;
-  title: React.ReactNode;
-  paragraph: React.ReactNode;
-}>;
+  id: string
+  title: React.ReactNode
+  paragraph: React.ReactNode
+}>
 
 function Section({ id, title, paragraph, children }: SectionProps) {
   return (
@@ -30,33 +30,41 @@ function Section({ id, title, paragraph, children }: SectionProps) {
         {children}
       </div>
     </section>
-  );
+  )
 }
 
 function renderHighlightOnly(s?: string) {
-  if (!s) return null;
+  if (!s) return null
   return reactStringReplace(s, /<highlight>(.*?)<\/highlight>/g, (match, i) => (
     <span key={i} className="text-highlight">
       {match}
     </span>
-  ));
+  ))
 }
 
 export default async function HomePage() {
-  const locale = await getLocale();
-  // const tFallback = await getTranslations("Home");
+  const locale = await getLocale()
 
-  const home = await getHome(locale);
-  // const home = await getHome("fr-FR");
+  const home = await getHome(locale)
+  console.log('HomePage home:', home)
+  let t;
+  let tFallback;
 
-  const t = home.translations[0];
+  if (home === null) {
+    tFallback = await getTranslations("Home");
+    console.log("HomePage tFallback:", typeof tFallback, tFallback);
+  } else {
+    t = home.translations[0]
+    console.log("HomePage t:", typeof t, t);
+  }
 
-  const apiImageUrl = process.env.DIRECTUS_API_ENDPOINT + "/assets";
+
+  const apiImageUrl = process.env.DIRECTUS_API_ENDPOINT + '/assets'
 
   return (
     <div className="flex flex-col">
       {/* ---------------- Collective Rows---------------- */}
-      <CollectiveRows />
+      {/* <CollectiveRows /> */}
 
       {/* ---------------- Hero ---------------- */}
       <section
@@ -183,5 +191,5 @@ export default async function HomePage() {
       {/*   </div> */}
       {/* </section> */}
     </div>
-  );
+  )
 }
