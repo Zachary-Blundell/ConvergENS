@@ -80,6 +80,18 @@ export async function getArticlesRaw(req?: ItemsQuery): Promise<ArticleRaw[]> {
   return rawArticles as ArticleRaw[];
 }
 
+export async function getArticleCount(): Promise<number> {
+  const req: ItemsQuery = {
+    aggregate: { count: "*" },
+  };
+  const count: Array<{ count: string }> = await directus.request<any[]>(
+    readItems("articles", req),
+  );
+
+  return parseInt(count[0].count);
+}
+
+/* Article cards */
 export type ArticleCard = {
   //flattened
   id: string;
@@ -106,18 +118,6 @@ export type ArticleCard = {
   };
   published_at?: string | null;
 };
-
-export async function getArticleCount(): Promise<number> {
-  const req: ItemsQuery = {
-    aggregate: { count: "*" },
-  };
-  const count: Array<{ count: string }> = await directus.request<any[]>(
-    readItems("articles", req),
-  );
-
-  return parseInt(count[0].count);
-}
-
 export async function getArticleCards(
   locale: string,
   page: number,

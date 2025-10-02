@@ -5,13 +5,13 @@ import {
   getArticleCards,
   getArticleCount,
   perPage as perPage,
-} from "@/lib/cms/articles";
-import { ArticleCardGrid } from "@/components/ArticleCard";
-import { getAllTagsForUI } from "@/lib/cms/tags";
-import FiltersBar from "./FiltersBar";
-import Pagination from "@/components/Pagination";
-import { getAllCollectivesForUI } from "@/lib/cms/collectives";
-import { log } from "console";
+} from '@/lib/cms/articles';
+import { ArticleCardGrid } from '@/components/ArticleCard';
+import { getAllTagsForUI } from '@/lib/cms/tags';
+import FiltersBar from './FiltersBar';
+import Pagination from '@/components/Pagination';
+import { getAllCollectivesForUI } from '@/lib/cms/collectives';
+import { log } from 'console';
 
 export default async function Page({
   params,
@@ -26,8 +26,6 @@ export default async function Page({
   const currentPage = page ? parseInt(page) : 1;
   const currentTag = tag ? parseInt(tag) : null;
   const currentCollective = collective ? parseInt(collective) : null;
-  // const currentTag = tag;
-  // const currentCollective = collective;
 
   const articles = await getArticleCards(locale, currentPage, tag);
   const articleCount = await getArticleCount();
@@ -35,7 +33,6 @@ export default async function Page({
   const tagOptions = await getAllTagsForUI(locale);
   const collectiveOptions = await getAllCollectivesForUI(locale);
 
-  log("current page and tag", page, tag);
   return (
     <main className="flex flex-col gap-6 p-6">
       <FiltersBar

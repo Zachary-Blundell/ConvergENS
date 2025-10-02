@@ -13,9 +13,9 @@
   :root {
     /* Light mode tokens */
     /* backgrounds */
-    --surface-1: 0 0% 83%; /* #E0E0E0 */
+    --surface-1: 0 0% 82%; /* #E0E0E0 */
     --surface-2: 0 0% 90%; /* #EDEDED */
-    --surface-3: 0 0% 98%; /* #FAFAFA */
+    --surface-3: 0 0% 99%; /* #FAFAFA */
     /* text */
     --fg-primary: 0 0% 5%; /* #0D0D0D */
     --fg-muted: 0 0% 30%; /* #404040 */
@@ -35,11 +35,12 @@
 
   /* Dark mode tokens */
   .dark {
-    --surface-1: 0 0% 2%; /* #050505 */
-    --surface-2: 0 0% 7%; /* #121212 */
-    --surface-3: 0 0% 12%; /* #1F1F1F */
+    --surface-1: 0 0% 0%; /* #050505 */
+    --surface-2: 0 0% 10%; /* #121212 */
+    --surface-3: 0 0% 20%; /* #1F1F1F */
+
     --fg-primary: 0 0% 95%; /* #F2F2F2 */
-    --fg-muted: 0 0% 75%; /* #BFBFBF */
+    --fg-muted: 0 0% 70%; /* #BFBFBF */
     --outline: 0 0% 30%;
     --outline-highlight: 0 0% 60%;
   }
@@ -477,3 +478,27 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 /*---break---*/
+
+*:focus:not(ol) {
+  @apply outline-none ring-2 ring-highlight border-highlight;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  text-indent: 1px;
+  text-overflow: "";
+}
+
+@layer utilities {
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}

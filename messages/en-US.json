@@ -117,6 +117,41 @@
     "noCollectives": "No collectives found."
   },
 
+  "CalendarPage": {
+    "daysShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+    "months": [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "ui": {
+      "today": "Today",
+      "addEvent": "Add Event",
+      "prevYear": "Previous year",
+      "nextYear": "Next year",
+      "close": "Close"
+    },
+    "labels": {
+      "eventsOn": "Events on {date}",
+      "noEvents": "No events",
+      "description": "Description",
+      "location": "Location",
+      "collective": "Collective",
+      "viewCollective": "View collective",
+      "allDay": "All day",
+      "timeRange": "{start} – {end}"
+    }
+  },
+
   "404": {
     "badgeLabel": "Information",
     "title": "Page not found",

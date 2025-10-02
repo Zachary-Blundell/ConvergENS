@@ -44,19 +44,26 @@ function renderHighlightOnly(s?: string) {
 
 export default async function HomePage() {
   const locale = await getLocale();
-  // const tFallback = await getTranslations("Home");
 
   const home = await getHome(locale);
-  // const home = await getHome("fr-FR");
+  console.log('HomePage home:', home);
+  let t;
+  let tFallback;
 
-  const t = home.translations[0];
+  if (home === null) {
+    tFallback = await getTranslations('Home');
+    console.log('HomePage tFallback:', typeof tFallback, tFallback);
+  } else {
+    t = home.translations[0];
+    console.log('HomePage t:', typeof t, t);
+  }
 
   const apiImageUrl = process.env.DIRECTUS_API_ENDPOINT + '/assets';
 
   return (
     <div className="flex flex-col">
       {/* ---------------- Collective Rows---------------- */}
-      <CollectiveRows />
+      {/* <CollectiveRows /> */}
 
       {/* ---------------- Hero ---------------- */}
       <section

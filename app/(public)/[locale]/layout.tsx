@@ -5,9 +5,9 @@ import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
 import NavBar from "@/components/NavBar";
 import Footer from "@/components/Footer";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
-  title: "YourApp",
   description: "A crisp Next.js + Tailwind starter",
 };
 
@@ -31,6 +31,7 @@ export default async function RootLayout({
         <div className="flex-1">{children}</div>
         <Footer />
       </NextIntlClientProvider>
+      <Toaster />
     </main>
   );
 }
