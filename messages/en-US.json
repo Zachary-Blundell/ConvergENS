@@ -4,22 +4,22 @@
       "title": "Bringing together <highlight>movements</highlight> and the talents of ENS",
       "cta": "Discover the collectives"
     },
-    "whatIs": {
+    "section1": {
       "title": "What is ConvergENS?",
       "body": "ConvergENS is the collective that brings together the engaged collectives and clubs of the École normale supérieure (ENS), in connection with student parties and unions.\nIt arose from a double frustration: on the one hand, often small collective boards bending under the weight of volunteer work; on the other, new volunteers forced to choose between causes that speak to them just as much.\nConvergENS provides a shared space to follow each organization’s updates and keep the connection. From within the ENS, by coming together, we surface lines of convergence — and we also discuss the divides — across our struggles."
     },
-    "objectives": {
+    "section2": {
+      "title": "How does ConvergENS work?",
+      "body": "ConvergENS is not an umbrella structure over its members, but a collective that brings them together. Collectives and clubs are the decision-makers and vote in the General Assembly on everything concerning the collective (upcoming events, welcoming new members, etc.). Parties and unions are invited members: they contribute in particular to Agora (ConvergENS’ journal) and to its launch conferences.\nTo join ConvergENS, simply get involved in a member (or invited) organization and become its representative within the collective."
+    },
+    "section3": {
       "title": "Our Objectives",
-      "intro": "Our main objective is to promote a horizontal education in citizenship—not only through the ballot box, but also through union, collective, and party action.\nTo do this, we:",
+      "body": "Our main objective is to promote a horizontal education in citizenship—not only through the ballot box, but also through union, collective, and party action.\nTo do this, we:",
       "items": {
         "shareExperiences": "organize experience-sharing sessions among volunteers to prevent activist burnout;",
         "poolResources": "pool our resources and carry shared advocacy (notably with the ENS leadership);",
         "createSpaces": "create inter-organization spaces for discussion and debate to share updates and coordinate."
       }
-    },
-    "howItWorks": {
-      "title": "How does ConvergENS work?",
-      "body": "ConvergENS is not an umbrella structure over its members, but a collective that brings them together. Collectives and clubs are the decision-makers and vote in the General Assembly on everything concerning the collective (upcoming events, welcoming new members, etc.). Parties and unions are invited members: they contribute in particular to Agora (ConvergENS’ journal) and to its launch conferences.\nTo join ConvergENS, simply get involved in a member (or invited) organization and become its representative within the collective."
     },
     "about": {
       "row1": {
