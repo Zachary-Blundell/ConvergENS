@@ -13,7 +13,7 @@ import Pagination from '@/components/Pagination';
 import { getAllCollectivesForUI } from '@/lib/cms/collectives';
 import { log } from 'console';
 
-export default async function Page({
+export default async function ArticlesPage({
   params,
   searchParams,
 }: {
