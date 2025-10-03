@@ -1,25 +1,6 @@
 //lib/cms/utils.ts
-export const DEFAULT_LOCALE = "fr-FR";
-export const PLACEHOLDER_LOGO = "/images/placeholder.png";
-
-/* shared types */
-
-// export type ItemsQuery = {
-//   fields?: any[];
-//   sort?: string[] | string;
-//   filter?: Record<string, any>;
-//   search?: string;
-//   limit?: number;
-//   page?: number;
-//   deep?: Record<string, any>;
-//   aggregate?: Record<string, any>;
-// };
-//
-// export type Eq<T> = { _eq: T };
-// export type In<T> = { _in: readonly T[] };
-// export type Some<T> = { _some: T };
-// export type Id = string | number;
-// export type Locale = "fr-FR" | "en-US"; // or just `string` if you prefer
+export const DEFAULT_LOCALE = 'fr-FR';
+export const PLACEHOLDER_LOGO = '/images/placeholder.png';
 
 /* shared helpers */
 
@@ -39,16 +20,21 @@ export function pickTranslation<T extends { languages_code: string }>(
 export function buildAssetUrl(
   fileId?: string | { id: string } | null,
 ): string | null {
+  console.log('buildAssetUrl fileId:', fileId);
   if (!fileId) return null;
+  if (fileId === undefined) return null;
+
   const base = process.env.DIRECTUS_API_ENDPOINT;
-  const id = typeof fileId === "string" ? fileId : fileId.id;
+
+  const id = typeof fileId === 'string' ? fileId : fileId.id;
+  console.log('Asset ID:', id);
   return `${base}/assets/${id}`;
 }
 
 // Minimal but accurate shapes per Directus docs
 type SortParam = string | string[];
 type GroupByParam = string | string[];
-type ExportType = "csv" | "json" | "xml" | "yaml";
+type ExportType = 'csv' | 'json' | 'xml' | 'yaml';
 
 // Recursive "fields" tree (string or nested object)
 type FieldsParam = Array<string | { [key: string]: FieldsParam }>;
@@ -57,19 +43,21 @@ type FilterParam = Record<string, any>; // or import the SDK’s Filter type
 
 type AggregateParam = Partial<
   Record<
-    | "count"
-    | "countDistinct"
-    | "sum"
-    | "sumDistinct"
-    | "avg"
-    | "avgDistinct"
-    | "min"
-    | "max",
-    "*" | string | string[]
+    | 'count'
+    | 'countDistinct'
+    | 'sum'
+    | 'sumDistinct'
+    | 'avg'
+    | 'avgDistinct'
+    | 'min'
+    | 'max',
+    '*' | string | string[]
   >
 >;
 
 type DeepParams = Record<string, any>;
+
+/* shared types */
 
 export type ItemsQuery = {
   fields?: FieldsParam;
