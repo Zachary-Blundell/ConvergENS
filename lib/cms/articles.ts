@@ -1,15 +1,15 @@
 // lib/cms/articles.ts
-import { readItem, readItems } from "@directus/sdk";
-import { directus } from "../directus";
+import { readItem, readItems } from '@directus/sdk';
+import { directus } from '../directus';
 import {
   buildAssetUrl,
   DEFAULT_LOCALE,
   ItemsQuery,
   pickTranslation,
   PLACEHOLDER_LOGO,
-} from "./utils";
-import { log } from "console";
-import { TagTranslation } from "./tags";
+} from './utils';
+import { log } from 'console';
+import { TagTranslation } from './tags';
 
 export const perPage: number = 12;
 
@@ -70,22 +70,22 @@ export async function getArticlesRaw(req?: ItemsQuery): Promise<ArticleRaw[]> {
   if (!req) {
     // if req is not defined return everything
     req = {
-      fields: ["*"],
+      fields: ['*'],
     };
   }
 
-  log("here is the req from getArticlesRaw: ", req);
-  const rawArticles = await directus.request<any[]>(readItems("articles", req));
-  log("here are the raw Articles form getArticlesRaw: ", rawArticles);
+  log('here is the req from getArticlesRaw: ', req);
+  const rawArticles = await directus.request<any[]>(readItems('articles', req));
+  log('here are the raw Articles form getArticlesRaw: ', rawArticles);
   return rawArticles as ArticleRaw[];
 }
 
 export async function getArticleCount(): Promise<number> {
   const req: ItemsQuery = {
-    aggregate: { count: "*" },
+    aggregate: { count: '*' },
   };
   const count: Array<{ count: string }> = await directus.request<any[]>(
-    readItems("articles", req),
+    readItems('articles', req),
   );
 
   return parseInt(count[0].count);
@@ -118,6 +118,7 @@ export type ArticleCard = {
   };
   published_at?: string | null;
 };
+
 export async function getArticleCards(
   locale: string,
   page: number,
@@ -126,20 +127,20 @@ export async function getArticleCards(
   // we get everything but the body text
   const req: ItemsQuery = {
     fields: [
-      "id",
-      "published_at",
-      { cover: ["id", "width", "height"] },
+      'id',
+      'published_at',
+      { cover: ['id', 'width', 'height'] },
       {
         collective: [
-          "id",
-          "name",
-          "slug",
-          "color",
-          { logo: ["id", "width", "height"] },
+          'id',
+          'name',
+          'slug',
+          'color',
+          { logo: ['id', 'width', 'height'] },
         ],
       },
-      { tag: ["id", "color", { translations: ["languages_code", "name"] }] },
-      { translations: ["languages_code", "title"] },
+      { tag: ['id', 'color', { translations: ['languages_code', 'name'] }] },
+      { translations: ['languages_code', 'title'] },
     ],
     filter: {
       tag: { id: { _eq: tagId } },
@@ -155,11 +156,10 @@ export async function getArticleCards(
       tags: {
         translations: {
           _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
-          _limit: 2,
         },
       },
     },
-    sort: ["-date_created"],
+    sort: ['-date_created'],
     page,
     limit: perPage,
   };
@@ -204,20 +204,20 @@ export async function getArticle(
   // we get everything but the body text
   const req: ItemsQuery = {
     fields: [
-      "id",
-      "published_at",
-      { cover: ["id", "width", "height"] },
+      'id',
+      'published_at',
+      { cover: ['id', 'width', 'height'] },
       {
         collective: [
-          "id",
-          "name",
-          "slug",
-          "color",
-          { logo: ["id", "width", "height"] },
+          'id',
+          'name',
+          'slug',
+          'color',
+          { logo: ['id', 'width', 'height'] },
         ],
       },
-      { tag: ["id", "color", { translations: ["languages_code", "name"] }] },
-      { translations: ["languages_code", "title", "body"] },
+      { tag: ['id', 'color', { translations: ['languages_code', 'name'] }] },
+      { translations: ['languages_code', 'title', 'body'] },
     ],
     deep: {
       translations: {
@@ -236,7 +236,7 @@ export async function getArticle(
   };
   try {
     const articleRaw: ArticleRaw = await directus.request<ArticleRaw>(
-      readItem("articles", articleId, req),
+      readItem('articles', articleId, req),
     );
 
     if (!articleRaw) return null;
@@ -254,8 +254,8 @@ export async function getArticle(
 
     const article: ArticleFlat = {
       id: String(articleRaw.id),
-      title: String(articleTr?.title ?? ""),
-      body: String(articleTr?.body ?? ""),
+      title: String(articleTr?.title ?? ''),
+      body: String(articleTr?.body ?? ''),
 
       coverUrl,
       coverWidth: Number(articleRaw.cover?.width ?? 0),
@@ -269,15 +269,15 @@ export async function getArticle(
 
       collective: {
         id: articleRaw.collective?.id ?? null,
-        name: articleRaw.collective?.name ?? "",
-        slug: articleRaw.collective?.slug ?? "",
+        name: articleRaw.collective?.name ?? '',
+        slug: articleRaw.collective?.slug ?? '',
         color: articleRaw.collective?.color ?? null,
         logoUrl,
         logoWidth: Number(articleRaw.collective?.logo?.width ?? 0),
         logoHeight: Number(articleRaw.collective?.logo?.height ?? 0),
       },
 
-      published_at: String(articleRaw.published_at ?? ""),
+      published_at: String(articleRaw.published_at ?? ''),
     };
 
     return article;
@@ -291,8 +291,8 @@ export async function getArticle(
     // Common patterns: 404, or Directus code like "RECORD_NOT_FOUND"
     const isNotFound =
       code === 404 ||
-      code === "RECORD_NOT_FOUND" ||
-      err?.message?.toLowerCase?.().includes("not found");
+      code === 'RECORD_NOT_FOUND' ||
+      err?.message?.toLowerCase?.().includes('not found');
 
     if (isNotFound) return null;
 
