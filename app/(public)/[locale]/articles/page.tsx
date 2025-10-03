@@ -11,7 +11,6 @@ import { getAllTagsForUI } from '@/lib/cms/tags';
 import FiltersBar from './FiltersBar';
 import Pagination from '@/components/Pagination';
 import { getAllCollectivesForUI } from '@/lib/cms/collectives';
-import { log } from 'console';
 
 export default async function ArticlesPage({
   params,
