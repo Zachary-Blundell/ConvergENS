@@ -1,7 +1,6 @@
-// app/[locale]/calendar/page.tsx
+// app/(public)/[locale]/calendar/page.tsx
 // ConvergENS Calendar-page
 
-// app/(public)/[locale]/calendar/page.tsx
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import {
@@ -27,9 +26,6 @@ export default async function Page({
   // Parse with Paris defaulting
   const ym = parseCursor(searchParams?.cursor, 'Europe/Paris');
   const canonical = formatCursor(ym);
-
-  // console.log('Calendar page here is the year :', ym.year);
-  // console.log('Calendar page here is the month :', ym.month);
 
   const firstDay = firstOfMonth(ym);
   const startDate = startOfGrid(firstDay, true);
@@ -58,7 +54,14 @@ export default async function Page({
         <Link href={`/${locale}/calendar?cursor=${next}`}>Next &rarr;</Link>
       </header>
 
-      <CalendarMonth locale={locale} cursor={canonical} events={monthsEvents} />
+      <div className="flex items-center justify-center">
+        <CalendarMonth
+          locale={locale}
+          cursor={canonical}
+          events={monthsEvents}
+          className="max-w-7xl"
+        />
+      </div>
     </main>
   );
 }
