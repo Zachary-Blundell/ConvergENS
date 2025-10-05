@@ -5,8 +5,8 @@ import Link from 'next/link';
 import '@/styles/scroll.css';
 import reactStringReplace from 'react-string-replace';
 import { getLocale, getTranslations } from 'next-intl/server';
-import { FlatHomePage, getHome } from '@/lib/cms/homepage';
-// import CollectiveRows from '@/components/CollectivesRow';
+import { getHome } from '@/lib/cms/homepage';
+import CollectiveRows from '@/components/CollectivesRow';
 
 type SectionProps = React.PropsWithChildren<{
   id: string;
@@ -53,7 +53,7 @@ export default async function HomePage() {
   return (
     <div className="flex flex-col">
       {/* ---------------- Collective Rows---------------- */}
-      {/* <CollectiveRows /> */}
+      <CollectiveRows />
 
       {/* ---------------- Hero ---------------- */}
       <section
