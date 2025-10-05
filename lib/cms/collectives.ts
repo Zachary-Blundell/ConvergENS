@@ -70,6 +70,16 @@ export type CollectiveUI = {
   color: string;
 };
 
+export type CollectiveBadge = {
+  id: string | number;
+  slug: string;
+  name: string;
+  logoUrl: string; // placeholder fallback handled
+  logoWidth: number | null;
+  logoHeight: number | null;
+  color: string;
+};
+
 export async function getCollectivesRaw(
   req?: ItemsQuery,
 ): Promise<CollectiveRaw[]> {
@@ -236,27 +246,59 @@ export async function getCollectiveCards(
 //   });
 // }
 //
-// export async function getCollectiveBadges(): Promise<CollectiveFlat[]> {
-//   const rows = await getCollectivesRaw({
-//     /* id, name, slug, color, and logo should be included by default see utils.ts*/
-//   });
-//   return rows.map((i) => {
-//     const result = {
-//       id: String(i.id),
-//       name: String(i.name ?? ""),
-//       slug: String(i.slug ?? ""),
-//       color: i.color ?? null,
-//       logoUrl: buildAssetUrl(i.logo) ?? PLACEHOLDER_LOGO,
-//       logoWidth: i.logo?.width ?? null,
-//       logoHeight: i.logo?.height ?? null,
-//     };
-//     return result;
-//   });
-// }
-//
-export async function getAllCollectivesForUI(
-  locale: string,
-): Promise<CollectiveUI[]> {
+export async function getCollectiveBadges(): Promise<CollectiveBadge[]> {
+  const req: ItemsQuery = {
+    fields: [
+      'id',
+      'slug',
+      { logo: ['id', 'width', 'height'] },
+      'name',
+      'color',
+    ],
+  };
+  try {
+    const rows = await getCollectivesRaw(req);
+    return rows.map((i) => {
+      const result = {
+        id: String(i.id),
+        name: String(i.name ?? ''),
+        slug: String(i.slug ?? ''),
+        color: i.color ?? null,
+        logoUrl: buildAssetUrl(i.logo) ?? PLACEHOLDER_LOGO,
+        logoWidth: i.logo?.width ?? null,
+        logoHeight: i.logo?.height ?? null,
+      };
+      return result;
+    });
+  } catch (err: unknown) {
+    const e = err as any;
+
+    console.warn('Error fetching homepage:', err);
+    const code =
+      e?.errors?.[0]?.extensions?.code || e?.response?.status || e?.status;
+
+    // Common patterns: 404, or Directus code like "RECORD_NOT_FOUND"
+    const isNotFound =
+      code === 404 ||
+      code === 'RECORD_NOT_FOUND' ||
+      e?.message?.toLowerCase?.().includes('not found');
+
+    if (isNotFound) return null;
+
+    return [];
+    //   return {
+    //       id: null,
+    //       name: null,
+    //       slug: null,
+    //       color:  null,
+    //       logoUrl:  PLACEHOLDER_LOGO,
+    //       logoWidth:  null,
+    //       logoHeight: null,
+    // }
+  }
+}
+
+export async function getAllCollectivesForUI(): Promise<CollectiveUI[]> {
   const req: ItemsQuery = {
     fields: ['id', 'name', 'color'],
   };
@@ -273,6 +315,7 @@ export async function getAllCollectivesForUI(
     };
   });
 }
+
 export async function getCollectiveBySlug(
   slug: string,
   locale = DEFAULT_LOCALE,
