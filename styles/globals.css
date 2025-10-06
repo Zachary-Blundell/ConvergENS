@@ -11,19 +11,31 @@
   }
 
   :root {
-    /* Light mode tokens */
-    /* backgrounds */
-    --surface-1: 0 0% 92%; /* #E0E0E0 */
-    --surface-2: 0 0% 96%; /* #E0E0E0 */
-    --surface-3: 0 0% 98%; /* #EDEDED */
-    --surface-4: 0 0% 100%; /* #FAFAFA */
-    /* text */
-    --fg-primary: 0 0% 5%; /* #0D0D0D */
-    --fg-muted: 0 0% 30%; /* #404040 */
-    /* borders */
+    color-scheme: light dark;
+    /* --- Light mode tokens --- */
+
+    /* Backgrounds (light) */
+    --surface-1: 0 0% 85%; /* Darkest background */
+    --surface-2: 0 0% 90%;
+    --surface-3: 0 0% 95%;
+    --surface-4: 0 0% 100%; /* Lightest background */
+
+    /* Text (light) */
+    --fg-primary: 0 0% 4%;
+    --fg-muted: 0 0% 28%;
+
+    /* Borders (light) */
     --outline: var(--surface-2);
     --outline-highlight: 0 0% 100%;
-    color-scheme: light dark;
+
+    /* Shadows (light) */
+    --shadow-s:
+      inset 0 1px 2px #ffffff30, /* top highlight */ 0 1px 2px #00000030,
+      /* dark shadow */ 0 2px 4px #00000015; /* soft shadow */
+    --shadow-m:
+      inset 0 1px 2px #ffffff50, 0 2px 4px #00000030, 0 4px 8px #00000015;
+    --shadow-l:
+      inset 0 1px 2px #ffffff70, 0 4px 6px #00000030, 0 6px 10px #00000015;
 
     /* heading scale  */
     --fs-h1: clamp(2.25rem, 4vw, 3rem);
@@ -34,17 +46,32 @@
     --fs-h6: 1rem;
   }
 
-  /* Dark mode tokens */
   .dark {
-    --surface-1: 0 0% 4%; /* #050505 */
-    --surface-2: 0 0% 8%; /* #121212 */
-    --surface-3: 0 0% 12%; /* #1F1F1F */
-    --surface-4: 0 0% 18%; /* #1F1F1F */
+    /* --- Dark mode tokens --- */
 
-    --fg-primary: 0 0% 95%; /* #F2F2F2 */
-    --fg-muted: 0 0% 70%; /* #BFBFBF */
+    /* Backgrounds (dark) */
+    --surface-1: 0 0% 1%; /*Darkest background*/
+    --surface-2: 0 0% 9%;
+    --surface-3: 0 0% 18%;
+    --surface-4: 0 0% 27%; /*Lightest background*/
+
+    /* Text (dark) */
+    --fg-primary: 0 0% 95%;
+    --fg-muted: 0 0% 69%;
+
+    /* Borders (dark) */
     --outline: 0 0% 30%;
-    --outline-highlight: 0 0% 60%;
+    --outline-highdark: 0 0% 60%;
+
+    /* Shadows (dark) */
+    --shadow-s:
+      inset 0 1px 2px #ffffff25, 0 1px 2px #00000050, 0 2px 6px #00000030;
+
+    --shadow-m:
+      inset 0 1px 2px #ffffff35, 0 2px 4px #00000055, 0 6px 12px #00000035;
+
+    --shadow-l:
+      inset 0 1px 2px #ffffff45, 0 4px 8px #00000055, 0 10px 18px #00000040;
   }
 
   .font-heading {
@@ -93,6 +120,9 @@
   --color-fg-muted: hsl(var(--fg-muted));
   --color-outline: hsl(var(--outline));
   --color-outline-highlight: hsl(var(--outline-highlight));
+  --shadow-s: var(--shadow-s);
+  --shadow-m: var(--shadow-m);
+  --shadow-l: var(--shadow-l);
 
   /* brand/highlight ramp */
   --color-highlight-soft: #ff985d;
