@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import Image from "next/image";
-import { useTranslations } from "next-intl";
+import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
   NavigationMenuLink,
   navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import ThemeToggle from "./ThemeToggle";
-import LocaleSwitcher from "./LocaleSwitcher";
+} from '@/components/ui/navigation-menu';
+import ThemeToggle from './ThemeToggle';
+import LocaleSwitcher from './LocaleSwitcher';
 import {
   Sheet,
   SheetContent,
@@ -18,14 +18,14 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
-} from "./ui/sheet";
-import { HiMenuAlt3 } from "react-icons/hi";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { usePathname } from "next/navigation";
-import { Link } from "@/i18n/navigation";
+} from './ui/sheet';
+import { HiMenuAlt3 } from 'react-icons/hi';
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import { usePathname } from 'next/navigation';
+import { Link } from '@/i18n/navigation';
 
 /** i18n keys */
-type LinkKey = "collectives" | "articles" | "calendar" | "newspaper";
+type LinkKey = 'collectives' | 'articles' | 'calendar' | 'newspaper';
 
 export type LinkItem = {
   href: `/${string}`;
@@ -33,55 +33,48 @@ export type LinkItem = {
 };
 
 export const DEFAULT_LINKS: readonly LinkItem[] = [
-  { href: "/collectives", labelKey: "collectives" },
-  { href: "/articles", labelKey: "articles" },
-  { href: "/calendar", labelKey: "calendar" },
-  { href: "/newspaper", labelKey: "newspaper" },
+  { href: '/collectives', labelKey: 'collectives' },
+  { href: '/articles', labelKey: 'articles' },
+  { href: '/calendar', labelKey: 'calendar' },
+  { href: '/newspaper', labelKey: 'newspaper' },
 ] as const;
 
 export default function NavBar() {
-  const t = useTranslations("Nav");
+  const t = useTranslations('Nav');
   const pathname = usePathname();
 
   return (
     <nav
       className="sticky top-0 z-50 flex w-full items-center justify-between px-4 py-2 border-b-1 border-surface-3
              bg-surface-2/70 backdrop-blur-sm"
-      aria-label={t("primaryNav", { default: "Primary" })}
+      aria-label={t('primaryNav', { default: 'Primary' })}
     >
       {/* Left logo */}
       <Link href="/" className="flex items-center gap-2">
         <Image
           src="/images/placeholder.png"
-          alt={t("logoAlt")}
+          alt={t('logoAlt')}
           width={40}
           height={40}
           className="rounded-md"
         />
         <span className="font-heading text-highlight text-lg">
-          {t("siteTitle")}
+          {t('siteTitle')}
         </span>
       </Link>
 
       {/* Desktop nav (hide below 800px) */}
       <div className="max-[799px]:hidden">
-        <NavigationMenu>
-          <NavigationMenuList className="flex gap-2">
-            {DEFAULT_LINKS.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <NavigationMenuItem key={link.href}>
-                  <NavigationMenuLink
-                    asChild
-                    className={navigationMenuTriggerStyle()}
-                    aria-current={isActive ? "page" : undefined}
-                  >
-                    <Link href={link.href}>{t(link.labelKey)}</Link>
-                  </NavigationMenuLink>
-                </NavigationMenuItem>
-              );
-            })}
-          </NavigationMenuList>
+        <NavigationMenu className="flex gap-2">
+          {DEFAULT_LINKS.map((link) => {
+            return (
+              <NavigationMenuLink asChild>
+                <a href={link.href} className={navigationMenuTriggerStyle()}>
+                  {t(link.labelKey)}
+                </a>
+              </NavigationMenuLink>
+            );
+          })}
         </NavigationMenu>
       </div>
 
@@ -100,21 +93,21 @@ export default function NavBar() {
 }
 
 function MobileMenu() {
-  const t = useTranslations("Nav");
+  const t = useTranslations('Nav');
   const pathname = usePathname();
 
   return (
     <Sheet>
       {/* Explicit name on the trigger; SR text included */}
       <SheetTrigger
-        aria-label={t("openMenu", { default: "Open menu" })}
+        aria-label={t('openMenu', { default: 'Open menu' })}
         aria-haspopup="dialog"
         aria-controls="mobile-menu"
         className="inline-flex items-center justify-center rounded-md p-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
       >
         <HiMenuAlt3 className="h-6 w-6" aria-hidden="true" />
         <span className="sr-only">
-          {t("openMenu", { default: "Open menu" })}
+          {t('openMenu', { default: 'Open menu' })}
         </span>
       </SheetTrigger>
 
@@ -122,9 +115,9 @@ function MobileMenu() {
       <SheetContent side="right" className="w-72 sm:w-80" id="mobile-menu">
         <SheetHeader>
           <VisuallyHidden>
-            <SheetTitle>{t("menuTitle", { default: "Main menu" })}</SheetTitle>
+            <SheetTitle>{t('menuTitle', { default: 'Main menu' })}</SheetTitle>
             <SheetDescription>
-              {t("menuDesc", { default: "Primary navigation and settings" })}
+              {t('menuDesc', { default: 'Primary navigation and settings' })}
             </SheetDescription>
           </VisuallyHidden>
         </SheetHeader>
@@ -132,7 +125,7 @@ function MobileMenu() {
         <div className="mt-4 space-y-4">
           <nav
             className="flex flex-col gap-1"
-            aria-label={t("primaryNav", { default: "Primary" })}
+            aria-label={t('primaryNav', { default: 'Primary' })}
           >
             {DEFAULT_LINKS.map((link) => {
               const isActive = pathname === link.href;
@@ -140,7 +133,7 @@ function MobileMenu() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  aria-current={isActive ? "page" : undefined}
+                  aria-current={isActive ? 'page' : undefined}
                   className="rounded-md px-3 py-2 text-fg-primary hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   {t(link.labelKey)}
