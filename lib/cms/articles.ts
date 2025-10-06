@@ -118,11 +118,11 @@ export type ArticleCard = {
   };
   published_at?: string | null;
 };
-
 export async function getArticleCards(
   locale: string,
   page: number,
   tagId?: string,
+  collectiveId?: string,
 ): Promise<ArticleCard[]> {
   // we get everything but the body text
   const req: ItemsQuery = {
@@ -144,6 +144,7 @@ export async function getArticleCards(
     ],
     filter: {
       tag: { id: { _eq: tagId } },
+      collective: { id: { _eq: collectiveId } },
     },
     deep: {
       translations: {
@@ -156,6 +157,7 @@ export async function getArticleCards(
       tags: {
         translations: {
           _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+          _limit: 2,
         },
       },
     },

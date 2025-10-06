@@ -26,11 +26,11 @@ export default async function ArticlesPage({
   const currentTag = tag ? parseInt(tag) : null;
   const currentCollective = collective ? parseInt(collective) : null;
 
-  const articles = await getArticleCards(locale, currentPage, tag);
+  const articles = await getArticleCards(locale, currentPage, tag, collective);
   const articleCount = await getArticleCount();
 
   const tagOptions = await getAllTagsForUI(locale);
-  const collectiveOptions = await getAllCollectivesForUI(locale);
+  const collectiveOptions = await getAllCollectivesForUI();
 
   return (
     <main className="flex flex-col gap-6 p-6">
