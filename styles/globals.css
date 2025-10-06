@@ -1,5 +1,5 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
 /* ----- Tailwind helpers ----- */
 @custom-variant dark (&:is(.dark *));
@@ -13,9 +13,10 @@
   :root {
     /* Light mode tokens */
     /* backgrounds */
-    --surface-1: 0 0% 82%; /* #E0E0E0 */
-    --surface-2: 0 0% 90%; /* #EDEDED */
-    --surface-3: 0 0% 99%; /* #FAFAFA */
+    --surface-1: 0 0% 92%; /* #E0E0E0 */
+    --surface-2: 0 0% 96%; /* #E0E0E0 */
+    --surface-3: 0 0% 98%; /* #EDEDED */
+    --surface-4: 0 0% 100%; /* #FAFAFA */
     /* text */
     --fg-primary: 0 0% 5%; /* #0D0D0D */
     --fg-muted: 0 0% 30%; /* #404040 */
@@ -35,9 +36,10 @@
 
   /* Dark mode tokens */
   .dark {
-    --surface-1: 0 0% 0%; /* #050505 */
-    --surface-2: 0 0% 10%; /* #121212 */
-    --surface-3: 0 0% 20%; /* #1F1F1F */
+    --surface-1: 0 0% 4%; /* #050505 */
+    --surface-2: 0 0% 8%; /* #121212 */
+    --surface-3: 0 0% 12%; /* #1F1F1F */
+    --surface-4: 0 0% 18%; /* #1F1F1F */
 
     --fg-primary: 0 0% 95%; /* #F2F2F2 */
     --fg-muted: 0 0% 70%; /* #BFBFBF */
@@ -86,6 +88,7 @@
   --color-surface-1: hsl(var(--surface-1));
   --color-surface-2: hsl(var(--surface-2));
   --color-surface-3: hsl(var(--surface-3));
+  --color-surface-4: hsl(var(--surface-4));
   --color-fg-primary: hsl(var(--fg-primary));
   --color-fg-muted: hsl(var(--fg-muted));
   --color-outline: hsl(var(--outline));
@@ -341,22 +344,22 @@
   }
 
   /* Center image when parent has inline text-align:center */
-  .cms-content :is(p, div, figure)[style*="text-align:center"] > img,
-  .cms-content :is(p, div, figure)[style*="text-align: center"] > img {
+  .cms-content :is(p, div, figure)[style*='text-align:center'] > img,
+  .cms-content :is(p, div, figure)[style*='text-align: center'] > img {
     margin-left: auto;
     margin-right: auto; /* centers a block */
   }
 
   /* Right-align */
-  .cms-content :is(p, div, figure)[style*="text-align:right"] > img,
-  .cms-content :is(p, div, figure)[style*="text-align: right"] > img {
+  .cms-content :is(p, div, figure)[style*='text-align:right'] > img,
+  .cms-content :is(p, div, figure)[style*='text-align: right'] > img {
     margin-left: auto; /* pushes block image to the right */
     margin-right: 0;
   }
 
   /* Left-align (explicit) */
-  .cms-content :is(p, div, figure)[style*="text-align:left"] > img,
-  .cms-content :is(p, div, figure)[style*="text-align: left"] > img {
+  .cms-content :is(p, div, figure)[style*='text-align:left'] > img,
+  .cms-content :is(p, div, figure)[style*='text-align: left'] > img {
     margin-left: 0;
     margin-right: auto;
   }
@@ -488,7 +491,7 @@ select {
   -moz-appearance: none;
   appearance: none;
   text-indent: 1px;
-  text-overflow: "";
+  text-overflow: '';
 }
 
 @layer utilities {
