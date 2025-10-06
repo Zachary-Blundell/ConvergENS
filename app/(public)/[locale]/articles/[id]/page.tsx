@@ -1,39 +1,20 @@
-// export default async function articlePage({
-//   params,
-// }: {
-//   params: Promise<{ articleSlug: string }>;
-// }) {
-//   const { articleSlug } = await params;
-//
-//   return (
-//     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-//       <h1 className="text-2xl font-semibold">
-//         Article articleSlug: {articleSlug} for ConvergENS
-//       </h1>
-//       <p className="mt-2 text-gray-600">
-//         Route to demonstrate an article page for ConvergENS. This page is used
-//         to show an article.
-//       </p>
-//     </section>
-//   );
-// }
 // app/[locale]/articles/[id]/page.tsx
-import * as React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import HtmlContent from "@/components/HtmlContent";
-import { getArticle } from "@/lib/cms/articles";
-import { notFound } from "next/navigation";
+import * as React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import HtmlContent from '@/components/HtmlContent';
+import { getArticle } from '@/lib/cms/articles';
+import { notFound } from 'next/navigation';
 
 function formatDate(iso: string, locale: string) {
   try {
-    return new Intl.DateTimeFormat(locale || "en", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+    return new Intl.DateTimeFormat(locale || 'en', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     }).format(new Date(iso));
   } catch {
-    return iso.split("T")[0];
+    return iso.split('T')[0];
   }
 }
 
@@ -89,7 +70,7 @@ export default async function ArticlePage({
               <span
                 className="relative inline-block h-7 w-7 overflow-hidden rounded-full ring-2 ring-offset-1 ring-offset-white dark:ring-offset-zinc-900"
                 style={{
-                  ["--tw-ring-color" as any]: article.collective.color,
+                  ['--tw-ring-color' as any]: article.collective.color,
                 }}
               >
                 <Image
