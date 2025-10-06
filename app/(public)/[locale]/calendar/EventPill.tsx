@@ -1,4 +1,4 @@
-'use client';
+('use client');
 
 import React from 'react';
 import type { CalEvent } from '@/lib/cms/events';
@@ -40,8 +40,7 @@ export default function EventPill({
         'w-full truncate rounded-md px-2 py-1 pl-3 text-left text-xs ' +
         'bg-stone-100 hover:bg-stone-200 ' +
         'dark:bg-stone-800 dark:hover:bg-stone-700 ' +
-        'cursor-pointer' +
-        (typeof className === 'string' ? ` ${className}` : '')
+        'cursor-pointer'
       }
       // 4px inset strip inside the left edge; respects border radius.
       style={{ boxShadow: `inset 4px 0 0 0 ${color}` }}
