@@ -77,7 +77,7 @@ export default async function Page({
         {hasPrev ? (
           <Link href={`/${locale}/calendar?cursor=${prev}`}>&larr; Prev</Link>
         ) : (
-          <span className="text-stone-400 select-none">&larr; Prev</span>
+          <span className="text-fg-primary select-none">&larr; Prev</span>
         )}
 
         <h1 className="text-2xl">
@@ -90,7 +90,7 @@ export default async function Page({
         {hasNext ? (
           <Link href={`/${locale}/calendar?cursor=${next}`}>Next &rarr;</Link>
         ) : (
-          <span className="text-stone-400 select-none">Next &rarr;</span>
+          <span className="text-fg-primary select-none">Next &rarr;</span>
         )}
       </header>
 
