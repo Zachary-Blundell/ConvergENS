@@ -141,7 +141,7 @@ export default function CalendarMonth({
   return (
     <div className={`w-full select-none${className ? ` ${className}` : ''}`}>
       {/* Weekday header */}
-      <div className="grid grid-cols-7 text-xs uppercase tracking-wide text-stone-500 dark:text-stone-400">
+      <div className="grid grid-cols-7 text-xs uppercase tracking-wide text-fg-muted">
         {labels.map((label) => (
           <div key={label} className="py-2 text-center font-medium">
             {label}
@@ -179,7 +179,7 @@ export default function CalendarMonth({
                   handleDayClick(date);
                 }
               }}
-              className={`${base} ${muted} ${ring} rounded-md hover:bg-stone-50 dark:hover:bg-stone-800 transition flex flex-col`}
+              className={`${base} ${muted} ${ring} rounded-md hover:bg-surface-4 transition flex flex-col`}
               aria-label={date.toDateString()}
             >
               <div className="flex items-start justify-between">
@@ -221,7 +221,7 @@ export default function CalendarMonth({
                               setOpenDay(date);
                             }
                           }}
-                          className="w-full truncate rounded-md bg-stone-50 px-2 py-1 text-left text-xs text-stone-600 hover:bg-stone-100 dark:bg-stone-900 dark:text-stone-300 dark:hover:bg-stone-800 cursor-pointer"
+                          className="w-full truncate rounded-md bg-stone-50 px-2 py-1 text-left text-xs text-stone-600  cursor-pointer"
                         >
                           +{hiddenCount} more
                         </div>
