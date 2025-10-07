@@ -16,7 +16,7 @@ import ThemeToggle from './ThemeToggle';
 import LocaleSwitcher from './LocaleSwitcher';
 import { usePathname } from 'next/navigation';
 import { HiMenuAlt3 } from 'react-icons/hi';
-import Image from 'next/image';
+import Logo from './logo';
 
 /** i18n keys */
 type LinkKey = 'collectives' | 'articles' | 'calendar' | 'newspaper';
@@ -61,18 +61,7 @@ export default function NavBar() {
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
             <div className="flex w-full justify-between lg:w-auto">
               {/* Left logo */}
-              <Link href="/" className="flex items-center gap-2">
-                <Image
-                  src="/images/placeholder.png"
-                  alt={t('logoAlt')}
-                  width={40}
-                  height={40}
-                  className="rounded-md"
-                />
-                <span className="font-heading text-highlight text-lg">
-                  {t('siteTitle')}
-                </span>
-              </Link>
+              <Logo alt={t('logoAlt')} title={t('siteTitle')} />
 
               {/* Mobile controls (show below 800px) */}
               <div className="flex items-center gap-3 min-[799px]:hidden">
