@@ -150,15 +150,15 @@ export default function CalendarMonth({
       </div>
 
       {/* Day grid */}
-      <div className="grid grid-cols-7 gap-1 rounded-xl m-3 p-2 bg-stone-200 overflow-hidden dark:bg-stone-800">
+      <div className="grid grid-cols-7 gap-1 rounded-xl m-3 p-2 bg-surface-2 overflow-hidden ">
         {cells.map((date) => {
           const inMonth = date.getMonth() === monthIndex;
           const isToday = sameDay(date, today);
 
-          const base = 'aspect-square bg-white p-2 text-sm dark:bg-stone-900';
+          const base = 'aspect-square bg-surface-3 p-2 text-sm ';
           const muted = inMonth
-            ? 'text-stone-900 dark:text-stone-100'
-            : 'text-stone-400 dark:text-stone-500';
+            ? 'text-fg-primary'
+            : 'text-fg-muted opacity-60';
           const ring = isToday ? 'ring-1 ring-highlight/60' : '';
 
           const key = ymd(date);
