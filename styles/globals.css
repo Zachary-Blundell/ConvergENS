@@ -15,8 +15,8 @@
     /* --- Light mode tokens --- */
 
     /* Backgrounds (light) */
-    --surface-1: 0 0% 85%; /* Darkest background */
-    --surface-2: 0 0% 90%;
+    --surface-1: 0 0% 75%; /* Darkest background */
+    --surface-2: 0 0% 85%;
     --surface-3: 0 0% 95%;
     --surface-4: 0 0% 100%; /* Lightest background */
 
