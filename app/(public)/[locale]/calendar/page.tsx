@@ -19,7 +19,7 @@ import { getEventsForCalendar } from '@/lib/cms/events';
 type Params = Promise<{ locale: string }>;
 type Search = Promise<{ cursor?: string }>;
 
-export default async function Page({
+export default async function CalendarPage({
   params,
   searchParams,
 }: {
