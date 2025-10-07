@@ -118,6 +118,11 @@
   },
 
   "CalendarPage": {
+    "nav": {
+      "ariaLabel": "Calendar month navigation",
+      "prev": "← Prev",
+      "next": "Next →"
+    },
     "daysShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     "months": [
       "January",

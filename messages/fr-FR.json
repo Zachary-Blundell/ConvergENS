@@ -119,6 +119,11 @@
   },
 
   "CalendarPage": {
+    "nav": {
+      "ariaLabel": "Navigation du mois du calendrier",
+      "prev": "← Précédent",
+      "next": "Suivant →"
+    },
     "daysShort": ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
     "months": [
       "janvier",

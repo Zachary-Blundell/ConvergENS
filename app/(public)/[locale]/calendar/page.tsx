@@ -10,27 +10,28 @@ import {
   firstOfMonth,
   startOfGrid,
   addDays,
-  nowYearMonthTZ,
   clampYear,
+  nowYearMonthTZ,
 } from '@/lib/date/cursor';
 import CalendarMonth from './CalendarMonth';
 import { getEventsForCalendar } from '@/lib/cms/events';
+import { getTranslations } from 'next-intl/server';
 
-type Params = Promise<{ locale: string }>;
-type Search = Promise<{ cursor?: string }>;
-
-export default async function CalendarPage({
+export default async function Page({
   params,
   searchParams,
 }: {
-  params: Params;
-  searchParams?: Search;
+  params: Promise<{ locale: string }>;
+  searchParams?: Promise<{ cursor: string }>;
 }) {
+  const t = await getTranslations('CalendarPage');
   const { locale } = await params;
-  const { cursor = '' } = await (searchParams ||
-    Promise.resolve({ cursor: '' }));
 
-  // Parse the cursor using Paris TZ defaults; fall back to "now" if invalid
+  // Pull the raw cursor from the querystring (may be missing/invalid).
+  const { cursor } = await (searchParams || Promise.resolve({ cursor: '' }));
+
+  // Normalize the cursor. If it's empty/invalid, default to the current month.
+  // Use Europe/Paris as the reference timezone for month boundaries.
   let ym = parseCursor(cursor, 'Europe/Paris');
 
   // Extra safety: if someone crafts a year outside our supported range,
@@ -39,7 +40,7 @@ export default async function CalendarPage({
     ym = nowYearMonthTZ('Europe/Paris');
   }
 
-  // Canonical, zero-padded "YYYY-MM"
+  // Canonical form of the month cursor (always "YYYY-MM", zero-padded).
   const canonical = formatCursor(ym);
 
   // If the incoming cursor isn't canonical, redirect to the canonical URL
@@ -74,11 +75,16 @@ export default async function CalendarPage({
     <main className="space-y-4">
       <div className="py-9" />
       {/* Header with month label and guarded prev/next links */}
-      <header className="m-4 flex items-center justify-between">
+      <nav
+        aria-label={t('nav.ariaLabel')}
+        className="m-4 flex items-center justify-between"
+      >
         {hasPrev ? (
-          <Link href={`/${locale}/calendar?cursor=${prev}`}>&larr; Prev</Link>
+          <Link href={`/${locale}/calendar?cursor=${prev}`}>
+            {t('nav.prev')}
+          </Link>
         ) : (
-          <span className="text-fg-primary select-none">&larr; Prev</span>
+          <span className="text-fg-primary select-none">{t('nav.prev')}</span>
         )}
 
         <h1 className="text-2xl">
@@ -89,11 +95,13 @@ export default async function CalendarPage({
         </h1>
 
         {hasNext ? (
-          <Link href={`/${locale}/calendar?cursor=${next}`}>Next &rarr;</Link>
+          <Link href={`/${locale}/calendar?cursor=${next}`}>
+            {t('nav.next')}
+          </Link>
         ) : (
-          <span className="text-fg-primary select-none">Next &rarr;</span>
+          <span className="text-fg-primary select-none">{t('nav.next')}</span>
         )}
-      </header>
+      </nav>
 
       {/* Month grid */}
       <div className="flex items-center justify-center">
