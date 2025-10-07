@@ -133,28 +133,6 @@
       "fallbackName": "Collectif",
       "logoAlt": "Logo de {name}"
     },
-    "daysShort": ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-    "months": [
-      "janvier",
-      "février",
-      "mars",
-      "avril",
-      "mai",
-      "juin",
-      "juillet",
-      "août",
-      "septembre",
-      "octobre",
-      "novembre",
-      "décembre"
-    ],
-    "ui": {
-      "today": "Aujourd’hui",
-      "addEvent": "Ajouter un événement",
-      "prevYear": "Année précédente",
-      "nextYear": "Année suivante",
-      "close": "Fermer"
-    },
     "labels": {
       "eventsOn": "Événements le {date}",
       "noEvents": "Aucun événement",
@@ -162,7 +140,6 @@
       "location": "Lieu",
       "collective": "Collectif",
       "viewCollective": "Voir le collectif",
-      "allDay": "Toute la journée",
       "timeRange": "{start} – {end}"
     }
   },

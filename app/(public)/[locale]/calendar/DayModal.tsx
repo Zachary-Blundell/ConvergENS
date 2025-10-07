@@ -3,6 +3,7 @@
 import React from 'react';
 import type { CalEvent } from '@/lib/cms/events';
 import EventPill from './EventPill';
+import { useTranslations } from 'next-intl';
 
 export type DayModalProps = {
   date: Date;
@@ -31,12 +32,14 @@ export default function DayModal({
   date,
   events,
   onCloseAction,
-  onEventClickAction: onEventClick,
+  onEventClickAction,
   locale,
   zIndex = 60,
 }: DayModalProps) {
+  const t = useTranslations('CalendarPage');
+
   const resolvedLocale =
-    locale || (typeof navigator !== 'undefined' ? navigator.language : 'en-US');
+    locale || (typeof navigator !== 'undefined' ? navigator.language : 'fr-FR');
   const sorted = [...(events || [])].sort(compareEvents);
 
   return (
@@ -51,17 +54,20 @@ export default function DayModal({
         onClick={(e) => e.stopPropagation()}
       >
         <header className="flex items-center justify-between gap-4">
-          <h2 className="text-lg ">{fmtDayLong(resolvedLocale, date)}</h2>
+          <h2 className="text-lg ">
+            {t('labels.eventsOn', { date: fmtDayLong(resolvedLocale, date) })}
+          </h2>
           <button
             onClick={onCloseAction}
-            className="rounded-md px-2 py-1 text-sm text-stone-600 hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800"
+            className="rounded-md px-2 py-1 text-sm text-fg-primary hover:bg-highlight"
+            aria-label={t('nav.close')}
           >
-            Close
+            {t('nav.close')}
           </button>
         </header>
 
         {sorted.length === 0 ? (
-          <p className="mt-3 text-sm text-stone-500">No events.</p>
+          <p className="mt-3 text-sm text-fg-primary">{t('labels.noEvents')}</p>
         ) : (
           <ul className="mt-3 space-y-2 max-h-[60vh] overflow-auto pr-1">
             {sorted.map((ev) => (
@@ -69,7 +75,7 @@ export default function DayModal({
                 <EventPill
                   event={ev}
                   locale={resolvedLocale}
-                  onClickAction={onEventClick}
+                  onClickAction={onEventClickAction}
                 />
               </li>
             ))}
