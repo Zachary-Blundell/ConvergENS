@@ -74,7 +74,7 @@ export default function NavBar() {
                   <li key={index}>
                     <Link
                       href={link.href}
-                      className="text-fg-primary hover:text-fg-muted bg-surface-3 rounded-lg p-2 block duration-150"
+                      className="text-fg-primary hover:text-fg-muted bg-surface-3 shadow-s rounded-lg p-2 block duration-150 border-0.5 border-outline"
                     >
                       <span>{t(link.labelKey)}</span>
                     </Link>
