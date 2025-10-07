@@ -1,10 +1,10 @@
-// app/[locale]/articles/FiltersBar.tsx
-"use client";
+'use client';
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import type { CollectiveUI } from "@/lib/cms/collectives";
-import type { TagUI } from "@/lib/cms/tags";
-import { useCallback } from "react";
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import type { CollectiveUI } from '@/lib/cms/collectives';
+import type { TagUI } from '@/lib/cms/tags';
+import { useCallback } from 'react';
+import { useTranslations } from 'next-intl';
 
 type Id = string | number;
 type Option = { id: Id; label: string };
@@ -17,14 +17,15 @@ function toOptionsFromTags(items: TagUI[]): Option[] {
 }
 
 const cn = (...xs: Array<string | false | null | undefined>) =>
-  xs.filter(Boolean).join(" ");
+  xs.filter(Boolean).join(' ');
 
-const baseBtn = "rounded-md px-2 py-1 text-sm border transition";
-const activeBtn = "bg-highlight-soft dark:bg-highlight border-outline";
-const inactiveBtn = "hover:bg-surface-3 border-white dark:border-outline ";
-const groupWrap = "flex flex-wrap items-center gap-2";
+const baseBtn = 'rounded-md px-2 py-1 text-sm border transition bg-';
+const activeBtn = 'bg-highlight-soft dark:bg-highlight border-outline';
+const inactiveBtn =
+  'bg-surface-3 hover:bg-surface-4 border-white dark:border-outline ';
+const groupWrap = 'flex flex-wrap items-center gap-2';
 const groupLabel =
-  "bg-surface-3 border border-outline rounded-sm px-2 py-1 text-xs font-medium";
+  'border border-outline rounded-sm pl-2 py-1 text-xs font-medium';
 
 export default function FiltersBar({
   collectives,
@@ -37,6 +38,7 @@ export default function FiltersBar({
   selectedTag?: Id;
   selectedCollective?: Id;
 }) {
+  const t = useTranslations('ArticlesPage.FiltersBar');
   const router = useRouter();
   const pathname = usePathname();
   const params = useSearchParams();
@@ -47,7 +49,7 @@ export default function FiltersBar({
       for (const [k, v] of Object.entries(updates)) {
         v ? p.set(k, v) : p.delete(k);
       }
-      p.set("page", "1"); // reset paging on filter change
+      p.set('page', '1'); // reset paging on filter change
       router.push(`${pathname}?${p.toString()}`);
     },
     [params, pathname, router],
@@ -55,11 +57,11 @@ export default function FiltersBar({
 
   const renderGroup = (
     title: string,
-    param: "collective" | "tag",
+    param: 'collective' | 'tag',
     options: Option[],
     selected?: Id,
   ) => {
-    const selectedStr = selected != null ? String(selected) : "";
+    const selectedStr = selected != null ? String(selected) : '';
     return (
       <div className={groupWrap}>
         <p className={groupLabel}>{title}</p>
@@ -69,7 +71,7 @@ export default function FiltersBar({
           className={cn(baseBtn, !selectedStr ? activeBtn : inactiveBtn)}
           aria-pressed={!selectedStr}
         >
-          All
+          {t('actions.all')}
         </button>
 
         {options.map((opt) => {
@@ -93,116 +95,19 @@ export default function FiltersBar({
   };
 
   return (
-    <div className="bg-surface-2 border border-outline rounded-md p-2 flex flex-col gap-2">
+    <div className="bg-surface-2 shadow-m border border-outline rounded-md p-2 flex flex-col gap-2">
       {renderGroup(
-        "Collectives:",
-        "collective",
+        t('groups.collectives'),
+        'collective',
         toOptionsFromCollectives(collectives),
         selectedCollective,
       )}
-      {renderGroup("Tags:", "tag", toOptionsFromTags(tags), selectedTag)}
+      {renderGroup(
+        t('groups.tags'),
+        'tag',
+        toOptionsFromTags(tags),
+        selectedTag,
+      )}
     </div>
   );
 }
-// "use client";
-// import { CollectiveUI } from "@/lib/cms/collectives";
-// import { TagUI } from "@/lib/cms/tags";
-// import { usePathname, useRouter, useSearchParams } from "next/navigation";
-//
-// export default function FiltersBar({
-//   collectives,
-//   tags,
-//   selectedTag,
-//   selectedCollective,
-// }: {
-//   collectives: CollectiveUI[];
-//   tags: TagUI[];
-//   selectedTag?: number;
-//   selectedCollective?: number;
-// }) {
-//   const router = useRouter();
-//   const pathname = usePathname();
-//   const params = useSearchParams();
-//
-//   const push = (updates: Record<string, string | undefined>) => {
-//     const p = new URLSearchParams(params);
-//
-//     Object.entries(updates).forEach(([k, v]) =>
-//       v ? p.set(k, v) : p.delete(k),
-//     );
-//     p.set("page", "1");
-//     router.push(`${pathname}?${p.toString()}`);
-//   };
-//   console.log("tags recived: ", tags);
-//   console.log("slecetedtag recived: ", selectedTag);
-//
-//   return (
-//     <div className="bg-surface-2 border border-outline rounded-md p-2 flex flex-col gap-2">
-//       <div className="flex flex-wrap items-center gap-2">
-//         <p className="bg-surface-3 border border-outline rounded-sm p-1">
-//           Collectives:{" "}
-//         </p>
-//         <button
-//           onClick={() => push({ collective: undefined })}
-//           className={`rounded-md border-1 border-black dark:border-white px-2 py-1 text-sm transition ${
-//             !selectedCollective
-//               ? "bg-highlight-soft dark:bg-highlight"
-//               : "hover:bg-surface-3"
-//           }`}
-//         >
-//           All
-//         </button>
-//
-//         {collectives.map((c) => (
-//           <button
-//             key={c.id}
-//             onClick={() => push({ collective: c.id.toString() })}
-//             className={`bg-surface-3 rounded-md border-1 border-highlight px-2 py-1 text-sm transition ${
-//               selectedCollective === c.id
-//                 ? "bg-highlight-soft dark:bg-highlight"
-//                 : "hover:bg-surface-3"
-//             }`}
-//             title={c.name}
-//           >
-//             {c.name}
-//           </button>
-//         ))}
-//       </div>
-//       <div className="flex flex-wrap items-center gap-2">
-//         <p className="bg-surface-3 border border-outline rounded-sm p-1">
-//           Tags:{" "}
-//         </p>
-//         <button
-//           onClick={() => push({ tag: undefined })}
-//           className={`bg-surface-3 rounded-md border-1 border-black dark:border-white px-2 py-1 text-sm transition ${
-//             !selectedTag
-//               ? "bg-highlight-soft dark:bg-highlight"
-//               : "hover:bg-surface-3"
-//           }`}
-//         >
-//           All
-//         </button>
-//
-//         {tags.map((t) => {
-//           console.log("here is the t.id: ", t.id);
-//           return (
-//             <button
-//               key={t.id}
-//               onClick={() =>
-//                 selectedTag !== t.id ? push({ tag: t.id.toString() }) : {}
-//               }
-//               className={`bg-surface-3 rounded-md border-1 border-highlight px-2 py-1 text-sm transition ${
-//                 selectedTag === t.id
-//                   ? "bg-highlight dark:bg-highlight"
-//                   : "hover:bg-highlight-200 dark:hover:bg-highlight-200"
-//               }`}
-//               title={t.label}
-//             >
-//               {t.label}
-//             </button>
-//           );
-//         })}
-//       </div>
-//     </div>
-//   );
-// }
