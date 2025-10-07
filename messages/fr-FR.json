@@ -147,7 +147,16 @@
     "articlesHeader": "Nos articles",
     "noArticles": "Aucun article trouvé.",
     "tryDifferentFilters": "Essayez peut-être différents filtres.",
-    "backToArticles": "← Retour aux articles"
+    "backToArticles": "← Retour aux articles",
+    "FiltersBar": {
+      "groups": {
+        "collectives": "Collectifs :",
+        "tags": "Tags :"
+      },
+      "actions": {
+        "all": "Tous"
+      }
+    }
   },
 
   "404": {
