@@ -12,7 +12,7 @@ export default function Footer() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-6 py-12 md:grid-cols-3">
         {/* Brand */}
         <div className="space-y-4">
-          <Logo alt={t('logoAlt')} title={t('siteTitle')} />
+          <Logo alt={tNav('logoAlt')} title={tNav('siteTitle')} />
 
           <p className="text-sm text-fg-muted">{t('tagline')}</p>
         </div>
