@@ -122,7 +122,16 @@
     "nav": {
       "ariaLabel": "Navigation du mois du calendrier",
       "prev": "← Précédent",
-      "next": "Suivant →"
+      "next": "Suivant →",
+      "close": "Fermer"
+    },
+    "event": {
+      "allDay": "Toute la journée",
+      "locationLabel": "Lieu : "
+    },
+    "collective": {
+      "fallbackName": "Collectif",
+      "logoAlt": "Logo de {name}"
     },
     "daysShort": ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
     "months": [

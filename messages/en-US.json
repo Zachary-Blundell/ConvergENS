@@ -121,7 +121,16 @@
     "nav": {
       "ariaLabel": "Calendar month navigation",
       "prev": "← Prev",
-      "next": "Next →"
+      "next": "Next →",
+      "close": "Close"
+    },
+    "event": {
+      "allDay": "All day",
+      "locationLabel": "Location: "
+    },
+    "collective": {
+      "fallbackName": "Collective",
+      "logoAlt": "Logo of {name}"
     },
     "daysShort": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
     "months": [
