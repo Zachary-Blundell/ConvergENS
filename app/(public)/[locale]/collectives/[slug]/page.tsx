@@ -1,12 +1,12 @@
 // app/[locale]/collectives/[slug]/page.tsx
-import { getCollectiveBySlug } from "@/lib/cms/collectives";
-import { notFound } from "next/navigation";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { ExternalLink, Globe, Mail, Phone } from "lucide-react";
-import { Separator } from "@radix-ui/react-select";
-import { log } from "console";
-import HtmlContent from "@/components/HtmlContent";
+import { getCollectiveBySlug } from '@/lib/cms/collectives';
+import { notFound } from 'next/navigation';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { ExternalLink, Globe, Mail, Phone } from 'lucide-react';
+import { Separator } from '@radix-ui/react-select';
+import { log } from 'console';
+import HtmlContent from '@/components/HtmlContent';
 
 export default async function CollectivePage({
   params,
@@ -21,7 +21,7 @@ export default async function CollectivePage({
 
   return (
     // Main column
-    <div className="container mx-auto max-w-5xl px-4 py-8 ">
+    <div className="container mt-12 mx-auto max-w-5xl px-4 py-8 ">
       <div className="flex flex-row justify-between ">
         {/* Header */}
         <header className="flex flex-col gap-4 sm:flex-row sm:items-start">
@@ -107,7 +107,7 @@ export default async function CollectivePage({
                       >
                         <span
                           className="inline-block h-2.5 w-2.5 rounded-full"
-                          style={{ backgroundColor: "var(--brand)" }}
+                          style={{ backgroundColor: 'var(--brand)' }}
                         />
                         <span className="truncate">
                           {prettyPlatform(s.platform)}

@@ -34,6 +34,7 @@ export default async function ArticlesPage({
 
   return (
     <main className="flex flex-col gap-6 p-6">
+      <div className="py-5" />
       <FiltersBar
         collectives={collectiveOptions}
         tags={tagOptions}

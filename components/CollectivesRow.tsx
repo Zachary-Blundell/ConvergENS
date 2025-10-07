@@ -7,7 +7,7 @@ export default async function CollectiveRows() {
 
   if (assoBadges !== null) {
     return (
-      <div className="relative hidden z-10 sm:flex flex-wrap justify-center p-4 gap-2 w-fit mx-auto bg-surface-4/50 rounded-full">
+      <div className="relative hidden z-10 sm:flex flex-wrap justify-center mt-25 p-4 gap-2 w-fit mx-auto bg-surface-4/50 rounded-full">
         {assoBadges.map((a, n) => (
           <Link
             key={`${a.name}-${n}`}

@@ -17,7 +17,7 @@ export default async function CollectivesPage({
 
   // return <div>testing</div>;
   return (
-    <div className="container px-4 py-12 mx-auto">
+    <div className="container px-4 py-12 mt-10 mx-auto">
       <h1 className="mb-10 text-5xl text-center text-highlight">
         {t('collectivesHeader')}
       </h1>

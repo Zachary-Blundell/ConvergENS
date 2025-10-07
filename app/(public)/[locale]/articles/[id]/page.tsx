@@ -29,6 +29,7 @@ export default async function ArticlePage({
 
   return (
     <main className="mx-auto max-w-4xl p-6">
+      <div className="py-8" />
       {/* Breadcrumb / Back */}
       <div className="mb-4">
         <Link

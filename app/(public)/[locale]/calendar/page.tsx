@@ -72,6 +72,7 @@ export default async function Page({
 
   return (
     <main className="space-y-4">
+      <div className="py-9" />
       {/* Header with month label and guarded prev/next links */}
       <header className="m-4 flex items-center justify-between">
         {hasPrev ? (

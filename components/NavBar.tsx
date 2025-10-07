@@ -1,16 +1,5 @@
 'use client';
-
-import Image from 'next/image';
-import { useTranslations } from 'next-intl';
-import {
-  NavigationMenu,
-  NavigationMenuList,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  navigationMenuTriggerStyle,
-} from '@/components/ui/navigation-menu';
-import ThemeToggle from './ThemeToggle';
-import LocaleSwitcher from './LocaleSwitcher';
+import Link from 'next/link';
 import {
   Sheet,
   SheetContent,
@@ -19,10 +8,15 @@ import {
   SheetTitle,
   SheetDescription,
 } from './ui/sheet';
-import { HiMenuAlt3 } from 'react-icons/hi';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
+import React from 'react';
+import { cn } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
+import ThemeToggle from './ThemeToggle';
+import LocaleSwitcher from './LocaleSwitcher';
 import { usePathname } from 'next/navigation';
-import { Link } from '@/i18n/navigation';
+import { HiMenuAlt3 } from 'react-icons/hi';
+import Image from 'next/image';
 
 /** i18n keys */
 type LinkKey = 'collectives' | 'articles' | 'calendar' | 'newspaper';
@@ -40,55 +34,74 @@ export const DEFAULT_LINKS: readonly LinkItem[] = [
 ] as const;
 
 export default function NavBar() {
+  const [menuState] = React.useState(false);
+  const [isScrolled, setIsScrolled] = React.useState(false);
   const t = useTranslations('Nav');
-  const pathname = usePathname();
 
+  React.useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   return (
-    <nav
-      className="sticky top-0 z-50 flex w-full items-center justify-between px-4 py-2 border-b-1 border-surface-3
-             bg-surface-2/70 backdrop-blur-sm"
-      aria-label={t('primaryNav', { default: 'Primary' })}
-    >
-      {/* Left logo */}
-      <Link href="/" className="flex items-center gap-2">
-        <Image
-          src="/images/placeholder.png"
-          alt={t('logoAlt')}
-          width={40}
-          height={40}
-          className="rounded-md"
-        />
-        <span className="font-heading text-highlight text-lg">
-          {t('siteTitle')}
-        </span>
-      </Link>
+    <header>
+      <nav
+        data-state={menuState && 'active'}
+        className="fixed z-20 w-full px-2"
+      >
+        <div
+          className={cn(
+            'bg-surface-1/90 mx-auto mt-2 max-w-6xl px-6 transition-all duration-300 lg:px-12',
+            isScrolled &&
+              'bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5',
+          )}
+        >
+          <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
+            <div className="flex w-full justify-between lg:w-auto">
+              {/* Left logo */}
+              <Link href="/" className="flex items-center gap-2">
+                <Image
+                  src="/images/placeholder.png"
+                  alt={t('logoAlt')}
+                  width={40}
+                  height={40}
+                  className="rounded-md"
+                />
+                <span className="font-heading text-highlight text-lg">
+                  {t('siteTitle')}
+                </span>
+              </Link>
 
-      {/* Desktop nav (hide below 800px) */}
-      <div className="max-[799px]:hidden">
-        <NavigationMenu className="flex gap-2">
-          {DEFAULT_LINKS.map((link) => {
-            return (
-              <NavigationMenuLink asChild>
-                <a href={link.href} className={navigationMenuTriggerStyle()}>
-                  {t(link.labelKey)}
-                </a>
-              </NavigationMenuLink>
-            );
-          })}
-        </NavigationMenu>
-      </div>
-
-      {/* Mobile controls (show below 800px) */}
-      <div className="flex items-center gap-3 min-[799px]:hidden">
-        <MobileMenu />
-      </div>
-
-      {/* Right-side utilities on desktop */}
-      <div className="max-[799px]:hidden space-x-4 flex items-center justify-center">
-        <ThemeToggle />
-        <LocaleSwitcher />
-      </div>
-    </nav>
+              {/* Mobile controls (show below 800px) */}
+              <div className="flex items-center gap-3 min-[799px]:hidden">
+                <MobileMenu />
+              </div>
+            </div>
+            <div className="absolute inset-0 m-auto hidden size-fit lg:block">
+              <ul className="flex gap-8 text-sm">
+                {DEFAULT_LINKS.map((link, index) => (
+                  <li key={index}>
+                    <Link
+                      href={link.href}
+                      className="text-fg-primary hover:text-fg-muted bg-surface-3 rounded-lg p-2 block duration-150"
+                    >
+                      <span>{t(link.labelKey)}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* Right-side utilities on desktop */}
+            <div className="max-[799px]:hidden space-x-4 flex items-center justify-center">
+              <ThemeToggle />
+              <LocaleSwitcher />
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
   );
 }
 
