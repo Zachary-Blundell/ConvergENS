@@ -95,6 +95,7 @@ export async function getEventsForCalendar(
       _and: [
         { start_at: { _lt: endISO } }, // starts before window ends
         { end_at: { _gt: startISO } }, // ends after window starts
+        { status: { _eq: 'published' } }, // only published
       ],
     },
     deep: {
