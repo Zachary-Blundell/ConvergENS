@@ -143,6 +143,12 @@
       "timeRange": "{start} – {end}"
     }
   },
+  "ArticlesPage": {
+    "articlesHeader": "Nos articles",
+    "noArticles": "Aucun article trouvé.",
+    "tryDifferentFilters": "Essayez peut-être différents filtres.",
+    "backToArticles": "← Retour aux articles"
+  },
 
   "404": {
     "badgeLabel": "Information",

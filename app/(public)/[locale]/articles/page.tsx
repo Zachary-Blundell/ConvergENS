@@ -11,6 +11,32 @@ import { getAllTagsForUI } from '@/lib/cms/tags';
 import FiltersBar from './FiltersBar';
 import Pagination from '@/components/Pagination';
 import { getAllCollectivesForUI } from '@/lib/cms/collectives';
+import { getTranslations } from 'next-intl/server';
+
+async function ShowCards({ articles, currentPage, articleCount }) {
+  const t = await getTranslations('ArticlesPage');
+
+  if (articles.length === 0) {
+    return (
+      <div className="p-10 flex justify-center align-middle h-[50vh]">
+        <div className="bg-gradient-to-t from-surface-2 to-surface-3 flex flex-col p-10 my-auto rounded-lg shadow-l">
+          <h2>{t('noArticles')}</h2>
+          <p className="mt-2 text-fg-muted">{t('tryDifferentFilters')}</p>
+        </div>
+      </div>
+    );
+  }
+  return (
+    <>
+      <ArticleCardGrid items={articles} />
+      <Pagination
+        perPage={perPage}
+        currentPage={currentPage}
+        count={articleCount}
+      />
+    </>
+  );
+}
 
 export default async function ArticlesPage({
   params,
@@ -41,11 +67,10 @@ export default async function ArticlesPage({
         selectedTag={currentTag}
         selectedCollective={currentCollective}
       />
-      <ArticleCardGrid items={articles} />
-      <Pagination
-        perPage={perPage}
+      <ShowCards
+        articles={articles}
         currentPage={currentPage}
-        count={articleCount}
+        articleCount={articleCount}
       />
     </main>
   );

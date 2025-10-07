@@ -5,6 +5,7 @@ import Image from 'next/image';
 import HtmlContent from '@/components/HtmlContent';
 import { getArticle } from '@/lib/cms/articles';
 import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 
 function formatDate(iso: string, locale: string) {
   try {
@@ -27,6 +28,8 @@ export default async function ArticlePage({
   const article = await getArticle(id, locale);
   if (!article) notFound(); // from next/navigation
 
+  const t = await getTranslations('ArticlesPage');
+
   return (
     <main className="mx-auto max-w-4xl p-6">
       <div className="py-8" />
@@ -36,7 +39,7 @@ export default async function ArticlePage({
           href={`/${locale}/articles`}
           className="text-sm text-fg-muted hover:underline"
         >
-          ← Back to Articles
+          {t('backToArticles')}
         </Link>
       </div>
 

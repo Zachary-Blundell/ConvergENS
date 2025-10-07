@@ -143,6 +143,13 @@
     }
   },
 
+  "ArticlesPage": {
+    "articlesHeader": "Nos articles",
+    "noArticles": "No articles found.",
+    "tryDifferentFilters": "Maybe try some different filters.",
+    "backToArticles": "← Back to Articles"
+  },
+
   "404": {
     "badgeLabel": "Information",
     "title": "Page not found",
