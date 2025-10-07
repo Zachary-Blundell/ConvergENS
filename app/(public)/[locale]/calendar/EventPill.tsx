@@ -34,14 +34,7 @@ export default function EventPill({
         e.stopPropagation();
         onClickAction(event);
       }}
-      className={
-        // Truncate to keep single-line pills tidy in dense days.
-        // Neutral backgrounds for light/dark; no border to stay compact.
-        'w-full truncate rounded-md px-2 py-1 pl-3 text-left text-xs ' +
-        'bg-stone-100 hover:bg-stone-200 ' +
-        'dark:bg-stone-800 dark:hover:bg-stone-700 ' +
-        'cursor-pointer'
-      }
+      className="w-full truncate rounded-md px-2 py-1 pl-3 text-left text-xs bg-surface-4 border-1 dark:border-0 cursor-pointer"
       // 4px inset strip inside the left edge; respects border radius.
       style={{ boxShadow: `inset 4px 0 0 0 ${color}` }}
       // Native tooltip on hover.
@@ -59,7 +52,7 @@ export default function EventPill({
       {event.all_day ? (
         // All-day: prefix with label, then title.
         <>
-          <span className="opacity-70">All day · </span>
+          <span className="">All day · </span>
           {event.title}
         </>
       ) : (
