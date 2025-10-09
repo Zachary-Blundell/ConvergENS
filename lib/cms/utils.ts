@@ -20,14 +20,12 @@ export function pickTranslation<T extends { languages_code: string }>(
 export function buildAssetUrl(
   fileId?: string | { id: string } | null,
 ): string | null {
-  console.log('buildAssetUrl fileId:', fileId);
   if (!fileId) return null;
   if (fileId === undefined) return null;
 
   const base = process.env.DIRECTUS_API_ENDPOINT;
 
   const id = typeof fileId === 'string' ? fileId : fileId.id;
-  console.log('Asset ID:', id);
   return `${base}/assets/${id}`;
 }
 

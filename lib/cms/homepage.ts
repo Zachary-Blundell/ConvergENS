@@ -74,7 +74,6 @@ export type FlatHomePage = {
 
 export async function getHome(locale: string): Promise<FlatHomePage> {
   try {
-    console.log('Fetching homepage for locale:', locale);
     const homePageRaw: RawHomePage = await directus.request<RawHomePage>(
       readSingleton('homepage', {
         fields: [
@@ -152,7 +151,6 @@ export async function getHome(locale: string): Promise<FlatHomePage> {
       about_row3_img: homePageRaw.about_row3_img ?? PLACEHOLDER_LOGO,
     };
 
-    console.log('Fetched homepage:', homePageFlat);
     return homePageFlat;
   } catch (err: unknown) {
     const e = err as any;
