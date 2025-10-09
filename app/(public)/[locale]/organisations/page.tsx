@@ -18,13 +18,13 @@ export default async function OrganisationsPage({
   // return <div>testing</div>;
   return (
     <div className="container px-4 py-12 mt-10 mx-auto">
-      <h1 className="mb-10 text-5xl text-center text-highlight">
+      <h1 className="mb-20 text-5xl text-center text-highlight">
         {t('organisationsHeader')}
       </h1>
       {organisations.length === 0 ? (
         <p className="text-center text-fg-primary">{t('noOrganisations')}</p>
       ) : (
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-center">
+        <div className="sm:mx-3 grid gap-15 sm:grid-cols-2 lg:grid-cols-3 justify-center">
           {organisations.map((org) => (
             <OrganisationCard
               key={org.id}
