@@ -2,19 +2,19 @@
   "Home": {
     "hero": {
       "title": "Bringing together <highlight>movements</highlight> and the talents of ENS",
-      "cta": "Discover the collectives"
+      "cta": "Discover the organisations"
     },
     "section1": {
       "title": "What is ConvergENS?",
-      "body": "ConvergENS is the collective that brings together the engaged collectives and clubs of the École normale supérieure (ENS), in connection with student parties and unions.\nIt arose from a double frustration: on the one hand, often small collective boards bending under the weight of volunteer work; on the other, new volunteers forced to choose between causes that speak to them just as much.\nConvergENS provides a shared space to follow each organization’s updates and keep the connection. From within the ENS, by coming together, we surface lines of convergence — and we also discuss the divides — across our struggles."
+      "body": "ConvergENS is the organisation that brings together the engaged organisations and clubs of the École normale supérieure (ENS), in connection with student parties and unions.\nIt arose from a double frustration: on the one hand, often small organisation boards bending under the weight of volunteer work; on the other, new volunteers forced to choose between causes that speak to them just as much.\nConvergENS provides a shared space to follow each organization’s updates and keep the connection. From within the ENS, by coming together, we surface lines of convergence — and we also discuss the divides — across our struggles."
     },
     "section2": {
       "title": "How does ConvergENS work?",
-      "body": "ConvergENS is not an umbrella structure over its members, but a collective that brings them together. Collectives and clubs are the decision-makers and vote in the General Assembly on everything concerning the collective (upcoming events, welcoming new members, etc.). Parties and unions are invited members: they contribute in particular to Agora (ConvergENS’ journal) and to its launch conferences.\nTo join ConvergENS, simply get involved in a member (or invited) organization and become its representative within the collective."
+      "body": "ConvergENS is not an umbrella structure over its members, but a organisation that brings them together. Organisations and clubs are the decision-makers and vote in the General Assembly on everything concerning the organisation (upcoming events, welcoming new members, etc.). Parties and unions are invited members: they contribute in particular to Agora (ConvergENS’ journal) and to its launch conferences.\nTo join ConvergENS, simply get involved in a member (or invited) organization and become its representative within the organisation."
     },
     "section3": {
       "title": "Our Objectives",
-      "body": "Our main objective is to promote a horizontal education in citizenship—not only through the ballot box, but also through union, collective, and party action.\nTo do this, we:",
+      "body": "Our main objective is to promote a horizontal education in citizenship—not only through the ballot box, but also through union, organisation, and party action.\nTo do this, we:",
       "items": {
         "shareExperiences": "organize experience-sharing sessions among volunteers to prevent activist burnout;",
         "poolResources": "pool our resources and carry shared advocacy (notably with the ENS leadership);",
@@ -24,7 +24,7 @@
     "about": {
       "row1": {
         "title": "Activist Library & Kiosk",
-        "body": "A collective reading session (\"arpentage\") followed by a discussion every month.",
+        "body": "A organisation reading session (\"arpentage\") followed by a discussion every month.",
         "imageAlt": "Activist library and kiosk"
       },
       "row2": {
@@ -33,15 +33,15 @@
         "imageAlt": "AGORA cover"
       },
       "row3": {
-        "title": "Collective calendar",
+        "title": "Organisation calendar",
         "body": "All activist activities at ENS in one place.",
-        "imageAlt": "Collective calendar"
+        "imageAlt": "Organisation calendar"
       }
     },
     "latest": {
       "title": "See our latest joint actions",
       "card": {
-        "fallback": "Short summary of an initiative proposed by one of the member collectives."
+        "fallback": "Short summary of an initiative proposed by one of the member organisations."
       }
     }
   },
@@ -65,7 +65,7 @@
       "title": "Sitemap",
       "links": {
         "sitemap": "Sitemap",
-        "collectives": "Collectives",
+        "organisations": "Organisations",
         "events": "Events",
         "contact": "Contact"
       }
@@ -74,14 +74,14 @@
       "title": "Contact",
       "email": "convergens@laposte.net"
     },
-    "disclaimer": "Each collective is responsible for the pages dedicated to it. The positions expressed by each of them do not bind the other collectives. Thus, the collectives and unions remain completely independent of the partisan collectives invited to take part in ConvergENS activities.",
+    "disclaimer": "Each organisation is responsible for the pages dedicated to it. The positions expressed by each of them do not bind the other organisations. Thus, the organisations and unions remain completely independent of the partisan organisations invited to take part in ConvergENS activities.",
     "copyright": "© {year} {site}. All rights reserved."
   },
 
   "Newspaper": {
     "meta": {
       "title": "Agora – The ConvergENS Journal",
-      "description": "Agora is the biannual review of the ConvergENS collective: ecological, feminist, anti-racist and anti-colonialist perspectives rooted in activist practice."
+      "description": "Agora is the biannual review of the ConvergENS organisation: ecological, feminist, anti-racist and anti-colonialist perspectives rooted in activist practice."
     },
     "banner": {
       "alt": "Three copies of the newspaper Agora",
@@ -90,8 +90,8 @@
     },
     "about": {
       "headingSrOnly": "About Agora",
-      "p1": "is a review to which all members and invited members of the ConvergENS collective contribute.",
-      "p2": "Published twice a year, it gives each organization the opportunity to shed light on a shared theme from its own standpoint: ecological, feminist, anti-racist and anti-colonialist struggles. Our editorial line is clear: rather than producing abstract or purely ideological discourse, we start from our activist practices and everyday difficulties to nourish a collective reflection.",
+      "p1": "is a review to which all members and invited members of the ConvergENS organisation contribute.",
+      "p2": "Published twice a year, it gives each organization the opportunity to shed light on a shared theme from its own standpoint: ecological, feminist, anti-racist and anti-colonialist struggles. Our editorial line is clear: rather than producing abstract or purely ideological discourse, we start from our activist practices and everyday difficulties to nourish a organisation reflection.",
       "p3": "Each issue is accompanied by a launch talk—a time for debate and public discussion of the texts."
     },
     "issue3": {
@@ -107,14 +107,14 @@
     }
   },
 
-  "CollectivesPage": {
-    "collectivesHeader": "Our Community",
+  "OrganisationsPage": {
+    "organisationsHeader": "Our Community",
     "altLogo": "Logo {name}",
     "viewPage": "View page",
     "viewPageTitle": "View {name} page",
     "viewPageAria": "View {name} page",
     "noDescription": "No description available.",
-    "noCollectives": "No collectives found."
+    "noOrganisations": "No organisations found."
   },
 
   "CalendarPage": {
@@ -128,8 +128,8 @@
       "allDay": "All day",
       "locationLabel": "Location: "
     },
-    "collective": {
-      "fallbackName": "Collective",
+    "organisation": {
+      "fallbackName": "Organisation",
       "logoAlt": "Logo of {name}"
     },
     "labels": {
@@ -137,8 +137,8 @@
       "noEvents": "No events",
       "description": "Description",
       "location": "Location",
-      "collective": "Collective",
-      "viewCollective": "View collective",
+      "organisation": "Organisation",
+      "viewOrganisation": "View organisation",
       "timeRange": "{start} – {end}"
     }
   },
@@ -150,7 +150,7 @@
     "backToArticles": "← Back to Articles",
     "FiltersBar": {
       "groups": {
-        "collectives": "Collectives:",
+        "organisations": "Organisations:",
         "tags": "Tags:"
       },
       "all": "All",
