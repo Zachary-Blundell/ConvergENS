@@ -49,7 +49,7 @@
   "Nav": {
     "siteTitle": "ConvergENS",
     "logoAlt": "ConvergENS Logo",
-    "collectives": "Collectives",
+    "organisations": "Organisations",
     "articles": "Articles",
     "calendar": "Calendar",
     "newspaper": "Newspaper",
@@ -153,9 +153,9 @@
         "collectives": "Collectives:",
         "tags": "Tags:"
       },
-      "actions": {
-        "all": "All"
-      }
+      "all": "All",
+      "categories": "Categories",
+      "close": "Close"
     }
   },
 
