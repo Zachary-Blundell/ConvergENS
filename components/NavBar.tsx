@@ -19,7 +19,7 @@ import { HiMenuAlt3 } from 'react-icons/hi';
 import Logo from './logo';
 
 /** i18n keys */
-type LinkKey = 'collectives' | 'articles' | 'calendar' | 'newspaper';
+type LinkKey = 'organisations' | 'articles' | 'calendar' | 'newspaper';
 
 export type LinkItem = {
   href: `/${string}`;
@@ -27,7 +27,7 @@ export type LinkItem = {
 };
 
 export const DEFAULT_LINKS: readonly LinkItem[] = [
-  { href: '/collectives', labelKey: 'collectives' },
+  { href: '/organisations', labelKey: 'organisations' },
   { href: '/articles', labelKey: 'articles' },
   { href: '/calendar', labelKey: 'calendar' },
   { href: '/newspaper', labelKey: 'newspaper' },
