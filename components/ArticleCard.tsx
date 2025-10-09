@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import * as React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 /** Simple classnames combiner (avoids bringing in a util dependency) */
 function cn(...classes: Array<string | false | null | undefined>) {
-  return classes.filter(Boolean).join(" ");
+  return classes.filter(Boolean).join(' ');
 }
 
 /** Minimal shape expected by this card (matches your getter's ArticleCard) */
@@ -51,7 +51,7 @@ export default function ArticleCard({
   href,
   className,
   imagePriority,
-  imageSizes = "(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 100vw",
+  imageSizes = '(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 100vw',
 }: ArticleCardProps) {
   const router = useRouter();
   const linkHref = href ?? `/articles/${article.id}`;
@@ -63,14 +63,14 @@ export default function ArticleCard({
     ? {
         backgroundColor: article.tag.color,
         // light text for darker backgrounds; simple heuristic
-        color: "#fff",
-        borderColor: "rgba(255,255,255,0.4)",
+        color: '#fff',
+        borderColor: 'rgba(255,255,255,0.4)',
       }
     : undefined;
 
   const handleClick = () => router.push(linkHref);
   const handleKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (e) => {
-    if (e.key === "Enter" || e.key === " ") {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       router.push(linkHref);
     }
@@ -79,7 +79,7 @@ export default function ArticleCard({
   const collectiveRingColor = article.collective?.color ?? null;
   const ringVars = collectiveRingColor
     ? ({
-        ["--tw-ring-color" as any]: collectiveRingColor,
+        ['--tw-ring-color' as any]: collectiveRingColor,
       } as React.CSSProperties)
     : undefined;
 
@@ -91,17 +91,17 @@ export default function ArticleCard({
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       className={cn(
-        "group relative flex h-full flex-col overflow-hidden rounded-2xl border border-outline bg-surface-2 shadow-sm transition hover:shadow-lg hover:bg-surface-3 hover:text-fg-muted cursor-pointer",
+        'group relative flex h-full flex-col overflow-hidden rounded-2xl border border-outline bg-surface-2 shadow-sm transition hover:shadow-lg hover:bg-surface-3 hover:text-fg-muted cursor-pointer',
         className,
       )}
     >
+      {/* Cover image area */}
       <div className="relative">
-        {/* Cover image area */}
         <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface-3">
           {coverUrl ? (
             <Image
               src={coverUrl}
-              alt={article.title || "Article cover"}
+              alt={article.title || 'Article cover'}
               fill
               priority={imagePriority}
               sizes={imageSizes}
@@ -115,10 +115,10 @@ export default function ArticleCard({
           {article.tag?.name ? (
             <span
               className={cn(
-                "absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium",
+                'absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-xs font-medium',
                 article.tag.color
-                  ? "backdrop-contrast-125"
-                  : "bg-white/90 dark:bg-zinc-900/90 border-zinc-200 dark:border-zinc-700",
+                  ? 'backdrop-contrast-125'
+                  : 'bg-white/90 dark:bg-zinc-900/90 border-zinc-200 dark:border-zinc-700',
               )}
               style={tagStyle}
             >
@@ -137,14 +137,14 @@ export default function ArticleCard({
           {article.collective.logoUrl ? (
             <span
               className={cn(
-                "relative inline-block h-8 w-8 overflow-hidden rounded-full ring-2 ring-offset-1 ring-offset-white dark:ring-offset-zinc-900",
-                collectiveRingColor ? undefined : "ring-outline",
+                'relative inline-block h-8 w-8 overflow-hidden rounded-full ring-2 ring-offset-1 ring-offset-white dark:ring-offset-zinc-900',
+                collectiveRingColor ? undefined : 'ring-outline',
               )}
               style={ringVars}
             >
               <Image
                 src={article.collective.logoUrl}
-                alt={article.collective.name ?? "Collective logo"}
+                alt={article.collective.name ?? 'Collective logo'}
                 fill
                 sizes="24px"
                 className="object-cover"
@@ -154,7 +154,7 @@ export default function ArticleCard({
             <span
               className="inline-block h-2.5 w-2.5 rounded-full"
               style={{
-                backgroundColor: article.collective.color ?? "#e5e7eb",
+                backgroundColor: article.collective.color ?? '#e5e7eb',
               }}
               aria-hidden
             />
@@ -170,7 +170,7 @@ export default function ArticleCard({
               {article.collective.name ?? article.collective.slug}
             </Link>
           ) : (
-            <span>{article.collective.name ?? "Collective"}</span>
+            <span>{article.collective.name ?? 'Collective'}</span>
           )}
         </div>
         {/* )} */}
@@ -184,7 +184,7 @@ export function ArticleCardSkeleton({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "animate-pulse overflow-hidden rounded-2xl border-2 border-outline",
+        'animate-pulse overflow-hidden rounded-2xl border-2 border-outline',
         className,
       )}
     >
