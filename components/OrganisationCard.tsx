@@ -1,9 +1,9 @@
-import { Link } from "@/i18n/navigation";
-import { useTranslations } from "next-intl";
-import Image from "next/image";
-import React from "react";
+import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import React from 'react';
 
-export function CollectiveCard({
+export function OrganisationCard({
   name,
   summary,
   logoUrl,
@@ -21,17 +21,17 @@ export function CollectiveCard({
   slug: string;
   color: string;
 }) {
-  const t = useTranslations("CollectivesPage");
+  const t = useTranslations('OrganisationsPage');
 
   // ---------- Contrast helpers ----------
   function hexToRgb(hex: string) {
-    const h = hex.replace("#", "");
+    const h = hex.replace('#', '');
     const full =
       h.length === 3
         ? h
-            .split("")
+            .split('')
             .map((c) => c + c)
-            .join("")
+            .join('')
         : h;
     const num = parseInt(full, 16);
     return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
@@ -62,14 +62,14 @@ export function CollectiveCard({
     }
   }
   function pickText(hexBg: string) {
-    const ratioWhite = safeRatio(() => contrastRatio(hexBg, "#ffffff"));
-    const ratioBlack = safeRatio(() => contrastRatio(hexBg, "#000000"));
-    if (isNaN(ratioWhite) || isNaN(ratioBlack)) return "#ffffff"; // fallback
-    return ratioBlack >= ratioWhite ? "#000000" : "#ffffff";
+    const ratioWhite = safeRatio(() => contrastRatio(hexBg, '#ffffff'));
+    const ratioBlack = safeRatio(() => contrastRatio(hexBg, '#000000'));
+    if (isNaN(ratioWhite) || isNaN(ratioBlack)) return '#ffffff'; // fallback
+    return ratioBlack >= ratioWhite ? '#000000' : '#ffffff';
   }
 
-  const bg = color || "#ffffff";
-  const hoverBg = "#FF621F";
+  const bg = color || '#ffffff';
+  const hoverBg = '#FF621F';
   const textColor = pickText(bg);
   const textColorHover = pickText(hoverBg);
 
@@ -81,7 +81,7 @@ export function CollectiveCard({
           height={logoH}
           width={logoW}
           src={logoUrl}
-          alt={t("altLogo", { name })}
+          alt={t('altLogo', { name })}
           // className="h-24 w-24 bg-surface-2 ring-2 ring-outline shadow-lg transition-transform duration-200"
         />
       </div>
@@ -92,7 +92,7 @@ export function CollectiveCard({
           height={logoH}
           width={logoW}
           src={logoUrl}
-          alt={t("altLogo", { name })}
+          alt={t('altLogo', { name })}
           className="h-24 w-24 rounded-full bg-surface-2 ring-2 ring-outline shadow-lg transition-transform duration-200 group-hover:scale-105"
         />
       </div>
@@ -106,9 +106,9 @@ export function CollectiveCard({
         <p className="my-5 text-sm text-fg-muted">{summary}</p>
 
         <Link
-          href={"/collectives/" + slug}
-          title={t("viewPageTitle", { name })}
-          aria-label={t("viewPageAria", { name })}
+          href={'/organisations/' + slug}
+          title={t('viewPageTitle', { name })}
+          aria-label={t('viewPageAria', { name })}
           className="
             inline-block rounded-md px-6 py-3 text-sm text-center font-medium uppercase
             focus:outline-none transition-colors duration-200
@@ -117,14 +117,14 @@ export function CollectiveCard({
           "
           style={
             {
-              ["--btn-bg" as any]: bg,
-              ["--btn-bg-hover" as any]: hoverBg,
-              ["--btn-fg" as any]: textColor,
-              ["--btn-fg-hover" as any]: textColorHover,
+              ['--btn-bg' as any]: bg,
+              ['--btn-bg-hover' as any]: hoverBg,
+              ['--btn-fg' as any]: textColor,
+              ['--btn-fg-hover' as any]: textColorHover,
             } as React.CSSProperties
           }
         >
-          {t("viewPage")}
+          {t('viewPage')}
         </Link>
       </div>
     </div>

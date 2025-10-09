@@ -98,7 +98,7 @@ export async function getCollectivesRaw(
 }
 
 /* Collective cards */
-export type CollectiveCard = {
+export type OrganisationCard = {
   //flattened
   id: string;
   name: string;
@@ -123,9 +123,9 @@ export type CollectiveCard = {
   socials?: { platform: string; url: string }[];
 };
 
-export async function getCollectiveCards(
+export async function getOrganisationCards(
   locale: string,
-): Promise<CollectiveCard[]> {
+): Promise<OrganisationCard[]> {
   // we get everything but the body text
   const req: ItemsQuery = {
     fields: [
@@ -162,10 +162,10 @@ export async function getCollectiveCards(
 
   const rows = await getCollectivesRaw(req);
 
-  return rows.map((i: CollectiveRaw): CollectiveCard => {
+  return rows.map((i: CollectiveRaw): OrganisationCard => {
     const collectiveTr = pickTranslation(i.translations, locale);
     const typeTr = pickTranslation(i.type.translations, locale);
-    const result: CollectiveCard = {
+    const result: OrganisationCard = {
       id: String(i.id),
       name: String(i.name ?? null),
       slug: String(i.slug ?? null),

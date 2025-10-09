@@ -1,41 +1,41 @@
-// app/[locale]/collectives/page.tsx
-import { CollectiveCard } from '@/components/CollectiveCard';
-import { getCollectiveCards } from '@/lib/cms/collectives';
+// app/[locale]/organisations/page.tsx
+import { OrganisationCard } from '@/components/OrganisationCard';
+import { getOrganisationCards } from '@/lib/cms/collectives';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
-export default async function CollectivesPage({
+export default async function OrganisationsPage({
   params,
 }: {
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
 
-  const t = await getTranslations('CollectivesPage');
+  const t = await getTranslations('OrganisationsPage');
 
-  const collectives = await getCollectiveCards(locale);
+  const organisations = await getOrganisationCards(locale);
 
   // return <div>testing</div>;
   return (
     <div className="container px-4 py-12 mt-10 mx-auto">
       <h1 className="mb-10 text-5xl text-center text-highlight">
-        {t('collectivesHeader')}
+        {t('organisationsHeader')}
       </h1>
-      {collectives.length === 0 ? (
-        <p className="text-center text-fg-primary">{t('noCollectives')}</p>
+      {organisations.length === 0 ? (
+        <p className="text-center text-fg-primary">{t('noOrganisations')}</p>
       ) : (
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3 justify-center">
-          {collectives.map((asso) => (
-            <CollectiveCard
-              key={asso.id}
-              id={asso.id}
-              name={asso.name}
-              logoW={asso.logoWidth}
-              logoH={asso.logoHeight}
-              summary={asso.summary}
-              logoUrl={asso.logoUrl}
-              slug={asso.slug}
-              color={asso.color}
+          {organisations.map((org) => (
+            <OrganisationCard
+              key={org.id}
+              id={org.id}
+              name={org.name}
+              logoW={org.logoWidth}
+              logoH={org.logoHeight}
+              summary={org.summary}
+              logoUrl={org.logoUrl}
+              slug={org.slug}
+              color={org.color}
             />
           ))}
         </div>

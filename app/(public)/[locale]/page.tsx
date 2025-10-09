@@ -6,7 +6,7 @@ import Link from 'next/link';
 import reactStringReplace from 'react-string-replace';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { getHome } from '@/lib/cms/homepage';
-import CollectiveRows from '@/components/CollectivesRow';
+import OrganisationsRow from '@/components/OrganisationsRow';
 
 /* ---------------- Utilities ---------------- */
 
@@ -96,7 +96,7 @@ export default async function HomePage() {
           />
         )}
         {/* ---------------- Collective Rows---------------- */}
-        <CollectiveRows />
+        <OrganisationsRow />
 
         <div className="relative bottom-10 z-10 flex h-full w-full items-center justify-center">
           <div className="px-4 text-center">
