@@ -74,20 +74,10 @@ export function OrganisationCard({
   const textColorHover = pickText(hoverBg);
 
   return (
-    <div className="relative group flex w-full flex-col mt-12 rounded-lg bg-surface-2 shadow-lg transition delay-150 duration-300 ease-in-out md:hover:-translate-y-1 md:hover:scale-110">
+    <div className="group relative flex h-full flex-col rounded-lg bg-surface-2 shadow-m transition delay-150 duration-300 ease-in-out md:hover:-translate-y-1 md:hover:scale-110">
       {/* Mobile logo (centered, inside flow) */}
-      <div className="sm:hidden -mt-10 mb-2 flex justify-center">
-        <Image
-          height={logoH}
-          width={logoW}
-          src={logoUrl}
-          alt={t('altLogo', { name })}
-          // className="h-24 w-24 bg-surface-2 ring-2 ring-outline shadow-lg transition-transform duration-200"
-        />
-      </div>
-
       {/* Desktop/Tablet floating logo */}
-      <div className="hidden sm:block absolute -top-12 -left-6 z-10">
+      <div className="-mt-10 mb-2 flex justify-center sm:block sm:absolute sm:-top-2 sm:-left-6 sm:z-10">
         <Image
           height={logoH}
           width={logoW}
@@ -98,7 +88,7 @@ export function OrganisationCard({
       </div>
 
       {/* Content */}
-      <div className="flex flex-col sm:flex-none justify-between flex-1 p-4">
+      <div className="flex flex-col flex-1 p-4">
         <div className="flex justify-center items-center w-full">
           <h3 className="text-center text-xl text-fg-primary px-15">{name}</h3>
         </div>
@@ -110,7 +100,8 @@ export function OrganisationCard({
           title={t('viewPageTitle', { name })}
           aria-label={t('viewPageAria', { name })}
           className="
-            inline-block rounded-md px-6 py-3 text-sm text-center font-medium uppercase
+          mt-auto inline-flex gap-2 
+            rounded-md px-6 py-3  text-sm text-center font-medium uppercase
             focus:outline-none transition-colors duration-200
             bg-[var(--btn-bg)] hover:bg-[var(--btn-bg-hover)]
             text-[var(--btn-fg)] hover:text-[var(--btn-fg-hover)]
