@@ -35,12 +35,7 @@ export default function Footer() {
               </Link>
             </li>
             <li>
-              <Link href="/collectives" className="hover:underline">
-                {t('sitemap.links.collectives')}
-              </Link>
-            </li>
-            <li>
-              <Link href="/evenements" className="hover:underline">
+              <Link href="/legal" className="hover:underline">
                 {t('sitemap.links.events')}
               </Link>
             </li>
