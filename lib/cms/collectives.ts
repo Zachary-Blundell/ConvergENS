@@ -255,6 +255,7 @@ export async function getCollectiveBadges(): Promise<CollectiveBadge[]> {
       'name',
       'color',
     ],
+    filter: { status: { _eq: 'published' } },
   };
   try {
     const rows = await getCollectivesRaw(req);
