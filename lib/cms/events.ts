@@ -107,7 +107,7 @@ export async function getEventsForCalendar(
         },
       },
     },
-    // sort: ['all_day', 'start_at', 'end_at'], // all_day first (false<true), then by time
+    sort: ['all_day', 'start_at', 'end_at'], // all_day first (false<true), then by time
   };
 
   const rawEvents = await getEventsRaw(req);
