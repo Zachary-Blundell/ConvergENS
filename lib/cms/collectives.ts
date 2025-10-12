@@ -8,7 +8,6 @@ import {
   pickTranslation,
   PLACEHOLDER_LOGO,
 } from './utils';
-import { log } from 'console';
 
 export type CollectiveTranslation = {
   languages_code: string;
@@ -93,7 +92,6 @@ export async function getCollectivesRaw(
   const rawCollectives = await directus.request<any[]>(
     readItems('collectives', req),
   );
-  log('here are the raw collectives form getCollectivesRaw: ', rawCollectives);
   return rawCollectives as CollectiveRaw[];
 }
 
@@ -322,7 +320,6 @@ export async function getCollectiveBySlug(
   locale = DEFAULT_LOCALE,
 ): Promise<CollectiveFlat | null> {
   // 1) Find the primary key by slug (and published)
-  log('here is the slug searched', slug);
   const found = await directus.request<{ id: string }[]>(
     readItems('collectives', {
       fields: ['id'],
@@ -330,7 +327,6 @@ export async function getCollectiveBySlug(
       limit: 1,
     }),
   );
-  log('here is what was found: ', found);
   const id = found?.[0]?.id;
   if (!id) return null;
 

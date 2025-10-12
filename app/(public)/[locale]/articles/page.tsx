@@ -10,8 +10,8 @@ import { ArticleCardGrid } from '@/components/ArticleCard';
 import { getAllTagsForUI } from '@/lib/cms/tags';
 import FiltersBar from './FiltersBar';
 import Pagination from '@/components/Pagination';
-import { getAllCollectivesForUI } from '@/lib/cms/collectives';
 import { getTranslations } from 'next-intl/server';
+import { getAllCollectivesForUI } from '@/lib/cms/collectives';
 
 async function ShowCards({ articles, currentPage, articleCount }) {
   const t = await getTranslations('ArticlesPage');
@@ -43,29 +43,34 @@ export default async function ArticlesPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ page: string; tag: string; collective: string }>;
+  searchParams: Promise<{ page: string; tag: string; organisation: string }>;
 }) {
   const { locale } = await params;
-  const { page, tag, collective } = await searchParams;
+  const { page, tag, organisation } = await searchParams;
 
   const currentPage = page ? parseInt(page) : 1;
   const currentTag = tag ? parseInt(tag) : null;
-  const currentCollective = collective ? parseInt(collective) : null;
+  const currentOrganisation = organisation ? parseInt(organisation) : null;
 
-  const articles = await getArticleCards(locale, currentPage, tag, collective);
+  const articles = await getArticleCards(
+    locale,
+    currentPage,
+    tag,
+    organisation,
+  );
   const articleCount = await getArticleCount();
 
   const tagOptions = await getAllTagsForUI(locale);
-  const collectiveOptions = await getAllCollectivesForUI();
+  const organisationOptions = await getAllCollectivesForUI();
 
   return (
     <main className="flex flex-col gap-6 p-6">
       <div className="py-5" />
       <FiltersBar
-        collectives={collectiveOptions}
+        organisations={organisationOptions}
         tags={tagOptions}
         selectedTag={currentTag}
-        selectedCollective={currentCollective}
+        selectedOrganisation={currentOrganisation}
       />
       <ShowCards
         articles={articles}

@@ -74,9 +74,7 @@ export async function getArticlesRaw(req?: ItemsQuery): Promise<ArticleRaw[]> {
     };
   }
 
-  log('here is the req from getArticlesRaw: ', req);
   const rawArticles = await directus.request<any[]>(readItems('articles', req));
-  log('here are the raw Articles form getArticlesRaw: ', rawArticles);
   return rawArticles as ArticleRaw[];
 }
 
@@ -194,7 +192,6 @@ export async function getArticleCards(
       },
       published_at: String(i.published_at),
     };
-    log(result);
     return result;
   });
 }

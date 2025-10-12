@@ -5,7 +5,6 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Globe, Mail, Phone } from 'lucide-react';
 import { Separator } from '@radix-ui/react-select';
-import { log } from 'console';
 import HtmlContent from '@/components/HtmlContent';
 
 export default async function CollectivePage({
@@ -15,7 +14,6 @@ export default async function CollectivePage({
 }) {
   const { slug, locale } = await params;
   const assoc = await getCollectiveBySlug(slug, locale);
-  log(assoc);
 
   if (!assoc) notFound();
 
