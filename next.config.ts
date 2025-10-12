@@ -1,21 +1,12 @@
-import { NextConfig } from 'next';
+// next.config.ts
+import type { NextConfig } from 'next';
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig: NextConfig = {
   output: 'standalone',
   images: {
-    remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: process.env.DIRECTUS_API_ENDPOINT.replace(
-          'http://',
-          '',
-        ).replace(':8055', ''),
-        port: '8055',
-      },
-    ],
+    domains: ['convergensapi.zac.coffee'],
   },
 };
 
-const withNextIntl = createNextIntlPlugin();
-export default withNextIntl(nextConfig);
+export default createNextIntlPlugin()(nextConfig);

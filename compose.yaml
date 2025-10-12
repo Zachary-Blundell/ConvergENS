@@ -1,0 +1,11 @@
+services:
+  web:
+    image: ghcr.io/zachary-blundell/convergens:latest
+    ports: ['3000:3000']
+    restart: unless-stopped
+    env_file: .env
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3000/health']
+      interval: 10s
+      timeout: 3s
+      retries: 5
