@@ -11,7 +11,7 @@ export default async function CollectiveRows() {
         {assoBadges.map((a, n) => (
           <Link
             key={`${a.name}-${n}`}
-            href={`/collectives/${a.slug}`}
+            href={`/organisations/${a.slug}`}
             className="group block"
             aria-label={a.name}
           >

@@ -95,7 +95,7 @@ export default async function HomePage() {
             className="object-cover z-0"
           />
         )}
-        {/* ---------------- Collective Rows---------------- */}
+        {/* ---------------- Organisation Rows---------------- */}
         <OrganisationsRow />
 
         <div className="relative bottom-10 z-10 flex h-full w-full items-center justify-center">
@@ -106,7 +106,7 @@ export default async function HomePage() {
               )}
             </h1>
             <Link
-              href="/collectives"
+              href="/organisations"
               className="mt-6 inline-block rounded-md bg-highlight px-6 py-3 text-sm font-medium uppercase text-white transition-colors duration-300 hover:bg-highlight-400 focus:outline-none"
             >
               {t?.hero_cta ? t.hero_cta : tFallback('hero.cta')}
