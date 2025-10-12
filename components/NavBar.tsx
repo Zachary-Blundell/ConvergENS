@@ -68,7 +68,7 @@ export default function NavBar() {
                 <MobileMenu />
               </div>
             </div>
-            <div className="absolute inset-0 m-auto hidden size-fit lg:block">
+            <div className="z-10 inset-0 m-auto hidden size-fit lg:block">
               <ul className="flex gap-8 text-sm">
                 {DEFAULT_LINKS.map((link, index) => (
                   <li key={index}>
