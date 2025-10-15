@@ -131,6 +131,7 @@ export async function getOrganisationCards(
       'name',
       'slug',
       'color',
+      'type',
       { logo: ['id', 'width', 'height'] },
       {
         type: [
@@ -184,6 +185,7 @@ export async function getOrganisationCards(
       description: collectiveTr?.description ?? null,
       socials: i.socials ?? [],
     };
+    console.log(result);
     return result;
   });
 }
