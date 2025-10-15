@@ -115,7 +115,13 @@
     "viewPageTitle": "Voir la page de {name}",
     "viewPageAria": "Voir la page de {name}",
     "noDescription": "Aucune description disponible.",
-    "noOrganisations": "Pas d’organisations trouvées."
+    "noOrganisations": "Pas d’organisations trouvées.",
+
+    "decisionMakingMembers": "Membres décisionnaires :",
+    "invitedMembers": "Membre invité :",
+    "associativeOrganisations": "Organisations associatives :",
+    "unionOrganisations": "Organisations syndicales :",
+    "partisanOrganisations": "Organisations partisanes :"
   },
 
   "CalendarPage": {
@@ -143,6 +149,7 @@
       "timeRange": "{start} – {end}"
     }
   },
+
   "ArticlesPage": {
     "articlesHeader": "Nos articles",
     "noArticles": "Aucun article trouvé.",

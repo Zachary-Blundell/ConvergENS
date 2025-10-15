@@ -114,7 +114,13 @@
     "viewPageTitle": "View {name} page",
     "viewPageAria": "View {name} page",
     "noDescription": "No description available.",
-    "noOrganisations": "No organisations found."
+    "noOrganisations": "No organisations found.",
+
+    "decisionMakingMembers": "Decision-making Members:",
+    "invitedMembers": "Invited Members: ",
+    "associativeOrganisations": "Associative Organisations",
+    "unionOrganisations": "Union Organisations",
+    "partisanOrganisations": "Uartisan Organisations"
   },
 
   "CalendarPage": {
