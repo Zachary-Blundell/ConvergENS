@@ -143,6 +143,7 @@ export async function getArticleCards(
     filter: {
       tag: { id: { _eq: tagId } },
       collective: { id: { _eq: collectiveId } },
+      status: { _eq: 'published' },
     },
     deep: {
       translations: {
@@ -159,7 +160,7 @@ export async function getArticleCards(
         },
       },
     },
-    sort: ['-date_created'],
+    sort: ['-published_at'],
     page,
     limit: perPage,
   };
