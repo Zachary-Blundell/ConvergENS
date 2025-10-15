@@ -185,7 +185,6 @@ export async function getOrganisationCards(
       description: collectiveTr?.description ?? null,
       socials: i.socials ?? [],
     };
-    console.log(result);
     return result;
   });
 }
