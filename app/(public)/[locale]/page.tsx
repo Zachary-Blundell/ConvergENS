@@ -71,6 +71,7 @@ function Section({ id, className, title, paragraph, children }: SectionProps) {
 export default async function HomePage() {
   const locale = await getLocale();
   const home = await getHome(locale);
+  console.log('Home page data:', home);
 
   const t = home?.translations;
   const tFallback = await getTranslations('Home');
@@ -137,7 +138,14 @@ export default async function HomePage() {
       <section className="container mx-auto space-y-20 px-4 py-16">
         {/* Row 1 – image left, text right */}
         <div className="grid items-center gap-10 sm:grid-cols-2">
-          <div className="scroll-fade-in aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700" />
+          {/* <div className="scroll-fade-in aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700" /> */}
+          <Image
+            src={home?.about_row1_img.url}
+            alt="About image 1"
+            width={home?.about_row1_img.width ?? 800}
+            height={home?.about_row1_img.height ?? 450}
+            className="scroll-fade-in aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700"
+          />
           <div className="space-y-4">
             <h2 className="text-2xl text-fg-primary">
               {t?.about_row1_title ?? tFallback('about.row1.title')}
@@ -158,12 +166,26 @@ export default async function HomePage() {
               {t?.about_row2_body ?? tFallback('about.row2.body')}
             </p>
           </div>
-          <div className="scroll-fade-in order-1 aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700 sm:order-2" />
+          {/* <div className="scroll-fade-in order-1 aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700 sm:order-2" /> */}
+
+          <Image
+            src={home?.about_row2_img.url}
+            alt="About image 2"
+            width={home?.about_row2_img.width ?? 800}
+            height={home?.about_row2_img.height ?? 450}
+            className="scroll-fade-in order-1 aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700 sm:order-2"
+          />
         </div>
 
         {/* Row 3 – image left, text right */}
         <div className="grid items-center gap-10 sm:grid-cols-2">
-          <div className="scroll-fade-in aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700" />
+          <Image
+            src={home?.about_row3_img.url}
+            alt="About image 3"
+            width={home?.about_row3_img.width ?? 800}
+            height={home?.about_row3_img.height ?? 450}
+            className="scroll-fade-in aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700"
+          />
           <div className="space-y-4">
             <h2 className="text-2xl text-fg-primary">
               {t?.about_row3_title ?? tFallback('about.row3.title')}
@@ -178,11 +200,18 @@ export default async function HomePage() {
       {/* ---------------- Objectives ---------------- */}
       <Section
         id="objectives"
+        className="bg-surface-2"
         title={t?.section_3_title ?? tFallback('section3.title')}
         paragraph={t?.section_3_body ?? tFallback('section3.body')}
       />
 
-      <ArticleCardCarousel articles={carouselArticles} className="mb-2" />
+      <h2 className="p-5 text-center text-3xl sm:text-4xl md:text-5xl text-highlight">
+        Latest Articles
+      </h2>
+      <ArticleCardCarousel
+        articles={carouselArticles}
+        className="max-w-5/6 mb-8 min-h-[50svh]"
+      />
     </div>
   );
 }
