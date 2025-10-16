@@ -17,6 +17,7 @@ export default async function CollectivePage({
 
   if (!assoc) notFound();
 
+  // console.log('current description: ', assoc.description);
   return (
     // Main column
     <div className="container mt-12 mx-auto max-w-5xl px-4 py-8 ">
@@ -86,55 +87,59 @@ export default async function CollectivePage({
         </header>
 
         {/* Sidebar */}
-        <aside className="lg:col-span-1">
-          <div className="rounded-xl border">
-            <div className="p-4">
+        {assoc.socials.length > 0 ? (
+          <aside className="lg:col-span-1">
+            <div className="p-4 rounded-xl border">
               <h2 className="text-fg-primary uppercase tracking-wide">
                 Socials
               </h2>
 
               <ul className="mt-3 space-y-2">
-                {assoc.socials.length > 0 ? (
-                  assoc.socials.map((s) => (
-                    <li key={s.url}>
-                      <a
-                        href={s.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group inline-flex max-w-full items-center gap-2 truncate text-sm hover:underline"
-                      >
-                        <span
-                          className="inline-block h-2.5 w-2.5 rounded-full"
-                          style={{ backgroundColor: 'var(--brand)' }}
-                        />
-                        <span className="truncate">
-                          {prettyPlatform(s.platform)}
-                        </span>
-                        <ExternalLink className="h-3.5 w-3.5 opacity-60 group-hover:opacity-100" />
-                      </a>
-                    </li>
-                  ))
-                ) : (
-                  <li className="text-sm text-muted-foreground">
-                    No social links yet.
+                {assoc.socials.map((s) => (
+                  <li key={s.url}>
+                    <a
+                      href={s.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group inline-flex max-w-full items-center gap-2 truncate text-sm hover:underline"
+                    >
+                      <span
+                        className="inline-block h-2.5 w-2.5 rounded-full"
+                        style={{ backgroundColor: 'var(--brand)' }}
+                      />
+                      <span className="truncate">
+                        {prettyPlatform(s.platform)}
+                      </span>
+                      <ExternalLink className="h-3.5 w-3.5 opacity-60 group-hover:opacity-100" />
+                    </a>
                   </li>
-                )}
+                ))}
               </ul>
             </div>
-          </div>
-        </aside>
+          </aside>
+        ) : (
+          <></>
+        )}
       </div>
 
       <Separator className="my-8" />
 
       {/* Main content */}
-      <div
-        className="w-full px-10 py-2 bg-surface-3 border-2 border-outline border-t-outline-highlight
+      {assoc.description ? (
+        <div
+          className="w-full px-10 py-2 bg-surface-3 border-2 border-outline border-t-outline-highlight
        rounded-xl hshadow-lg "
-      >
-        {/* Description */}
-        <HtmlContent className="cms-content " html={assoc.description} />
-      </div>
+        >
+          {/* Description */}
+          <HtmlContent className="cms-content " html={assoc.description} />
+        </div>
+      ) : (
+        <div className="flex bg-surface-3 w-100 h-50 items-center rounded-md mx-auto">
+          <p className="mx-auto my-4 max-w-3xl px-4 text-center text-base sm:text-lg leading-relaxed text-fg-primary">
+            This organisation has not yet provided a description in English.
+          </p>
+        </div>
+      )}
     </div>
   );
 }
