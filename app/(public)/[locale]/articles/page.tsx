@@ -2,6 +2,7 @@
 // ConvergENS Articles-page
 
 import {
+  ArticleCard,
   getArticleCards,
   getArticleCount,
   perPage as perPage,
@@ -13,7 +14,15 @@ import Pagination from '@/components/Pagination';
 import { getTranslations } from 'next-intl/server';
 import { getAllCollectivesForUI } from '@/lib/cms/collectives';
 
-async function ShowCards({ articles, currentPage, articleCount }) {
+async function ShowCards({
+  articles,
+  currentPage,
+  articleCount,
+}: {
+  articles: Array<ArticleCard>;
+  currentPage: number;
+  articleCount: number;
+}) {
   const t = await getTranslations('ArticlesPage');
 
   if (articles.length === 0) {
