@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+import { ArticleCard as TArticleCard } from '@/lib/cms/articles';
+
 /** Simple classnames combiner (avoids bringing in a util dependency) */
 function cn(...classes: Array<string | false | null | undefined>) {
   return classes.filter(Boolean).join(' ');
@@ -35,7 +37,7 @@ export type ArticleCardData = {
 };
 
 export type ArticleCardProps = {
-  article: ArticleCardData;
+  article: TArticleCard;
   /** Optional href override. Defaults to `/articles/{id}` */
   href?: string;
   /** Extra wrapper classes */
@@ -48,15 +50,17 @@ export type ArticleCardProps = {
 
 export default function ArticleCard({
   article,
-  href,
   className,
   imagePriority,
   imageSizes = '(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 100vw',
 }: ArticleCardProps) {
   const router = useRouter();
-  const linkHref = href ?? `/articles/${article.id}`;
+  const linkHref = `/articles/${article.id}`;
 
-  const { coverUrl } = article;
+  const { coverUrl, collective } = article;
+  const slug = collective?.slug;
+  const isConvergens = slug.toLowerCase() === 'convergens';
+  const href = isConvergens ? '/' : `/organisations/${slug}`;
 
   // Tag styles: prefer provided color, fall back to neutral
   const tagStyle: React.CSSProperties | undefined = article.tag.color
@@ -162,7 +166,7 @@ export default function ArticleCard({
 
           {article.collective.slug ? (
             <Link
-              href={`/collectives/${article.collective.slug}`}
+              href={href}
               onClick={(e) => e.stopPropagation()}
               onKeyDown={(e) => e.stopPropagation()}
               className="hover:underline relative z-10"
@@ -201,7 +205,7 @@ export function ArticleCardSkeleton({ className }: { className?: string }) {
 }
 
 /** Small grid helper for quick testing in isolation */
-export function ArticleCardGrid({ items }: { items: ArticleCardData[] }) {
+export function ArticleCardGrid({ items }: { items: TArticleCard[] }) {
   return (
     <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {items.map((a) => (
