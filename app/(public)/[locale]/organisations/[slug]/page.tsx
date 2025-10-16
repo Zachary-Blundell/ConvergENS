@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ExternalLink, Globe, Mail, Phone } from 'lucide-react';
 import { Separator } from '@radix-ui/react-select';
 import HtmlContent from '@/components/HtmlContent';
+import { ArticleCardCarousel } from '@/components/ArticleCarousel';
 
 export default async function CollectivePage({
   params,
@@ -139,6 +140,20 @@ export default async function CollectivePage({
             This organisation has not yet provided a description in English.
           </p>
         </div>
+      )}
+      {assoc.articles.length > 0 ? (
+        <section>
+          <h2 className="p-5 text-center text-3xl sm:text-4xl md:text-5xl text-highlight">
+            Latest Articles
+          </h2>
+          <div className="h-1 w-24 bg-highlight mx-auto mb-2 rounded" />
+          <ArticleCardCarousel
+            articles={assoc.articles}
+            className="mb-8 min-h-[50svh]"
+          />
+        </section>
+      ) : (
+        <></>
       )}
     </div>
   );
