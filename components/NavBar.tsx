@@ -45,6 +45,7 @@ export default function NavBar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
   return (
     <header>
       <nav
@@ -73,6 +74,7 @@ export default function NavBar() {
                 {DEFAULT_LINKS.map((link, index) => (
                   <li key={index}>
                     <Link
+                      prefetch={false}
                       href={link.href}
                       className="text-fg-primary hover:text-fg-muted bg-surface-3 shadow-s rounded-lg p-2 block duration-150 border-0.5 border-outline"
                     >
