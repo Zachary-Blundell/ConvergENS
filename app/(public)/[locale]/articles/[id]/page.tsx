@@ -68,7 +68,7 @@ export default async function ArticlePage({
           {/* Meta: Collective + Date */}
           <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-fg-muted">
             <Link
-              href={`/${locale}/collectives/${article.collective.slug}`}
+              href={`/${locale}/organisations/${article.collective.slug}`}
               className="inline-flex items-center gap-2 hover:underline"
             >
               <span
