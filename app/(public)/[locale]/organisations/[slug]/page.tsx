@@ -147,10 +147,7 @@ export default async function CollectivePage({
             Latest Articles
           </h2>
           <div className="h-1 w-24 bg-highlight mx-auto mb-2 rounded" />
-          <ArticleCardCarousel
-            articles={assoc.articles}
-            className="mb-8 min-h-[50svh]"
-          />
+          <ArticleCardCarousel articles={assoc.articles} className="my-8 " />
         </section>
       ) : (
         <></>
