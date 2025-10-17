@@ -171,6 +171,9 @@ function CarouselItem({ className, ...props }: React.ComponentProps<'div'>) {
   );
 }
 
+const buttonClassName =
+  'size-8 sm:size-10 md:size-12 rounded-full p-3 z-10 pointer-events-auto';
+
 function CarouselPrevious({
   className,
   variant = 'outline',
@@ -184,7 +187,7 @@ function CarouselPrevious({
       variant={variant}
       size={size}
       className={cn(
-        'size-8 rounded-full pointer-events-auto',
+        buttonClassName,
         orientation === 'horizontal'
           ? 'top-1/2 left-2 -translate-y-1/2'
           : 'top-2 left-1/2 -translate-x-1/2 rotate-90',
@@ -213,7 +216,7 @@ function CarouselNext({
       variant={variant}
       size={size}
       className={cn(
-        'size-8 rounded-full pointer-events-auto',
+        buttonClassName,
         orientation === 'horizontal'
           ? 'top-1/2 right-2 -translate-y-1/2'
           : 'bottom-2 left-1/2 -translate-x-1/2 rotate-90',
