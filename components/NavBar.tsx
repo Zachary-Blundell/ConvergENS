@@ -64,11 +64,13 @@ export default function NavBar() {
               {/* Left logo */}
               <Logo alt={t('logoAlt')} title={t('siteTitle')} />
 
-              {/* Mobile controls (show below 800px) */}
-              <div className="flex items-center gap-3 min-[799px]:hidden">
+              {/* Mobile controls (show below lg) */}
+              <div className="flex items-center gap-3 lg:hidden">
                 <MobileMenu />
               </div>
             </div>
+
+            {/* Desktop primary links */}
             <div className="z-10 inset-0 m-auto hidden size-fit lg:block">
               <ul className="flex gap-8 text-sm">
                 {DEFAULT_LINKS.map((link, index) => (
@@ -84,8 +86,9 @@ export default function NavBar() {
                 ))}
               </ul>
             </div>
+
             {/* Right-side utilities on desktop */}
-            <div className="max-[799px]:hidden space-x-4 flex items-center justify-center">
+            <div className="hidden lg:flex items-center justify-center space-x-4">
               <ThemeToggle />
               <LocaleSwitcher />
             </div>
