@@ -30,7 +30,6 @@ export async function getContactPage(
         },
       }),
     );
-    console.log('contactPageRaw', contactPageRaw);
 
     const contactPageFlat: ContactPageFlat = {
       body: contactPageRaw.translations?.[0]?.page_body ?? null,

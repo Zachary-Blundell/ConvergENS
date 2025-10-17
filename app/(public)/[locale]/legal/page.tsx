@@ -10,7 +10,6 @@ export default async function LegalPage({
 
   const legalpage = await getLegalPage(locale);
 
-  console.log('legalpage from the front: ', legalpage);
   return (
     <main className="flex flex-col p-6 mt-20">
       <div className="bg-surface-2 p-5 rounded-xl">

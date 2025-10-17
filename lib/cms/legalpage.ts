@@ -30,7 +30,6 @@ export async function getLegalPage(
         },
       }),
     );
-    console.log('legalPageRaw', legalPageRaw);
 
     const legalPageFlat: LegalPageFlat = {
       body: legalPageRaw.translations?.[0]?.page_body ?? null,

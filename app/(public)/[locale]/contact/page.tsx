@@ -10,7 +10,6 @@ export default async function ContactPage({
 
   const contactpage = await getContactPage(locale);
 
-  console.log('contactpage from the front: ', contactpage);
   return (
     <main className="flex flex-col p-6 mt-20">
       <div className="bg-surface-2 p-5 rounded-xl">

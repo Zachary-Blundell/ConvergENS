@@ -71,7 +71,6 @@ function Section({ id, className, title, paragraph, children }: SectionProps) {
 export default async function HomePage() {
   const locale = await getLocale();
   const home = await getHome(locale);
-  console.log('Home page data:', home);
 
   const t = home?.translations;
   const tFallback = await getTranslations('Home');

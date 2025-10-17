@@ -18,7 +18,6 @@ export default async function CollectivePage({
 
   if (!assoc) notFound();
 
-  // console.log('current description: ', assoc.description);
   return (
     // Main column
     <div className="container mt-12 mx-auto max-w-5xl px-4 py-8 ">
