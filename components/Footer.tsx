@@ -36,7 +36,7 @@ export default function Footer() {
             </li>
             <li>
               <Link href="/legal" className="hover:underline">
-                {t('sitemap.links.events')}
+                {t('sitemap.links.legal')}
               </Link>
             </li>
             <li>
