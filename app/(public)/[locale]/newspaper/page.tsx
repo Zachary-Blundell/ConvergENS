@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import { Button } from '@/components/ui/button';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
+import { getNewspaperPage } from '@/lib/cms/newspage';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Newspaper');
@@ -24,6 +25,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function NewspaperPage() {
   const t = await getTranslations('Newspaper');
   const lang = await getLocale();
+  // I want to integrate this api data.
+  const newspaper = await getNewspaperPage(lang);
+
   const isEn = lang === 'en-US';
 
   return (
@@ -36,6 +40,8 @@ export default async function NewspaperPage() {
           <Image
             src="/images/agora/agora-banner.jpg"
             alt={t('banner.alt')}
+            // width={640}
+            // height={304}
             fill
             priority
             className="object-cover object-center opacity-70"
@@ -82,7 +88,8 @@ export default async function NewspaperPage() {
             <Image
               src="/images/agora/agora-3.jpeg"
               alt={t('issue3.cover.alt')}
-              fill
+              width={948}
+              height={1348}
               className="object-cover"
             />
             <figcaption className="sr-only">
