@@ -13,11 +13,35 @@ interface ImageProcessedT {
   width: number;
 }
 
+// helper functions
+function pickTranslation(
+  translations: NewspaperTranslationRaw[],
+  preferred: string,
+  fallback: string,
+): NewspaperTranslation {
+  const t =
+    translations.find((x) => x.languages_code === preferred) ??
+    translations.find((x) => x.languages_code === fallback);
+
+  // If still nothing, return explicit nulls for all keys so the UI can decide
+  return (
+    t ?? {
+      title: null,
+      subtitle: null,
+      description: null,
+      edition_title: null,
+      quote_box: null,
+      banner_img_description: null,
+      edition_img_description: null,
+    }
+  );
+}
+
 export interface NewspaperRaw {
   id: number;
   banner_img: ImageT | null; // Directus file attributes
   current_edition_img: ImageT | null; // Directus file attributes
-  translations: NewspaperTranslation[];
+  translations: NewspaperTranslationRaw[];
 }
 export interface NewspaperFlat {
   id: number;
@@ -37,29 +61,15 @@ export interface NewspaperTranslation {
   edition_img_description: string | null;
 }
 
-interface NewspaperTranslationRaw {
-  languages_code: string; // add this so we can pick the right one
-  title: string | null;
-  subtitle: string | null;
-  description: string | null;
-  edition_title: string | null;
-  quote_box: string | null;
-  banner_img_description: string | null;
-  edition_img_description: string | null;
-}
-
-export interface NewspaperRaw {
-  id: number;
-  banner_img: ImageT | null;
-  current_edition_img: ImageT | null;
-  translations: NewspaperTranslationRaw[]; // note the Raw type here
-}
+type NewspaperTranslationRaw = NewspaperTranslation & {
+  languages_code: string;
+};
 
 export async function getNewspaperPage(
   locale: string,
 ): Promise<NewspaperFlat | null> {
   try {
-    const raw = await directus.request<NewspaperRaw>(
+    const newspaperPageRaw = await directus.request<NewspaperRaw>(
       readSingleton('newspaper', {
         fields: [
           'id',
@@ -71,7 +81,7 @@ export async function getNewspaperPage(
           'current_edition_img.width',
           {
             translations: [
-              'languages_code', // <-- include this
+              'languages_code',
               'title',
               'subtitle',
               'description',
@@ -85,38 +95,71 @@ export async function getNewspaperPage(
         deep: {
           translations: {
             _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
-            _limit: 2,
           },
         },
       }),
     );
 
-    // Prefer requested locale, else default, else null
-    const chosen =
-      raw.translations?.find((t) => t.languages_code === locale) ??
-      raw.translations?.find((t) => t.languages_code === DEFAULT_LOCALE) ??
-      null;
+    // If record truly doesn't exist
+    if (!newspaperPageRaw?.id) return null;
 
-    const translation = chosen
-      ? {
-          title: chosen.title,
-          subtitle: chosen.subtitle,
-          description: chosen.description,
-          edition_title: chosen.edition_title,
-          quote_box: chosen.quote_box,
-          banner_img_description: chosen.banner_img_description,
-          edition_img_description: chosen.edition_img_description,
-        }
-      : null;
+    const resolvedT = pickTranslation(
+      newspaperPageRaw.translations ?? [],
+      locale,
+      DEFAULT_LOCALE,
+    );
 
-    return {
-      id: raw.id,
-      banner_img: toProcessedImage(raw.banner_img, true),
-      current_edition_img: toProcessedImage(raw.current_edition_img, true),
-      translation,
+    console.log('newspaperPageRaw', newspaperPageRaw);
+    const newspaperPageFlat: NewspaperFlat = {
+      id: newspaperPageRaw.id,
+      banner_img: {
+        url: buildAssetUrl(newspaperPageRaw.banner_img.id) ?? PLACEHOLDER_LOGO,
+        height: newspaperPageRaw.banner_img.height,
+        width: newspaperPageRaw.banner_img.width,
+      },
+      current_edition_img: {
+        url:
+          buildAssetUrl(newspaperPageRaw.current_edition_img.id) ??
+          PLACEHOLDER_LOGO,
+        height: newspaperPageRaw.current_edition_img.height,
+        width: newspaperPageRaw.current_edition_img.width,
+      },
+      translations: resolvedT,
     };
-  } catch (e) {
-    console.warn('Error fetching newspaper:', e);
+    console.log('newspaperPage Flat_', newspaperPageFlat);
+
+    return newspaperPageFlat;
+  } catch (err: unknown) {
+    const e = err as any;
+
+    console.warn('Error fetching homepage:', err);
+    const code =
+      e?.errors?.[0]?.extensions?.code || e?.response?.status || e?.status;
+
+    // Common patterns: 404, or Directus code like "RECORD_NOT_FOUND"
+    const isNotFound =
+      code === 404 ||
+      code === 'RECORD_NOT_FOUND' ||
+      e?.message?.toLowerCase?.().includes('not found');
+
+    if (isNotFound) return null;
+
     return null;
   }
 }
+
+// export async function getTestPage() {
+//   // ): Promise<newspaperPageFlat | null> {
+//   const pageName = 'newspaper';
+//
+//   const newspaperPageRaw = await directus.request(
+//     readSingleton(pageName, {
+//       fields: ['*', { translations: ['*'] }],
+//     }),
+//   );
+//
+//   console.log(pageName, newspaperPageRaw);
+//
+//   return null;
+// }
+//
