@@ -2,15 +2,15 @@
   "Home": {
     "hero": {
       "title": "Fédérons les <highlight>luttes</highlight> et les talents de l’ENS",
-      "cta": "Découvrir les collectifs"
+      "cta": "Découvrir les organisations"
     },
     "section1": {
       "title": "Qu’est-ce que ConvergENS ?",
-      "body": "ConvergENS est le collectif qui rassemble les collectifs et clubs engagés de l’École normale supérieure (ENS), en lien avec les partis et les syndicats étudiants.\nIl est né d’une double frustration : d’un côté, des bureaux associatifs souvent restreints qui plient sous la charge bénévole ; de l’autre, des nouveaux et nouvelles bénévoles contraint·es de choisir entre des luttes qui leur parlent tout autant.\nConvergENS offre un espace commun pour suivre l’actualité de chaque organisation et garder le lien. Depuis l’ENS, en nous rassemblant, nous faisons émerger des lignes de convergence – et nous discutons aussi des clivages – entre nos luttes."
+      "body": "ConvergENS est le organisation qui rassemble les organisations et clubs engagés de l’École normale supérieure (ENS), en lien avec les partis et les syndicats étudiants.\nIl est né d’une double frustration : d’un côté, des bureaux associatifs souvent restreints qui plient sous la charge bénévole ; de l’autre, des nouveaux et nouvelles bénévoles contraint·es de choisir entre des luttes qui leur parlent tout autant.\nConvergENS offre un espace commun pour suivre l’actualité de chaque organisation et garder le lien. Depuis l’ENS, en nous rassemblant, nous faisons émerger des lignes de convergence – et nous discutons aussi des clivages – entre nos luttes."
     },
     "section2": {
       "title": "Comment fonctionne ConvergENS ?",
-      "body": "ConvergENS n’est pas une structure qui chapeaute ses membres, mais un collectif qui les rassemble. Les collectifs et clubs sont décisionnaires et votent en Assemblée générale sur tout ce qui concerne le collectif (prochains événements, accueil de nouveaux membres, etc.). Les partis et syndicats sont membres invité·es : ils et elles contribuent notamment à Agora (le journal de ConvergENS) et à ses conférences de lancement.\nPour rejoindre ConvergENS, il suffit de s’investir dans une organisation membre (ou invitée) et d’en devenir le ou la représentant·e au sein du collectif."
+      "body": "ConvergENS n’est pas une structure qui chapeaute ses membres, mais un organisation qui les rassemble. Les organisations et clubs sont décisionnaires et votent en Assemblée générale sur tout ce qui concerne le organisation (prochains événements, accueil de nouveaux membres, etc.). Les partis et syndicats sont membres invité·es : ils et elles contribuent notamment à Agora (le journal de ConvergENS) et à ses conférences de lancement.\nPour rejoindre ConvergENS, il suffit de s’investir dans une organisation membre (ou invitée) et d’en devenir le ou la représentant·e au sein du organisation."
     },
     "section3": {
       "title": "Nos objectifs",
@@ -24,7 +24,7 @@
     "about": {
       "row1": {
         "title": "Bibliothèque & Kiosque militants",
-        "body": "Un arpentage (lecture collective suivie d’une discussion) chaque mois.",
+        "body": "Un arpentage (lecture organisation suivie d’une discussion) chaque mois.",
         "imageAlt": "Bibliothèque et kiosque militants"
       },
       "row2": {
@@ -33,15 +33,15 @@
         "imageAlt": "Couverture d’AGORA"
       },
       "row3": {
-        "title": "Calendrier collectif",
+        "title": "Calendrier organisation",
         "body": "Toutes les activités militantes de l’ENS au même endroit.",
-        "imageAlt": "Calendrier collectif"
+        "imageAlt": "Calendrier organisation"
       }
     },
     "latest": {
       "title": "Retrouvez nos dernières actions communes",
       "card": {
-        "fallback": "Résumé court de l’initiative proposée par l’une des collectifs membres."
+        "fallback": "Résumé court de l’initiative proposée par l’une des organisations membres."
       }
     }
   },
@@ -49,7 +49,7 @@
   "Nav": {
     "siteTitle": "ConvergENS",
     "logoAlt": "Logo ConvergENS",
-    "collectives": "Collectifs",
+    "organisations": "Organisations",
     "articles": "Articles",
     "calendar": "Calendrier",
     "newspaper": "Journal",
@@ -66,8 +66,8 @@
       "title": "Plan du site",
       "links": {
         "sitemap": "Plan du site",
-        "collectives": "Collectifs",
-        "events": "Événements",
+        "organisations": "Organisations",
+        "legal": "Legal",
         "contact": "Contact"
       }
     },
@@ -75,14 +75,14 @@
       "title": "Contact",
       "email": "convergens@laposte.net"
     },
-    "disclaimer": "Chaque collectif est responsable des pages qui lui sont dédiées. Les positions exprimées par chacun d’eux n’engagent donc aucun des autres collectifs. Ainsi, les collectifs et syndicats restent complètement indépendants des collectifs partisans invités à participer aux activités de ConvergENS.",
+    "disclaimer": "Chaque organisation est responsable des pages qui lui sont dédiées. Les positions exprimées par chacun d’eux n’engagent donc aucun des autres organisations. Ainsi, les organisations et syndicats restent complètement indépendants des organisations partisans invités à participer aux activités de ConvergENS.",
     "copyright": "© {year} {site}. Tous droits réservés."
   },
 
   "Newspaper": {
     "meta": {
       "title": "Agora – Le journal de ConvergENS",
-      "description": "Agora est la revue bi-annuelle du collectif ConvergENS : éclairages écologistes, féministes, antiracistes, anticolonialistes, à partir des pratiques militantes."
+      "description": "Agora est la revue bi-annuelle du organisation ConvergENS : éclairages écologistes, féministes, antiracistes, anticolonialistes, à partir des pratiques militantes."
     },
     "banner": {
       "alt": "Trois exemplaires du journal Agora",
@@ -91,8 +91,8 @@
     },
     "about": {
       "headingSrOnly": "À propos d’Agora",
-      "p1": "est une revue à laquelle contribuent l'ensemble des membres et membres invités du collectif ConvergENS.",
-      "p2": "Bi-annuelle, elle offre à chaque organisation l'occasion d'éclairer un objet commun depuis sa position particulière : luttes écologistes, féministes, antiracistes, anticolonialistes... Notre ligne éditoriale est claire : plutôt que de produire un discours abstrait ou purement idéologique, nous partons de nos pratiques militantes et de nos difficultés quotidiennes pour nourrir une réflexion collective.",
+      "p1": "est une revue à laquelle contribuent l'ensemble des membres et membres invités du organisation ConvergENS.",
+      "p2": "Bi-annuelle, elle offre à chaque organisation l'occasion d'éclairer un objet commun depuis sa position particulière : luttes écologistes, féministes, antiracistes, anticolonialistes... Notre ligne éditoriale est claire : plutôt que de produire un discours abstrait ou purement idéologique, nous partons de nos pratiques militantes et de nos difficultés quotidiennes pour nourrir une réflexion organisation.",
       "p3": "Chaque numéro s'accompagne d'une conférence de lancement, moment de débat et de mise en discussion publique des textes."
     },
     "issue3": {
@@ -108,48 +108,61 @@
     }
   },
 
-  "CollectivesPage": {
-    "collectivesHeader": "Notre collectif",
+  "OrganisationsPage": {
+    "organisationsHeader": "Notre colectif",
     "altLogo": "Logo {name}",
     "viewPage": "Voir la page",
     "viewPageTitle": "Voir la page de {name}",
     "viewPageAria": "Voir la page de {name}",
     "noDescription": "Aucune description disponible.",
-    "noCollectives": "Pas d’collectifs trouvées."
+    "noOrganisations": "Pas d’organisations trouvées.",
+
+    "decisionMakingMembers": "Membres décisionnaires :",
+    "invitedMembers": "Membre invité :",
+    "associativeOrganisations": "Organisations associatives :",
+    "unionOrganisations": "Organisations syndicales :",
+    "partisanOrganisations": "Organisations partisanes :"
   },
 
   "CalendarPage": {
-    "daysShort": ["Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"],
-    "months": [
-      "janvier",
-      "février",
-      "mars",
-      "avril",
-      "mai",
-      "juin",
-      "juillet",
-      "août",
-      "septembre",
-      "octobre",
-      "novembre",
-      "décembre"
-    ],
-    "ui": {
-      "today": "Aujourd’hui",
-      "addEvent": "Ajouter un événement",
-      "prevYear": "Année précédente",
-      "nextYear": "Année suivante",
+    "nav": {
+      "ariaLabel": "Navigation du mois du calendrier",
+      "prev": "← Précédent",
+      "next": "Suivant →",
       "close": "Fermer"
+    },
+    "event": {
+      "allDay": "Toute la journée",
+      "locationLabel": "Lieu : "
+    },
+    "organisation": {
+      "fallbackName": "Organisation",
+      "logoAlt": "Logo de {name}"
     },
     "labels": {
       "eventsOn": "Événements le {date}",
       "noEvents": "Aucun événement",
       "description": "Description",
       "location": "Lieu",
-      "collective": "Collectif",
-      "viewCollective": "Voir le collectif",
-      "allDay": "Toute la journée",
+      "organisation": "Organisation",
+      "viewOrganisation": "Voir le organisation",
       "timeRange": "{start} – {end}"
+    }
+  },
+
+  "ArticlesPage": {
+    "articlesHeader": "Nos articles",
+    "noArticles": "Aucun article trouvé.",
+    "tryDifferentFilters": "Essayez peut-être différents filtres.",
+    "backToArticles": "← Retour aux articles",
+    "FiltersBar": {
+      "groups": {
+        "organisations": "organisations :",
+        "tags": "Tags :"
+      },
+      "all": "Tous",
+      "categories": "Catégories",
+      "close": "Fermer"
     }
   },
 

@@ -8,20 +8,21 @@ import DayModal from './DayModal';
 import { addDays, startOfGrid } from '@/lib/date/cursor';
 
 export type CalendarMonthProps = {
-  /** Cursor in the form YYYY-MM */
+  // Month cursor in "YYYY-MM" form (e.g., "2025-10").
   cursor: string;
-  /** BCP47 locale, e.g. 'en-US', 'fr-FR'. Defaults to browser/Next.js runtime locale. */
+  // BCP-47 locale (e.g., "en-US", "fr-FR"). Defaults to runtime/browser locale.
   locale?: string;
-  /** Start weeks on Monday (EU style). Defaults to true. */
+  // Start weeks on Monday (EU style). Default: true.
   startOnMonday?: boolean;
-  /** Events to display as pills */
+  // Events rendered as pills.
   events?: CalEvent[];
-  /** Max pills per day before showing "+N more". Default 3. */
+  // Max pills shown per day before "+N more". Default: 4.
   maxPills?: number;
+  // Extra CSS classes for the root.
   className?: string;
 };
 
-/** Small utility: parse `YYYY-MM` cursor into numbers. */
+// Parse "YYYY-MM" into { year, month } (month is 1-based).
 function parseCursor(cursor: string): { year: number; month: number } {
   const m = cursor?.match(/^(\d{4})-(\d{2}|\d)$/);
   if (m) {
@@ -30,25 +31,30 @@ function parseCursor(cursor: string): { year: number; month: number } {
     if (
       Number.isFinite(year) &&
       Number.isFinite(month) &&
-      year >= 1900 &&
-      year <= 9999 &&
+      year >= 2000 &&
+      year <= 3000 &&
       month >= 1 &&
       month <= 12
     )
       return { year, month };
   }
+  // Fallback to current month if invalid.
   const now = new Date();
   return { year: now.getFullYear(), month: now.getMonth() + 1 };
 }
 
 const toDate = (y: number, m1: number, d: number) => new Date(y, m1, d);
+
+// Compare only Y/M/D.
 const sameDay = (a: Date, b: Date) =>
   a.getFullYear() === b.getFullYear() &&
   a.getMonth() === b.getMonth() &&
   a.getDate() === b.getDate();
 
+// Build localized weekday short labels, honoring Monday/Sunday week starts.
+// Uses a fixed reference week where 2021-08-01 was a Sunday.
 function weekdayLabels(locale: string, startOnMonday: boolean): string[] {
-  const base = new Date(2021, 7, 1); // Aug 1, 2021 is a Sunday
+  const base = new Date(2021, 7, 1); // Aug 1, 2021 (Sunday)
   const fmt = new Intl.DateTimeFormat(locale, { weekday: 'short' });
   const labels: string[] = [];
   for (let i = 0; i < 7; i++) {
@@ -59,13 +65,14 @@ function weekdayLabels(locale: string, startOnMonday: boolean): string[] {
   return labels;
 }
 
-// Event helpers for pills
+// Normalize a Date to local start-of-day.
 function startOfDay(d: Date) {
   const x = new Date(d);
   x.setHours(0, 0, 0, 0);
   return x;
 }
 
+// Format Date as "YYYY-MM-DD".
 function ymd(d: Date) {
   const y = d.getFullYear();
   const m = String(d.getMonth() + 1).padStart(2, '0');
@@ -73,6 +80,9 @@ function ymd(d: Date) {
   return `${y}-${m}-${day}`;
 }
 
+// Group events by each day they cover (inclusive).
+// Multi-day events appear on every covered day.
+// A small guard avoids infinite loops on bad data.
 function bucketEventsByDay(events: CalEvent[]): Map<string, CalEvent[]> {
   const map = new Map<string, CalEvent[]>();
   for (const ev of events || []) {
@@ -92,6 +102,7 @@ function bucketEventsByDay(events: CalEvent[]): Map<string, CalEvent[]> {
   return map;
 }
 
+// CalendarMonth: 6x7 month grid with event pills and modals.
 export default function CalendarMonth({
   cursor,
   locale,
@@ -110,8 +121,9 @@ export default function CalendarMonth({
     startOnMonday,
   );
 
-  // Precompute day buckets for pills
+  // Precompute per-day buckets so rendering stays cheap.
   const buckets = useMemo(() => bucketEventsByDay(events), [events]);
+
   const [openEvent, setOpenEvent] = useState<CalEvent | null>(null);
   const [openDay, setOpenDay] = useState<Date | null>(null);
 
@@ -119,7 +131,7 @@ export default function CalendarMonth({
     setOpenDay(date);
   }
 
-  // Build 42 cells (6 weeks x 7 days) to cover any month
+  // Always render 42 cells (6 weeks) to cover any month layout.
   const cells: Date[] = Array.from({ length: 42 }, (_, i) =>
     addDays(gridStart, i),
   );
@@ -127,9 +139,9 @@ export default function CalendarMonth({
   const monthIndex = month - 1;
 
   return (
-    <div className={'w-full select-none' + className ? ` ${className}` : ''}>
+    <div className={`w-full select-none${className ? ` ${className}` : ''}`}>
       {/* Weekday header */}
-      <div className="grid grid-cols-7 text-xs uppercase tracking-wide text-stone-500 dark:text-stone-400">
+      <div className="grid grid-cols-7 text-xs uppercase tracking-wide text-fg-muted">
         {labels.map((label) => (
           <div key={label} className="py-2 text-center font-medium">
             {label}
@@ -138,16 +150,15 @@ export default function CalendarMonth({
       </div>
 
       {/* Day grid */}
-      {/* <div className="grid grid-cols-7 gap-px rounded-xl bg-stone-200 overflow-hidden dark:bg-stone-800"> */}
-      <div className="grid grid-cols-7 gap-1 rounded-xl m-3 p-2 bg-stone-200 overflow-hidden dark:bg-stone-800">
+      <div className="grid grid-cols-7 gap-1 rounded-xl m-3 p-2 bg-surface-2 overflow-hidden ">
         {cells.map((date) => {
           const inMonth = date.getMonth() === monthIndex;
           const isToday = sameDay(date, today);
 
-          const base = 'aspect-square bg-white p-2 text-sm dark:bg-stone-900';
+          const base = 'aspect-square bg-surface-3 p-2 text-sm ';
           const muted = inMonth
-            ? 'text-stone-900 dark:text-stone-100'
-            : 'text-stone-400 dark:text-stone-500';
+            ? 'text-fg-primary'
+            : 'text-fg-muted opacity-60';
           const ring = isToday ? 'ring-1 ring-highlight/60' : '';
 
           const key = ymd(date);
@@ -168,7 +179,7 @@ export default function CalendarMonth({
                   handleDayClick(date);
                 }
               }}
-              className={`${base} ${muted} ${ring} rounded-md hover:bg-stone-50 dark:hover:bg-stone-800 transition flex flex-col`}
+              className={`${base} ${muted} ${ring} rounded-md hover:bg-surface-4 transition flex flex-col`}
               aria-label={date.toDateString()}
             >
               <div className="flex items-start justify-between">
@@ -180,7 +191,8 @@ export default function CalendarMonth({
                   {date.getDate()}
                 </span>
               </div>
-              {/* Pills (up to maxPills) */}
+
+              {/* Event pills (up to maxPills) */}
               {dayEvents.length > 0 && (
                 <div className="mt-1 flex-1 overflow-hidden">
                   <ul className="space-y-1">
@@ -209,7 +221,7 @@ export default function CalendarMonth({
                               setOpenDay(date);
                             }
                           }}
-                          className="w-full truncate rounded-md bg-stone-50 px-2 py-1 text-left text-xs text-stone-600 hover:bg-stone-100 dark:bg-stone-900 dark:text-stone-300 dark:hover:bg-stone-800 cursor-pointer"
+                          className="w-full truncate rounded-md bg-stone-50 px-2 py-1 text-left text-xs text-stone-600  cursor-pointer"
                         >
                           +{hiddenCount} more
                         </div>
@@ -222,6 +234,8 @@ export default function CalendarMonth({
           );
         })}
       </div>
+
+      {/* Day and Event modals */}
       {openDay && (
         <DayModal
           date={openDay}

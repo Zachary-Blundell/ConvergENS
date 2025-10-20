@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { usePathname, useRouter } from "@/i18n/navigation";
-import { useLocale } from "next-intl";
+import { usePathname, useRouter } from '@/i18n/navigation';
+import { useLocale } from 'next-intl';
 import {
   Select,
   SelectContent,
@@ -9,7 +9,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 export default function LocaleSwitcher() {
   const locale = useLocale();
@@ -21,13 +21,11 @@ export default function LocaleSwitcher() {
       value={locale}
       onValueChange={(newLocale) => {
         if (newLocale !== locale) {
-          // Client-side navigation with next-intl router (RSC request includes cookies)
           router.replace(pathname, { locale: newLocale });
-          // No router.refresh(); keep it smooth and avoid reflows.
         }
       }}
     >
-      <SelectTrigger className="w-20">
+      <SelectTrigger className="w-20 bg-surface-3">
         <SelectValue placeholder={locale.toUpperCase()} />
       </SelectTrigger>
       <SelectContent>

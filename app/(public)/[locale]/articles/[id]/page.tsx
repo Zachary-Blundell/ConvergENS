@@ -1,39 +1,21 @@
-// export default async function articlePage({
-//   params,
-// }: {
-//   params: Promise<{ articleSlug: string }>;
-// }) {
-//   const { articleSlug } = await params;
-//
-//   return (
-//     <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-//       <h1 className="text-2xl font-semibold">
-//         Article articleSlug: {articleSlug} for ConvergENS
-//       </h1>
-//       <p className="mt-2 text-gray-600">
-//         Route to demonstrate an article page for ConvergENS. This page is used
-//         to show an article.
-//       </p>
-//     </section>
-//   );
-// }
 // app/[locale]/articles/[id]/page.tsx
-import * as React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import HtmlContent from "@/components/HtmlContent";
-import { getArticle } from "@/lib/cms/articles";
-import { notFound } from "next/navigation";
+import * as React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import HtmlContent from '@/components/HtmlContent';
+import { getArticle } from '@/lib/cms/articles';
+import { notFound } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 
 function formatDate(iso: string, locale: string) {
   try {
-    return new Intl.DateTimeFormat(locale || "en", {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
+    return new Intl.DateTimeFormat(locale || 'en', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
     }).format(new Date(iso));
   } catch {
-    return iso.split("T")[0];
+    return iso.split('T')[0];
   }
 }
 
@@ -46,15 +28,18 @@ export default async function ArticlePage({
   const article = await getArticle(id, locale);
   if (!article) notFound(); // from next/navigation
 
+  const t = await getTranslations('ArticlesPage');
+
   return (
     <main className="mx-auto max-w-4xl p-6">
+      <div className="py-8" />
       {/* Breadcrumb / Back */}
       <div className="mb-4">
         <Link
           href={`/${locale}/articles`}
           className="text-sm text-fg-muted hover:underline"
         >
-          ← Back to Articles
+          {t('backToArticles')}
         </Link>
       </div>
 
@@ -83,13 +68,13 @@ export default async function ArticlePage({
           {/* Meta: Collective + Date */}
           <div className="mt-3 flex flex-wrap items-center gap-4 text-sm text-fg-muted">
             <Link
-              href={`/${locale}/collectives/${article.collective.slug}`}
+              href={`/${locale}/organisations/${article.collective.slug}`}
               className="inline-flex items-center gap-2 hover:underline"
             >
               <span
                 className="relative inline-block h-7 w-7 overflow-hidden rounded-full ring-2 ring-offset-1 ring-offset-white dark:ring-offset-zinc-900"
                 style={{
-                  ["--tw-ring-color" as any]: article.collective.color,
+                  ['--tw-ring-color' as any]: article.collective.color,
                 }}
               >
                 <Image

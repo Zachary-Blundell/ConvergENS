@@ -33,9 +33,23 @@ type RawHomePage = {
     about_row3_body?: string | null;
   }>;
 
-  about_row1_img?: string | null;
-  about_row2_img?: string | null;
-  about_row3_img?: string | null;
+  about_row1_img?: {
+    id: string;
+    height: number;
+    width: number;
+  } | null;
+
+  about_row2_img?: {
+    id: string;
+    height: number;
+    width: number;
+  } | null;
+
+  about_row3_img?: {
+    id: string;
+    height: number;
+    width: number;
+  } | null;
 };
 
 export type FlatHomePage = {
@@ -67,14 +81,25 @@ export type FlatHomePage = {
     about_row3_body: string | null;
   };
 
-  about_row1_img: string;
-  about_row2_img: string;
-  about_row3_img: string;
+  about_row1_img: {
+    url: string;
+    height: number;
+    width: number;
+  };
+  about_row2_img: {
+    url: string;
+    height: number;
+    width: number;
+  };
+  about_row3_img: {
+    url: string;
+    height: number;
+    width: number;
+  };
 };
 
 export async function getHome(locale: string): Promise<FlatHomePage> {
   try {
-    console.log('Fetching homepage for locale:', locale);
     const homePageRaw: RawHomePage = await directus.request<RawHomePage>(
       readSingleton('homepage', {
         fields: [
@@ -94,17 +119,24 @@ export async function getHome(locale: string): Promise<FlatHomePage> {
               'section_3_title',
               'section_3_body',
               'about_row1_title',
-              // "about_row1_img",
+
               'about_row1_body',
 
               'about_row2_title',
-              // "about_row2_img",
               'about_row2_body',
 
               'about_row3_title',
-              // "about_row3_img",
               'about_row3_body',
             ],
+          },
+          {
+            about_row1_img: ['id', 'height', 'width'],
+          },
+          {
+            about_row2_img: ['id', 'height', 'width'],
+          },
+          {
+            about_row3_img: ['id', 'height', 'width'],
           },
         ],
         deep: {
@@ -147,12 +179,24 @@ export async function getHome(locale: string): Promise<FlatHomePage> {
         about_row3_body: homePageRaw.translations?.[0]?.about_row3_body ?? null,
       },
 
-      about_row1_img: homePageRaw.about_row1_img ?? PLACEHOLDER_LOGO,
-      about_row2_img: homePageRaw.about_row2_img ?? PLACEHOLDER_LOGO,
-      about_row3_img: homePageRaw.about_row3_img ?? PLACEHOLDER_LOGO,
+      about_row1_img: {
+        url: buildAssetUrl(homePageRaw.about_row1_img?.id) ?? PLACEHOLDER_LOGO,
+        height: homePageRaw.about_row1_img?.height,
+        width: homePageRaw.about_row1_img?.width,
+      },
+      about_row2_img: {
+        url: buildAssetUrl(homePageRaw.about_row2_img?.id) ?? PLACEHOLDER_LOGO,
+        height: homePageRaw.about_row2_img?.height,
+        width: homePageRaw.about_row2_img?.width,
+      },
+
+      about_row3_img: {
+        url: buildAssetUrl(homePageRaw.about_row3_img?.id) ?? PLACEHOLDER_LOGO,
+        height: homePageRaw.about_row3_img?.height,
+        width: homePageRaw.about_row3_img?.width,
+      },
     };
 
-    console.log('Fetched homepage:', homePageFlat);
     return homePageFlat;
   } catch (err: unknown) {
     const e = err as any;
@@ -198,9 +242,21 @@ export async function getHome(locale: string): Promise<FlatHomePage> {
         about_row3_body: null,
       },
 
-      about_row1_img: PLACEHOLDER_LOGO,
-      about_row2_img: PLACEHOLDER_LOGO,
-      about_row3_img: PLACEHOLDER_LOGO,
+      about_row1_img: {
+        url: PLACEHOLDER_LOGO,
+        height: 100,
+        width: 100,
+      },
+      about_row2_img: {
+        url: PLACEHOLDER_LOGO,
+        height: 100,
+        width: 100,
+      },
+      about_row3_img: {
+        url: PLACEHOLDER_LOGO,
+        height: 100,
+        width: 100,
+      },
     };
   }
 }

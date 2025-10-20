@@ -8,7 +8,7 @@ import {
   pickTranslation,
   PLACEHOLDER_LOGO,
 } from './utils';
-import { log } from 'console';
+import { ArticleCard, ArticleRaw } from './articles';
 
 export type CollectiveTranslation = {
   languages_code: string;
@@ -23,8 +23,19 @@ export type TypeTranslation = {
   adjective?: string | null;
 };
 
+export type AssetRef = {
+  id: string;
+  width?: number | null;
+  height?: number | null;
+};
+
+export type ArticleTranslation = {
+  languages_code: string;
+  title?: string | null;
+};
+
 export type CollectiveRaw = {
-  id: string | number;
+  id: number;
   name?: string | null;
   slug?: string | null;
   color?: string | null;
@@ -38,6 +49,7 @@ export type CollectiveRaw = {
   website?: string | null;
   translations?: CollectiveTranslation[];
   socials?: { platform: string; url: string }[];
+  articles?: ArticleRaw[];
 };
 
 export type CollectiveFlat = {
@@ -62,6 +74,7 @@ export type CollectiveFlat = {
   summary?: string | null;
   description?: string | null;
   socials?: { platform: string; url: string }[];
+  articles: Array<ArticleCard>;
 };
 
 export type CollectiveUI = {
@@ -93,12 +106,11 @@ export async function getCollectivesRaw(
   const rawCollectives = await directus.request<any[]>(
     readItems('collectives', req),
   );
-  log('here are the raw collectives form getCollectivesRaw: ', rawCollectives);
   return rawCollectives as CollectiveRaw[];
 }
 
 /* Collective cards */
-export type CollectiveCard = {
+export type OrganisationCard = {
   //flattened
   id: string;
   name: string;
@@ -123,9 +135,9 @@ export type CollectiveCard = {
   socials?: { platform: string; url: string }[];
 };
 
-export async function getCollectiveCards(
+export async function getOrganisationCards(
   locale: string,
-): Promise<CollectiveCard[]> {
+): Promise<OrganisationCard[]> {
   // we get everything but the body text
   const req: ItemsQuery = {
     fields: [
@@ -133,6 +145,7 @@ export async function getCollectiveCards(
       'name',
       'slug',
       'color',
+      'type',
       { logo: ['id', 'width', 'height'] },
       {
         type: [
@@ -162,10 +175,10 @@ export async function getCollectiveCards(
 
   const rows = await getCollectivesRaw(req);
 
-  return rows.map((i: CollectiveRaw): CollectiveCard => {
+  return rows.map((i: CollectiveRaw): OrganisationCard => {
     const collectiveTr = pickTranslation(i.translations, locale);
     const typeTr = pickTranslation(i.type.translations, locale);
-    const result: CollectiveCard = {
+    const result: OrganisationCard = {
       id: String(i.id),
       name: String(i.name ?? null),
       slug: String(i.slug ?? null),
@@ -190,62 +203,6 @@ export async function getCollectiveCards(
   });
 }
 
-// export async function getCollectivesRaw(
-//   options: ItemsQuery = {},
-//   locale?: string | null,
-// ): Promise<CollectiveRaw[]> {
-//   const includeTranslations = Boolean(locale);
-//
-//
-//   const req: any = {
-//     ...options,
-//     filter: {
-//       status: { _eq: "published" },
-//     },
-//   };
-//
-//   if (includeTranslations) {
-//     req.deep = {
-//       translations: {
-//         _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
-//         _limit: 2,
-//       },
-//       ...(options.deep || {}),
-//     };
-//   } else if (options.deep) {
-//     // If caller I call my own deep object, respect it.
-//     req.deep = options.deep;
-//   }
-//
-//   const rows = await directus.request<any[]>(readItems("collectives", req));
-//   return rows as CollectiveRaw[];
-// }
-
-// export async function getCollectives(
-//   options: ItemsQuery = {},
-//   locale?: string,
-// ): Promise<CollectiveFlat[]> {
-//   const rows = await getCollectivesRaw(options, locale);
-//   return rows.map((i) => {
-//     const tr = pickTranslation(i.translations, locale);
-//     const result = {
-//       id: String(i.id),
-//       name: String(i.name ?? ""),
-//       slug: String(i.slug ?? ""),
-//       color: i.color ?? null,
-//       logoUrl: buildAssetUrl(i.logo) ?? PLACEHOLDER_LOGO,
-//       logoWidth: i.logo?.width ?? null,
-//       logoHeight: i.logo?.height ?? null,
-//       email: (i as any).email ?? null,
-//       phone: (i as any).phone ?? null,
-//       website: (i as any).website ?? null,
-//       summary: tr?.summary ?? null,
-//       description: tr?.description ?? null,
-//     };
-//     return result;
-//   });
-// }
-//
 export async function getCollectiveBadges(): Promise<CollectiveBadge[]> {
   const req: ItemsQuery = {
     fields: [
@@ -255,6 +212,7 @@ export async function getCollectiveBadges(): Promise<CollectiveBadge[]> {
       'name',
       'color',
     ],
+    filter: { status: { _eq: 'published' } },
   };
   try {
     const rows = await getCollectivesRaw(req);
@@ -316,12 +274,99 @@ export async function getAllCollectivesForUI(): Promise<CollectiveUI[]> {
   });
 }
 
+// export async function getCollectiveBySlug(
+//   slug: string,
+//   locale = DEFAULT_LOCALE,
+// ): Promise<CollectiveFlat | null> {
+//   // 1) Find the primary key by slug (and published)
+//   const found = await directus.request<{ id: string }[]>(
+//     readItems('collectives', {
+//       fields: ['id'],
+//       filter: { slug: { _eq: slug }, status: { _eq: 'published' } },
+//       limit: 1,
+//     }),
+//   );
+//   const id = found?.[0]?.id;
+//   if (!id) return null;
+//
+//   // 2) Fetch the single item by primary key
+//   const c = await directus.request<CollectiveRaw>(
+//     readItem('collectives', id, {
+//       fields: [
+//         'id',
+//         'name',
+//         'slug',
+//         'color',
+//         { logo: ['id', 'width', 'height'] },
+//         {
+//           type: [
+//             'id',
+//             { translations: ['languages_code', 'name', 'plural', 'adjective'] },
+//           ],
+//         },
+//         { translations: ['languages_code', 'summary', 'description'] },
+//         'email',
+//         'phone',
+//         'website',
+//         // { socials: ['platform', 'url'] },
+//         {
+//           articles: [
+//             'id',
+//             'status',
+//             'published_at',
+//             'slug',
+//             'title',
+//             { cover: ['id', 'width', 'height'] },
+//             { collective: ['id', 'slug', 'name'] },
+//             { translations: ['languages_code', 'title'] },
+//           ],
+//         },
+//       ],
+//       deep: {
+//         translations: {
+//           _filter: { languages_code: { _in: [locale] } },
+//         },
+//         types: {
+//           translations: {
+//             _filter: { languages_code: { _in: [locale] } },
+//           },
+//         },
+//       },
+//     }),
+//   );
+//
+//   // Flatten
+//   const tr = pickTranslation(c.translations, locale);
+//   const typeTr = pickTranslation(c.type.translations, locale);
+//
+//   return {
+//     id: String(c.id),
+//     name: String(c.name ?? ''),
+//     slug: String(c.slug ?? ''),
+//     summary: tr?.summary ?? null,
+//     description: tr?.description ?? null,
+//     color: c.color ?? null,
+//     type: {
+//       id: c.type?.id ?? null,
+//       name: c.type ? typeTr?.name : null,
+//       plural: c.type ? typeTr?.plural : null,
+//       adjective: c.type ? typeTr?.adjective : null,
+//     },
+//     logoUrl: buildAssetUrl(c.logo) ?? PLACEHOLDER_LOGO,
+//     logoWidth: c.logo?.width ?? null,
+//     logoHeight: c.logo?.height ?? null,
+//     email: c.email ?? null,
+//     phone: c.phone ?? null,
+//     website: c.website ?? null,
+//     socials: c.socials ?? [],
+//   };
+// }
+
 export async function getCollectiveBySlug(
   slug: string,
   locale = DEFAULT_LOCALE,
 ): Promise<CollectiveFlat | null> {
   // 1) Find the primary key by slug (and published)
-  log('here is the slug searched', slug);
   const found = await directus.request<{ id: string }[]>(
     readItems('collectives', {
       fields: ['id'],
@@ -329,11 +374,10 @@ export async function getCollectiveBySlug(
       limit: 1,
     }),
   );
-  log('here is what was found: ', found);
   const id = found?.[0]?.id;
   if (!id) return null;
 
-  // 2) Fetch the single item by primary key
+  // 2) Fetch the single item by primary key (+ related articles)
   const c = await directus.request<CollectiveRaw>(
     readItem('collectives', id, {
       fields: [
@@ -352,16 +396,33 @@ export async function getCollectiveBySlug(
         'email',
         'phone',
         'website',
-        // { socials: ['platform', 'url'] },
+
+        // O2M alias pulling articles tied to this collective
+        {
+          articles: [
+            'id',
+            'status',
+            'published_at',
+            { cover: ['id', 'width', 'height'] },
+            { translations: ['languages_code', 'title'] },
+          ],
+        },
       ],
       deep: {
-        translations: {
-          _filter: { languages_code: { _in: [locale] } },
+        translations: { _filter: { languages_code: { _in: [locale] } } },
+
+        // 🔧 was "types" before; should be "type"
+        type: {
+          translations: { _filter: { languages_code: { _in: [locale] } } },
         },
-        types: {
-          translations: {
-            _filter: { languages_code: { _in: [locale] } },
-          },
+
+        // control the related articles you pull
+        articles: {
+          _filter: { status: { _eq: 'published' } },
+          _sort: ['-published_at'],
+          _limit: 12,
+          translations: { _filter: { languages_code: { _in: [locale] } } },
+          collective: { fields: ['id', 'slug', 'name'] },
         },
       },
     }),
@@ -369,7 +430,7 @@ export async function getCollectiveBySlug(
 
   // Flatten
   const tr = pickTranslation(c.translations, locale);
-  const typeTr = pickTranslation(c.type.translations, locale);
+  const typeTr = pickTranslation(c.type?.translations, locale);
 
   return {
     id: String(c.id),
@@ -391,5 +452,29 @@ export async function getCollectiveBySlug(
     phone: c.phone ?? null,
     website: c.website ?? null,
     socials: c.socials ?? [],
+
+    articles: (c.articles ?? []).map((a: ArticleRaw) => ({
+      id: String(a.id),
+      title: pickTranslation(a.translations, locale)?.title ?? '',
+      coverUrl: buildAssetUrl(a.cover.id) ?? PLACEHOLDER_LOGO,
+      coverWidth: Number(a.cover.width),
+      coverHeight: Number(a.cover.height),
+
+      tag: {
+        id: a.tag?.id ?? '',
+        name: pickTranslation(a.tag?.translations, locale)?.name ?? '',
+        color: a.tag?.color ?? null,
+      },
+      collective: {
+        id: String(c.id),
+        name: c.name,
+        slug: c.slug,
+        color: c.color,
+        logoUrl: buildAssetUrl(c.logo.id) ?? PLACEHOLDER_LOGO,
+        logoWidth: c.logo.width,
+        logoHeight: c.logo.height,
+      },
+      published_at: String(a.published_at),
+    })),
   };
 }
