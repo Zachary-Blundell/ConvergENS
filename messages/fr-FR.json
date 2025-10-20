@@ -109,7 +109,7 @@
   },
 
   "OrganisationsPage": {
-    "organisationsHeader": "Notre colectif",
+    "organisationsHeader": "Notre collectif",
     "altLogo": "Logo {name}",
     "viewPage": "Voir la page",
     "viewPageTitle": "Voir la page de {name}",
