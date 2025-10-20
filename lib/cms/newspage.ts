@@ -109,7 +109,6 @@ export async function getNewspaperPage(
       DEFAULT_LOCALE,
     );
 
-    console.log('newspaperPageRaw', newspaperPageRaw);
     const newspaperPageFlat: NewspaperFlat = {
       id: newspaperPageRaw.id,
       banner_img: {
@@ -126,7 +125,6 @@ export async function getNewspaperPage(
       },
       translations: resolvedT,
     };
-    console.log('newspaperPage Flat_', newspaperPageFlat);
 
     return newspaperPageFlat;
   } catch (err: unknown) {
