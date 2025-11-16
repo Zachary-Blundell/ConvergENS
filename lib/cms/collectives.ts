@@ -396,7 +396,7 @@ export async function getCollectiveBySlug(
         'email',
         'phone',
         'website',
-
+        { socials: ['type', 'url'] },
         // O2M alias pulling articles tied to this collective
         {
           articles: [
