@@ -205,7 +205,7 @@ export default async function HomePage() {
       />
 
       <h2 className="p-5 text-center text-3xl sm:text-4xl md:text-5xl text-highlight">
-        Latest Articles
+        {tFallback('latestArticles')}
       </h2>
       <ArticleCardCarousel
         articles={carouselArticles}
