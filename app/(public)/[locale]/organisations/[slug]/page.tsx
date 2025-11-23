@@ -7,6 +7,7 @@ import { ExternalLink, Globe, Mail, Phone } from 'lucide-react';
 import { Separator } from '@radix-ui/react-select';
 import HtmlContent from '@/components/HtmlContent';
 import { ArticleCardCarousel } from '@/components/ArticleCarousel';
+import { getTranslations } from 'next-intl/server';
 
 export default async function CollectivePage({
   params,
@@ -14,6 +15,7 @@ export default async function CollectivePage({
   params: Promise<{ slug: string; locale: string }>;
 }) {
   const { slug, locale } = await params;
+  const t = await getTranslations('OrganisationsPage');
   const assoc = await getCollectiveBySlug(slug, locale);
 
   if (!assoc) notFound();
@@ -134,19 +136,19 @@ export default async function CollectivePage({
           <HtmlContent className="cms-content " html={assoc.description} />
         </div>
       ) : (
-        <div className="flex bg-surface-3 w-100 h-50 items-center rounded-md mx-auto">
-          <p className="mx-auto my-4 max-w-3xl px-4 text-center text-base sm:text-lg leading-relaxed text-fg-primary">
-            This organisation has not yet provided a description in English.
-          </p>
+        <div className="flex bg-surface-3 w-full py-10 items-center rounded-md mx-auto">
+          {/* <p className="mx-auto my-4 max-w-3xl px-4 text-center text-base sm:text-lg leading-relaxed text-fg-primary"> */}
+          {/*   {t('noDescriptionForLocale')} */}
+          {/* </p> */}
         </div>
       )}
       {assoc.articles.length > 0 ? (
         <section>
           <h2 className="p-5 text-center text-3xl sm:text-4xl md:text-5xl text-highlight">
-            Latest Articles
+            {t('latestArticles')}
           </h2>
           <div className="h-1 w-24 bg-highlight mx-auto mb-2 rounded" />
-          <ArticleCardCarousel articles={assoc.articles} className="my-8 " />
+          <ArticleCardCarousel articles={assoc.articles} className="my-8 w-full bg-blue-500" />
         </section>
       ) : (
         <></>
