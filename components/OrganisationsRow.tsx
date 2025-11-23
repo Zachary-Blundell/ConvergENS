@@ -3,11 +3,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function CollectiveRows() {
-  const assoBadges = await getCollectiveBadges();
+  let assoBadges = await getCollectiveBadges();
+  const assoBadges2 = assoBadges;
+  assoBadges = [...assoBadges2, ...assoBadges.splice(0, 3)];
 
+  console.log('assoBadges', assoBadges)
   if (assoBadges !== null) {
     return (
-      <div className="relative hidden z-10 sm:flex flex-wrap justify-center mt-25 p-4 gap-2 w-fit mx-auto bg-surface-4/50 rounded-full">
+      <div className="relative hidden z-10 mx-4 sm:flex balanced-wrap justify-center mt-25 p-4 gap-2 w-fit bg-surface-4/50 rounded-full">
         {assoBadges.map((a, n) => (
           <Link
             key={`${a.name}-${n}`}

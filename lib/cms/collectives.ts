@@ -212,6 +212,7 @@ export async function getCollectiveBadges(): Promise<CollectiveBadge[]> {
       'name',
       'color',
     ],
+    sort: ['name'],
     filter: { status: { _eq: 'published' } },
   };
   try {
