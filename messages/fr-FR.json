@@ -38,14 +38,8 @@
         "imageAlt": "Calendrier organisation"
       }
     },
-    "latest": {
-      "title": "Retrouvez nos dernières actions communes",
-      "card": {
-        "fallback": "Résumé court de l’initiative proposée par l’une des organisations membres."
-      }
-    }
+    "latestArticles": "Derniers articles"
   },
-
   "Nav": {
     "siteTitle": "ConvergENS",
     "logoAlt": "Logo ConvergENS",
@@ -56,9 +50,9 @@
     "openMenu": "Ouvrir le menu",
     "menuTitle": "Menu principal",
     "menuDesc": "Navigation principale et paramètres",
-    "primaryNav": "Navigation principale"
+    "primaryNav": "Navigation principale",
+    "home": "Accueil"
   },
-
   "Footer": {
     "tagline": "ConvergENS & initiatives étudiantes.",
     "sitemap": {
@@ -78,7 +72,6 @@
     "disclaimer": "Chaque organisation est responsable des pages qui lui sont dédiées. Les positions exprimées par chacun d’eux n’engagent donc aucun des autres organisations. Ainsi, les organisations et syndicats restent complètement indépendants des organisations partisans invités à participer aux activités de ConvergENS.",
     "copyright": "© {year} {site}. Tous droits réservés."
   },
-
   "Newspaper": {
     "meta": {
       "title": "Agora – Le journal de ConvergENS",
@@ -107,7 +100,6 @@
       "note": "N'importe quel don via le formulaire suivant donne accès à la version numérique des trois premiers numéros, dont le tout dernier."
     }
   },
-
   "OrganisationsPage": {
     "organisationsHeader": "Notre collectif",
     "altLogo": "Logo {name}",
@@ -116,14 +108,14 @@
     "viewPageAria": "Voir la page de {name}",
     "noDescription": "Aucune description disponible.",
     "noOrganisations": "Pas d’organisations trouvées.",
-
     "decisionMakingMembers": "Membres décisionnaires :",
     "invitedMembers": "Membre invité :",
     "associativeOrganisations": "Organisations associatives :",
     "unionOrganisations": "Organisations syndicales :",
-    "partisanOrganisations": "Organisations partisanes :"
+    "partisanOrganisations": "Organisations partisanes :",
+    "latestArticles": "Derniers articles",
+    "noDescriptionForLocale": "Cette organisation n'a pas encore fourni de description en français."
   },
-
   "CalendarPage": {
     "nav": {
       "ariaLabel": "Navigation du mois du calendrier",
@@ -149,7 +141,6 @@
       "timeRange": "{start} – {end}"
     }
   },
-
   "ArticlesPage": {
     "articlesHeader": "Nos articles",
     "noArticles": "Aucun article trouvé.",
@@ -165,7 +156,6 @@
       "close": "Fermer"
     }
   },
-
   "404": {
     "badgeLabel": "Information",
     "title": "Page introuvable",

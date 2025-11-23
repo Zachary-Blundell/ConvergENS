@@ -38,14 +38,8 @@
         "imageAlt": "Organisation calendar"
       }
     },
-    "latest": {
-      "title": "See our latest joint actions",
-      "card": {
-        "fallback": "Short summary of an initiative proposed by one of the member organisations."
-      }
-    }
+    "latestArticles": "Latest Articles"
   },
-
   "Nav": {
     "siteTitle": "ConvergENS",
     "logoAlt": "ConvergENS Logo",
@@ -56,7 +50,8 @@
     "openMenu": "Open menu",
     "menuTitle": "Main menu",
     "menuDesc": "Primary navigation and settings",
-    "primaryNav": "Primary navigation"
+    "primaryNav": "Primary navigation",
+    "home": "Home"
   },
   "Footer": {
     "tagline": "ConvergENS & student initiatives.",
@@ -77,7 +72,6 @@
     "disclaimer": "Each organisation is responsible for the pages dedicated to it. The positions expressed by each of them do not bind the other organisations. Thus, the organisations and unions remain completely independent of the partisan organisations invited to take part in ConvergENS activities.",
     "copyright": "© {year} {site}. All rights reserved."
   },
-
   "Newspaper": {
     "meta": {
       "title": "Agora – The ConvergENS Journal",
@@ -106,7 +100,6 @@
       "note": "Any donation via the following form grants access to the digital versions of the first three issues, including the latest one."
     }
   },
-
   "OrganisationsPage": {
     "organisationsHeader": "Our Community",
     "altLogo": "Logo {name}",
@@ -115,14 +108,14 @@
     "viewPageAria": "View {name} page",
     "noDescription": "No description available.",
     "noOrganisations": "No organisations found.",
-
     "decisionMakingMembers": "Decision-making Members:",
     "invitedMembers": "Invited Members: ",
     "associativeOrganisations": "Associative Organisations",
     "unionOrganisations": "Union Organisations",
-    "partisanOrganisations": "Uartisan Organisations"
+    "partisanOrganisations": "Uartisan Organisations",
+    "latestArticles": "Latest Articles",
+    "noDescriptionForLocale": "This organisation has not yet provided a description in English."
   },
-
   "CalendarPage": {
     "nav": {
       "ariaLabel": "Calendar month navigation",
@@ -148,7 +141,6 @@
       "timeRange": "{start} – {end}"
     }
   },
-
   "ArticlesPage": {
     "articlesHeader": "Nos articles",
     "noArticles": "No articles found.",
@@ -164,7 +156,6 @@
       "close": "Close"
     }
   },
-
   "404": {
     "badgeLabel": "Information",
     "title": "Page not found",
