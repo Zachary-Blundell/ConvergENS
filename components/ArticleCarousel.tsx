@@ -23,7 +23,7 @@ export function ArticleCardCarousel({
       // className="max-w-5/6 flex items-center"
       className={cn('flex items-center', className)}
       opts={{
-        align: 'start',
+        align: 'center',
         loop: true,
       }}
     >
