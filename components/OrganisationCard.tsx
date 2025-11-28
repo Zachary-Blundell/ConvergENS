@@ -29,9 +29,9 @@ export function OrganisationCard({
     const full =
       h.length === 3
         ? h
-            .split('')
-            .map((c) => c + c)
-            .join('')
+          .split('')
+          .map((c) => c + c)
+          .join('')
         : h;
     const num = parseInt(full, 16);
     return { r: (num >> 16) & 255, g: (num >> 8) & 255, b: num & 255 };
@@ -90,7 +90,7 @@ export function OrganisationCard({
       {/* Content */}
       <div className="flex flex-col flex-1 p-4">
         <div className="flex justify-center items-center w-full">
-          <h3 className="text-center text-xl text-fg-primary px-15">{name}</h3>
+          <h3 className="text-center text-lg sm:text-xl text-fg-primary px-15">{name}</h3>
         </div>
 
         <p className="my-5 text-sm text-fg-muted">{summary}</p>
