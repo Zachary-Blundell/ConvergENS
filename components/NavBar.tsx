@@ -7,6 +7,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
+  SheetClose,
 } from './ui/sheet';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import React from 'react';
@@ -130,32 +131,32 @@ function MobileMenu() {
             </SheetDescription>
           </VisuallyHidden>
         </SheetHeader>
-
         <div className="mt-4 space-y-4">
           <nav
             className="flex flex-col gap-1"
             aria-label={t('primaryNav', { default: 'Primary' })}
           >
-
-            <Link
-              key={HOME_LINK.href}
-              href={HOME_LINK.href}
-              aria-current={pathname === HOME_LINK.href ? 'page' : undefined}
-              className="rounded-md px-3 py-2 text-fg-primary hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-              {t(HOME_LINK.labelKey)}
-            </Link>
+            <SheetClose asChild key={HOME_LINK.href}>
+              <Link
+                href={HOME_LINK.href}
+                aria-current={pathname === HOME_LINK.href ? 'page' : undefined}
+                className="rounded-md px-3 py-2 text-fg-primary hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                {t(HOME_LINK.labelKey)}
+              </Link>
+            </SheetClose>
             {DEFAULT_LINKS.map((link) => {
               const isActive = pathname === link.href;
               return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  aria-current={isActive ? 'page' : undefined}
-                  className="rounded-md px-3 py-2 text-fg-primary hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {t(link.labelKey)}
-                </Link>
+                <SheetClose asChild key={link.href}>
+                  <Link
+                    href={link.href}
+                    aria-current={isActive ? 'page' : undefined}
+                    className="rounded-md px-3 py-2 text-fg-primary hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    {t(link.labelKey)}
+                  </Link>
+                </SheetClose>
               );
             })}
 
