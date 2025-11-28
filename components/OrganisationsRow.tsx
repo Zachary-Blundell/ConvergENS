@@ -4,8 +4,9 @@ import Link from 'next/link';
 
 export default async function CollectiveRows() {
   let assoBadges = await getCollectiveBadges();
-  const assoBadges2 = assoBadges;
-  assoBadges = [...assoBadges2, ...assoBadges.splice(0, 3)];
+  // For testing more organisations than currently exist
+  // const assoBadges2 = assoBadges;
+  // assoBadges = [...assoBadges2, ...assoBadges.splice(0, 3)];
 
   console.log('assoBadges', assoBadges)
   if (assoBadges !== null) {
