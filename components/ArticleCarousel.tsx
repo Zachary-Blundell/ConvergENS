@@ -21,23 +21,23 @@ export function ArticleCardCarousel({
   return (
     <Carousel
       // className="max-w-5/6 flex items-center"
-      className={cn('flex items-center', className)}
+      className={cn('flex items-center justify-center', className)}
       opts={{
-        align: 'center',
+        align: 'start',
         loop: true,
       }}
     >
-      <CarouselPrevious />
+      {articles.length < 2 ? <></> : <CarouselPrevious />}
       <CarouselContent className="-ml-1">
         {articles.map((a) => (
-          <CarouselItem key={a.id} className="pl-1 md:basis-1/2 lg:basis-1/3">
+          <CarouselItem key={a.id} className={articles.length < 3 ? "pl-1" : "pl-1 md:basis-1/2 lg:basis-1/3"}>
             <div className="p-1">
               <ArticleCard key={a.id} article={a} />
             </div>
           </CarouselItem>
         ))}
       </CarouselContent>
-      <CarouselNext />
+      {articles.length < 2 ? <></> : <CarouselNext />}
     </Carousel>
   );
 }
