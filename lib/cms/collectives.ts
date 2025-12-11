@@ -48,7 +48,7 @@ export type CollectiveRaw = {
   phone?: string | null;
   website?: string | null;
   translations?: CollectiveTranslation[];
-  socials?: { platform: string; url: string }[];
+  socials?: { type: string; url: string }[];
   articles?: ArticleRaw[];
 };
 
@@ -73,7 +73,7 @@ export type CollectiveFlat = {
   // Localized fields (flattened)
   summary?: string | null;
   description?: string | null;
-  socials?: { platform: string; url: string }[];
+  socials?: { type: string; url: string }[];
   articles: Array<ArticleCard>;
 };
 
@@ -99,7 +99,8 @@ export async function getCollectivesRaw(
   if (!req) {
     // if req is not defined return everything
     req = {
-      fields: ['*'],
+      fields: [
+        { socials: ['*'], }],
     };
   }
 
@@ -132,7 +133,7 @@ export type OrganisationCard = {
   // Localized fields (flattened)
   summary?: string | null;
   description?: string | null;
-  socials?: { platform: string; url: string }[];
+  socials?: { type: string; url: string }[];
 };
 
 export async function getOrganisationCards(
@@ -309,7 +310,7 @@ export async function getAllCollectivesForUI(): Promise<CollectiveUI[]> {
 //         'email',
 //         'phone',
 //         'website',
-//         // { socials: ['platform', 'url'] },
+// { socials: ['type', 'url'] },
 //         {
 //           articles: [
 //             'id',
@@ -378,7 +379,7 @@ export async function getCollectiveBySlug(
   const id = found?.[0]?.id;
   if (!id) return null;
 
-  // 2) Fetch the single item by primary key (+ related articles)
+  // Fetch the single item by primary key (+ related articles)
   const c = await directus.request<CollectiveRaw>(
     readItem('collectives', id, {
       fields: [
@@ -397,6 +398,14 @@ export async function getCollectiveBySlug(
         'email',
         'phone',
         'website',
+        {
+          socials: [
+            'id', // junction id (optional)
+            {
+              socials_id: ['type', 'url'], // actual socials record
+            },
+          ],
+        },
 
         // O2M alias pulling articles tied to this collective
         {
@@ -412,12 +421,10 @@ export async function getCollectiveBySlug(
       deep: {
         translations: { _filter: { languages_code: { _in: [locale] } } },
 
-        // 🔧 was "types" before; should be "type"
         type: {
           translations: { _filter: { languages_code: { _in: [locale] } } },
         },
 
-        // control the related articles you pull
         articles: {
           _filter: { status: { _eq: 'published' } },
           _sort: ['-published_at'],
@@ -432,6 +439,8 @@ export async function getCollectiveBySlug(
   // Flatten
   const tr = pickTranslation(c.translations, locale);
   const typeTr = pickTranslation(c.type?.translations, locale);
+
+  console.log("here are the socials from collectives by slug: ", c.socials)
 
   return {
     id: String(c.id),
@@ -452,7 +461,10 @@ export async function getCollectiveBySlug(
     email: c.email ?? null,
     phone: c.phone ?? null,
     website: c.website ?? null,
-    socials: c.socials ?? [],
+    socials: (c.socials ?? []).map((s: any) => ({
+      type: s.socials_id?.type ?? '',
+      url: s.socials_id?.url ?? '',
+    })),
 
     articles: (c.articles ?? []).map((a: ArticleRaw) => ({
       id: String(a.id),
