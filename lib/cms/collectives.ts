@@ -213,8 +213,16 @@ export async function getCollectiveBadges(): Promise<CollectiveBadge[]> {
       'name',
       'color',
     ],
-    sort: ['name'],
+    sort: ['type.translations.name', 'name'],
     filter: { status: { _eq: 'published' } },
+
+    deep: {
+      type: {
+        translations: {
+          _filter: { languages_code: { _in: ['fr-FR'] } },
+        },
+      },
+    },
   };
   try {
     const rows = await getCollectivesRaw(req);
