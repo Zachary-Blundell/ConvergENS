@@ -254,15 +254,6 @@ export async function getCollectiveBadges(): Promise<CollectiveBadge[]> {
     if (isNotFound) return null;
 
     return [];
-    //   return {
-    //       id: null,
-    //       name: null,
-    //       slug: null,
-    //       color:  null,
-    //       logoUrl:  PLACEHOLDER_LOGO,
-    //       logoWidth:  null,
-    //       logoHeight: null,
-    // }
   }
 }
 
