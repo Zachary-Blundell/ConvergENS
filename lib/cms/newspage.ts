@@ -145,19 +145,3 @@ export async function getNewspaperPage(
     return null;
   }
 }
-
-// export async function getTestPage() {
-//   // ): Promise<newspaperPageFlat | null> {
-//   const pageName = 'newspaper';
-//
-//   const newspaperPageRaw = await directus.request(
-//     readSingleton(pageName, {
-//       fields: ['*', { translations: ['*'] }],
-//     }),
-//   );
-//
-//   console.log(pageName, newspaperPageRaw);
-//
-//   return null;
-// }
-//
