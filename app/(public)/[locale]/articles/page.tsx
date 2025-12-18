@@ -5,7 +5,7 @@ import {
   ArticleCard,
   getArticleCards,
   getArticleCount,
-  perPage as perPage,
+  perPageConstant,
 } from '@/lib/cms/articles';
 import { ArticleCardGrid } from '@/components/ArticleCard';
 import { getAllTagsForUI } from '@/lib/cms/tags';
@@ -39,7 +39,7 @@ async function ShowCards({
     <>
       <ArticleCardGrid items={articles} />
       <Pagination
-        perPage={perPage}
+        perPage={perPageConstant}
         currentPage={currentPage}
         count={articleCount}
       />
@@ -62,10 +62,13 @@ export default async function ArticlesPage({
   const currentOrganisation = organisation ? parseInt(organisation) : null;
 
   const articles = await getArticleCards(
-    locale,
-    currentPage,
-    tag,
-    organisation,
+    {
+      locale,
+      page: currentPage,
+      tagId: tag,
+      collectiveId: organisation,
+      numberOfArticles: perPageConstant,
+    }
   );
   const articleCount = await getArticleCount();
 

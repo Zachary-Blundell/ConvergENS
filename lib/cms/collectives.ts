@@ -429,7 +429,16 @@ export async function getCollectiveBySlug(
           _filter: { status: { _eq: 'published' } },
           _sort: ['-published_at'],
           _limit: 12,
-          translations: { _filter: { languages_code: { _in: [locale] } } },
+          translations: {
+            _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+            _limit: 2,
+          },
+          //       tags: {
+          //         translations: {
+          //           _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+          //           _limit: 2,
+          //         },
+          //       },
           collective: { fields: ['id', 'slug', 'name'] },
         },
       },
@@ -439,8 +448,6 @@ export async function getCollectiveBySlug(
   // Flatten
   const tr = pickTranslation(c.translations, locale);
   const typeTr = pickTranslation(c.type?.translations, locale);
-
-  console.log("here are the socials from collectives by slug: ", c.socials)
 
   return {
     id: String(c.id),

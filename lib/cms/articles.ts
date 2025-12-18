@@ -10,7 +10,7 @@ import {
 } from './utils';
 import { TagTranslation } from './tags';
 
-export const perPage: number = 12;
+export const perPageConstant: number = 12;
 
 export type ArticleTranslation = {
   languages_code: string;
@@ -115,11 +115,24 @@ export type ArticleCard = {
   };
   published_at?: string | null;
 };
-export async function getArticleCards(
+
+interface ArticleCardsParameters {
   locale: string,
   page: number,
   tagId?: string,
   collectiveId?: string,
+  numberOfArticles?: number,
+}
+
+
+export async function getArticleCards(
+  {
+    locale,
+    page,
+    tagId,
+    collectiveId,
+    numberOfArticles,
+  }: ArticleCardsParameters
 ): Promise<ArticleCard[]> {
   // we get everything but the body text
   const req: ItemsQuery = {
@@ -146,11 +159,8 @@ export async function getArticleCards(
     },
     deep: {
       translations: {
-        _filter: {
-          languages_code: {
-            _eq: locale,
-          },
-        },
+        _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+        _limit: 2,
       },
       tags: {
         translations: {
@@ -161,7 +171,7 @@ export async function getArticleCards(
     },
     sort: ['-published_at'],
     page,
-    limit: perPage,
+    limit: numberOfArticles,
   };
 
   const rows = await getArticlesRaw(req);
@@ -220,15 +230,13 @@ export async function getArticle(
     ],
     deep: {
       translations: {
-        _filter: {
-          languages_code: {
-            _eq: locale,
-          },
-        },
+        _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+        _limit: 2,
       },
       tags: {
         translations: {
-          _filter: { languages_code: { _in: [locale] } },
+          _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+          _limit: 2,
         },
       },
     },
@@ -297,82 +305,4 @@ export async function getArticle(
 
     return null;
   }
-}
-
-export async function getArticleCarousel(
-  locale: string,
-  numberOfArticles: number,
-  collectiveId?: string,
-): Promise<ArticleCard[]> {
-  // we get everything but the body text
-  const req: ItemsQuery = {
-    fields: [
-      'id',
-      'published_at',
-      { cover: ['id', 'width', 'height'] },
-      {
-        collective: [
-          'id',
-          'name',
-          'slug',
-          'color',
-          { logo: ['id', 'width', 'height'] },
-        ],
-      },
-      { tag: ['id', 'color', { translations: ['languages_code', 'name'] }] },
-      { translations: ['languages_code', 'title'] },
-    ],
-    filter: {
-      collective: { id: { _eq: collectiveId } },
-      status: { _eq: 'published' },
-    },
-    deep: {
-      translations: {
-        _filter: {
-          languages_code: {
-            _eq: locale,
-          },
-        },
-      },
-      tags: {
-        translations: {
-          _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
-          _limit: 2,
-        },
-      },
-    },
-    sort: ['-published_at'],
-    limit: numberOfArticles,
-  };
-
-  const rows = await getArticlesRaw(req);
-
-  return rows.map((i: ArticleRaw): ArticleCard => {
-    const articleTr = pickTranslation(i.translations, locale);
-    const tagTr = pickTranslation(i.tag.translations, locale);
-    const result = {
-      id: String(i.id),
-      title: String(articleTr?.title ?? null),
-
-      coverUrl: buildAssetUrl(i.cover.id) ?? PLACEHOLDER_LOGO,
-      coverWidth: Number(i.cover.width),
-      coverHeight: Number(i.cover.height),
-      tag: {
-        id: i.tag.id,
-        color: i.tag.color,
-        name: tagTr.name,
-      },
-      collective: {
-        id: i.collective.id,
-        name: i.collective.name,
-        slug: i.collective.slug,
-        color: i.collective.color,
-        logoUrl: buildAssetUrl(i.collective.logo.id) ?? PLACEHOLDER_LOGO,
-        logoWidth: i.collective.logo.width,
-        logoHeight: i.collective.logo.height,
-      },
-      published_at: String(i.published_at),
-    };
-    return result;
-  });
 }
