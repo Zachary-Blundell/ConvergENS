@@ -19,13 +19,10 @@ ENV NEXT_TELEMETRY_DISABLED=1
 RUN bun run build
 
 # Production image, copy all the files and run next
-FROM base AS runner
+FROM node:20-alpine AS runner
 WORKDIR /app
 
-# Uncomment the following line in case you want to disable telemetry during runtime.
-# ENV NEXT_TELEMETRY_DISABLED=1
-
-ENV NODE_ENV=production \
+ENV NODE_ENV=production\
     PORT=3000 \
     HOSTNAME="0.0.0.0"
 
@@ -43,4 +40,4 @@ USER nextjs
 
 EXPOSE 3000
 
-CMD ["bun", "./server.js"]
+CMD ["node", "./server.js"]

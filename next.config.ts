@@ -5,7 +5,13 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const nextConfig: NextConfig = {
   output: 'standalone',
   images: {
-    domains: ['convergensapi.zac.coffee'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'convergensapi.zac.coffee',
+        pathname: '**',
+      },
+    ],
   },
 };
 
