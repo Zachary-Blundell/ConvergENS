@@ -1,15 +1,15 @@
 'use client';
 
 import React from 'react';
-import type { CalEvent } from '@/lib/cms/events';
 import EventPill from './EventPill';
 import { useTranslations } from 'next-intl';
+import { CalendarEventFlat } from '@/lib/cms/events.types';
 
 export type DayModalProps = {
   date: Date;
-  events: CalEvent[];
+  events: CalendarEventFlat[];
   onCloseAction: () => void;
-  onEventClickAction?: (ev: CalEvent) => void;
+  onEventClickAction?: (ev: CalendarEventFlat) => void;
   locale?: string;
   zIndex?: number;
 };
@@ -23,7 +23,7 @@ function fmtDayLong(locale: string, d: Date) {
   });
 }
 
-function compareEvents(a: CalEvent, b: CalEvent) {
+function compareEvents(a: CalendarEventFlat, b: CalendarEventFlat) {
   if (a.all_day !== b.all_day) return a.all_day ? -1 : 1; // all-day first
   return a.start_at.getTime() - b.start_at.getTime();
 }

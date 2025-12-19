@@ -1,11 +1,11 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import type { CalEvent } from '@/lib/cms/events';
 import EventPill from './EventPill';
 import EventModal from './EventModal';
 import DayModal from './DayModal';
 import { addDays, startOfGrid } from '@/lib/date/cursor';
+import { CalendarEventFlat } from '@/lib/cms/events.types';
 
 export type CalendarMonthProps = {
   // Month cursor in "YYYY-MM" form (e.g., "2025-10").
@@ -15,7 +15,7 @@ export type CalendarMonthProps = {
   // Start weeks on Monday (EU style). Default: true.
   startOnMonday?: boolean;
   // Events rendered as pills.
-  events?: CalEvent[];
+  events?: CalendarEventFlat[];
   // Max pills shown per day before "+N more". Default: 4.
   maxPills?: number;
   // Extra CSS classes for the root.
@@ -83,8 +83,8 @@ function ymd(d: Date) {
 // Group events by each day they cover (inclusive).
 // Multi-day events appear on every covered day.
 // A small guard avoids infinite loops on bad data.
-function bucketEventsByDay(events: CalEvent[]): Map<string, CalEvent[]> {
-  const map = new Map<string, CalEvent[]>();
+function bucketEventsByDay(events: CalendarEventFlat[]): Map<string, CalendarEventFlat[]> {
+  const map = new Map<string, CalendarEventFlat[]>();
   for (const ev of events || []) {
     const start = startOfDay(ev.start_at);
     const end = startOfDay(ev.end_at);
@@ -124,7 +124,7 @@ export default function CalendarMonth({
   // Precompute per-day buckets so rendering stays cheap.
   const buckets = useMemo(() => bucketEventsByDay(events), [events]);
 
-  const [openEvent, setOpenEvent] = useState<CalEvent | null>(null);
+  const [openEvent, setOpenEvent] = useState<CalendarEventFlat | null>(null);
   const [openDay, setOpenDay] = useState<Date | null>(null);
 
   function handleDayClick(date: Date) {
@@ -184,9 +184,8 @@ export default function CalendarMonth({
             >
               <div className="flex items-start justify-between">
                 <span
-                  className={`inline-flex h-6 w-6 items-center justify-center rounded-full ${
-                    isToday ? 'bg-highlight text-white' : ''
-                  }`}
+                  className={`inline-flex h-6 w-6 items-center justify-center rounded-full ${isToday ? 'bg-highlight text-white' : ''
+                    }`}
                 >
                   {date.getDate()}
                 </span>

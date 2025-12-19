@@ -1,15 +1,15 @@
 'use client';
 
+import { CalendarEventFlat } from '@/lib/cms/events.types';
 import React from 'react';
-import type { CalEvent } from '@/lib/cms/events';
 
 export type EventPillProps = {
   // Source event to render.
-  event: CalEvent;
+  event: CalendarEventFlat;
   // Optional locale for time formatting (falls back to browser).
   locale?: string;
   // Required click handler (e.g., to open an event modal).
-  onClickAction: (ev: CalEvent) => void;
+  onClickAction: (ev: CalendarEventFlat) => void;
   // Extra classes for spacing when embedding.
   className?: string;
 };
@@ -23,8 +23,8 @@ export default function EventPill({
   const resolvedLocale =
     locale || (typeof navigator !== 'undefined' ? navigator.language : 'en-US');
 
-  // Left color strip uses the collective color; fallback is Tailwind slate-500 hex.
-  const color = event.collective?.color || '#64748b';
+  // Left color strip uses the first organisations color; fallback is Tailwind slate-500 hex.
+  const color = event.organisers[0]?.color || '#64748b';
 
   return (
     <button
@@ -44,9 +44,9 @@ export default function EventPill({
         event.all_day
           ? `${event.title} (All day)`
           : `${new Intl.DateTimeFormat(resolvedLocale, {
-              hour: '2-digit',
-              minute: '2-digit',
-            }).format(event.start_at)} · ${event.title}`
+            hour: '2-digit',
+            minute: '2-digit',
+          }).format(event.start_at)} · ${event.title}`
       }
     >
       {event.all_day ? (

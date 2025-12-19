@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
-import type { CalEvent } from '@/lib/cms/events';
 import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import type { CalendarEventFlat } from '@/lib/cms/events.types';
 
 export type EventModalProps = {
-  event: CalEvent;
+  event: CalendarEventFlat;
   onCloseAction: () => void;
   locale?: string;
   zIndex?: number;
@@ -27,7 +27,7 @@ function fmtRange(locale: string, a: Date, b: Date) {
         minute: '2-digit',
       }).formatRange(a, b);
     }
-  } catch {}
+  } catch { }
   return `${fmtTime(locale, a)} – ${fmtTime(locale, b)}`;
 }
 function fmtDayLong(locale: string, d: Date) {
@@ -49,12 +49,9 @@ export default function EventModal({
 
   const resolvedLocale =
     locale || (typeof navigator !== 'undefined' ? navigator.language : 'en-US');
-  const color = event.collective?.color || '#64748b';
 
-  const hasLogo = Boolean(event.collective?.logoUrl);
+  const organisers = event.organisers ?? [];
   const fallbackName = t('collective.fallbackName');
-  const nameOrSlug =
-    event.collective?.name ?? event.collective?.slug ?? fallbackName;
 
   return (
     <div
@@ -69,12 +66,10 @@ export default function EventModal({
       >
         <header className="flex items-start justify-between gap-4">
           <div className="min-w-0">
-            {/* title */}
             <h3 className="text-3xl bg-surface-3 shadow-s p-1 px-2 rounded-lg">
               {event.title}
             </h3>
 
-            {/* time and date */}
             <div className="mt-1 text-sm text-fg-primary">
               {event.all_day ? (
                 <span>{t('event.allDay')}</span>
@@ -87,7 +82,6 @@ export default function EventModal({
             </div>
           </div>
 
-          {/* close button */}
           <button
             onClick={onCloseAction}
             className="shrink-0 rounded-md px-2 py-1 text-sm text-fg-primary hover:bg-highlight"
@@ -113,45 +107,63 @@ export default function EventModal({
           </div>
         )}
 
-        {/* Collective chip */}
-        {(event.collective?.name || event.collective?.slug) && (
-          <div className="mt-2 inline-flex items-center gap-2 text-sm text-fg-muted">
-            {hasLogo ? (
-              // Avatar with colored ring + offset background
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-surface-3">
-                <span
-                  className="relative block h-7 w-7 overflow-hidden rounded-full"
-                  style={{ boxShadow: `0 0 0 2px ${color}` }} // colored ring
-                >
-                  <Image
-                    src={event.collective!.logoUrl!}
-                    alt={t('collective.logoAlt', { name: nameOrSlug })}
-                    fill
-                    sizes="32px"
-                    className="object-cover"
-                  />
-                </span>
-              </span>
-            ) : (
-              <span
-                className="inline-block h-2.5 w-2.5 rounded-full"
-                style={{ backgroundColor: color }}
-                aria-hidden
-              />
-            )}
+        {/* Organisers */}
+        {organisers.length > 0 && (
+          <div className="mt-3">
+            <p className="text-sm text-fg-muted mb-2">
+              {t('event.organisersLabel', { defaultMessage: 'Organisers' })}
+            </p>
 
-            {event.collective?.slug ? (
-              <Link
-                href={`/collectives/${event.collective.slug}`}
-                onClick={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                className="hover:underline relative z-10"
-              >
-                {nameOrSlug}
-              </Link>
-            ) : (
-              <span>{nameOrSlug}</span>
-            )}
+            <div className="flex flex-wrap gap-2">
+              {organisers.map((org) => {
+                const color = org.color ?? '#64748b';
+                const hasLogo = Boolean(org.logoUrl);
+                const nameOrSlug = org.name ?? org.slug ?? fallbackName;
+
+                return (
+                  <div
+                    key={org.id}
+                    className="inline-flex items-center gap-2 rounded-full border border-outline bg-surface-3 px-2 py-1 text-sm text-fg-muted"
+                  >
+                    {hasLogo ? (
+                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-surface-3">
+                        <span
+                          className="relative block h-6 w-6 overflow-hidden rounded-full"
+                          style={{ boxShadow: `0 0 0 2px ${color}` }}
+                        >
+                          <Image
+                            src={org.logoUrl!}
+                            alt={t('collective.logoAlt', { name: nameOrSlug })}
+                            fill
+                            sizes="24px"
+                            className="object-cover"
+                          />
+                        </span>
+                      </span>
+                    ) : (
+                      <span
+                        className="inline-block h-2.5 w-2.5 rounded-full"
+                        style={{ backgroundColor: color }}
+                        aria-hidden
+                      />
+                    )}
+
+                    {org.slug ? (
+                      <Link
+                        href={`/organisations/${org.slug}`}
+                        onClick={(e) => e.stopPropagation()}
+                        onKeyDown={(e) => e.stopPropagation()}
+                        className="hover:underline relative z-10"
+                      >
+                        {nameOrSlug}
+                      </Link>
+                    ) : (
+                      <span>{nameOrSlug}</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>

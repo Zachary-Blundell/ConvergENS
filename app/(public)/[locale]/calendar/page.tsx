@@ -54,10 +54,12 @@ export default async function Page({
   const startDate = startOfGrid(firstDay, true /* Monday start */);
   const endDate = addDays(startDate, 42); // exclusive upper bound
 
-  const monthsEvents = await getEventsForCalendar(locale, {
+  const monthsEvents = await getEventsForCalendar(
+    locale, {
     start: startDate,
     end: endDate,
   });
+
 
   // Build prev/next, but only if resulting years are within allowed range.
   const prevYM = shiftMonth(ym, -1);
