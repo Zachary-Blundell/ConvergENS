@@ -51,7 +51,7 @@ export default function EventModal({
     locale || (typeof navigator !== 'undefined' ? navigator.language : 'en-US');
 
   const organisers = event.organisers ?? [];
-  const fallbackName = t('collective.fallbackName');
+  const fallbackName = t('organisation.fallbackName');
 
   return (
     <div
@@ -133,7 +133,7 @@ export default function EventModal({
                         >
                           <Image
                             src={org.logoUrl!}
-                            alt={t('collective.logoAlt', { name: nameOrSlug })}
+                            alt={t('organisation.logoAlt', { name: nameOrSlug })}
                             fill
                             sizes="24px"
                             className="object-cover"
