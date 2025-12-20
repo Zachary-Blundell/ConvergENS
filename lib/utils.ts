@@ -4,9 +4,6 @@ import { twMerge } from "tailwind-merge";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
-// export function objectLogger(obj: Object) {
-//   console.log(JSON.stringify(obj, null, 2));
-// }
 
 export function objectLogger(obj: unknown, message?: String) {
   const seen = new WeakSet();
