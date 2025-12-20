@@ -126,7 +126,8 @@
     },
     "event": {
       "allDay": "All day",
-      "locationLabel": "Location: "
+      "locationLabel": "Location: ",
+      "organisersLabel": "Organisers"
     },
     "organisation": {
       "fallbackName": "Organisation",
