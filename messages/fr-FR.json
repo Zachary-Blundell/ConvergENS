@@ -127,7 +127,8 @@
     "event": {
       "allDay": "Toute la journée",
       "locationLabel": "Lieu : ",
-      "organisersLabel": "Organisateurs"
+      "organisersLabel": "Organisateur.ices",
+      "articlesLabel": "Articles"
     },
     "organisation": {
       "fallbackName": "Organisation",
