@@ -8,20 +8,13 @@ import {
   PLACEHOLDER_LOGO,
 } from './utils';
 import { CalendarEventFlat, EventRaw } from './events.types';
-import { isObject, objectLogger } from '../utils';
-
-
+import { isObject } from '../utils';
 
 export async function getEventsRaw(req?: ItemsQuery): Promise<EventRaw[]> {
   if (!req) {
     // if req is not defined return everything helpful for testing
     req = {
-      fields: ['*',
-        { translations: ['*'] },
-        { collective: ['*', { logo: ['*'] }] },
-        { organisers: ['*', { collectives_id: ['*', { logo: ['*'] }] }] },
-        { articles: ['*', { articles_id: ['*', { translations: ['*'] }] }] },
-      ],
+      fields: ['*'],
     };
   }
 
