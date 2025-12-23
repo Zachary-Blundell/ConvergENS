@@ -1,15 +1,6 @@
 // lib/cms/events.types.ts
 
-import { DirectusImage, Id } from "./types";
-
-
-export type CollectiveRaw = {
-  id: Id;
-  name?: string | null;
-  slug?: string | null;
-  color?: string | null;
-  logo?: DirectusImage | null;
-};
+import { CollectiveForUIRaw, Id } from "./types";
 
 export type EventTranslationRaw = {
   languages_code: string;
@@ -17,19 +8,19 @@ export type EventTranslationRaw = {
   description?: string | null;
 };
 
-export type ArticleEventTranslationRaw = {
+export type ArticleTranslationForEventRaw = {
   languages_code: string;
   title?: string | null;
 };
 
 export type ArticleEventInfoRaw = {
   id: Id;
-  translations?: ArticleEventTranslationRaw[];
+  translations?: ArticleTranslationForEventRaw[];
 };
 
 // M2M: events ↔ collectives (organisers)
 export type EventOrganiserRowRaw = {
-  collectives_id: CollectiveRaw;
+  collectives_id: CollectiveForUIRaw;
 };
 
 // M2M: events ↔ articles
@@ -37,21 +28,23 @@ export type EventArticleRowRaw = {
   articles_id: ArticleEventInfoRaw;
 };
 
+// Main Event type
 export type EventRaw = {
   id: Id;
+
   start_at?: string;
   end_at?: string;
-  all_day?: boolean;
-
+  all_day?: boolean | null;
   location?: string | null;
   location_address?: string | null;
 
   organisers?: EventOrganiserRowRaw[];
 
-  articles?: EventArticleRowRaw[];
+  articles?: EventArticleRowRaw[] | null;
   translations?: EventTranslationRaw[];
 };
 
+// Flattened Event types
 export type CalendarEventFlat = {
   id: string;
   title: string;
@@ -66,10 +59,10 @@ export type CalendarEventFlat = {
 
   organisers: Array<{
     id: string;
-    name: string | null;
-    slug: string | null;
-    color: string | null;
-    logoUrl: string | null;
+    name: string;
+    slug: string;
+    color: string;
+    logoUrl: string;
     logoWidth: number | null;
     logoHeight: number | null;
   }>;
@@ -77,7 +70,6 @@ export type CalendarEventFlat = {
   // articles linked to the event (just what calendar UI typically needs)
   articles: Array<{
     id: string;
-    title: string | null;
+    title: string;
   }>;
 };
-
