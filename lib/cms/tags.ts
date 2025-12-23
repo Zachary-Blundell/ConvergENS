@@ -9,10 +9,17 @@ export type TagTranslation = {
   name?: string | null;
 };
 export type TagRaw = {
-  id: string | number;
+  id: number;
   color: string;
   translations: TagTranslation[];
 };
+
+export type TagFlat = {
+  id: number | null;
+  name: string | null; // localized
+  color: string | null;
+};
+
 export type TagUI = { id: string | number; label: string; color: string };
 
 export async function getAllTags(locale: string): Promise<TagRaw[]> {
