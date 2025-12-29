@@ -6,6 +6,7 @@ import { CollectiveForUIRaw, DirectusImage, Id } from "./types";
 export type ArticleTranslationRaw = {
   languages_code: string;
   title?: string | null;
+  body?: string | null;
   description?: string | null;
 };
 
