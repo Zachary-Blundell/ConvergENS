@@ -83,3 +83,39 @@ export type CardArticleFlat = {
     location: string | null;
   }>;
 };
+
+export type ArticleFlat = {
+  id: Id;
+  published_at: Date; // ISO datetime should never be null due to default value
+
+  title: string;
+  body: string;
+
+  // Cover
+  coverUrl: string | null;
+  coverDescription: string | null;
+  coverWidth: number | null;
+  coverHeight: number | null;
+
+  tag: TagFlat | null;
+
+  editors: Array<{
+    id: string;
+    name: string;
+    slug: string;
+    color: string;
+    logoUrl: string;
+    logoWidth: number | null;
+    logoHeight: number | null;
+  }>;
+
+  events: Array<{
+    id: Id;
+    title: string;
+    start_at: Date;
+    end_at: Date;
+    all_day: boolean | null;
+    location_address: string | null;
+    location: string | null;
+  }>;
+};
