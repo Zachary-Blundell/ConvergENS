@@ -103,10 +103,9 @@ Si vous voulez **sauvegarder votre travail** mais qu’un **champ obligatoire** 
 - **Contrôle l’accès en modification** : toute organisation ajoutée ici pourra **éditer** l’article.
 - **Affichage sur le site :**
   - Sur la page **“Tous les articles”** (cartes / _article cards_), on affiche :
-    - les **3 premières** organisations de la liste **Editors**
-    - et le **nom de la première organisation** ajoutée (comme organisation principale affichée sur la carte)
-    - ![Lots of editors in ui](assets/images/Lots of editors.jpg)
-    - ![Two editors in ui](assets/images/two editors.jpg)
+    - les **3 premières** organisations de la liste **Editors** et le **nom de la première organisation** ajoutée (comme organisation principale affichée sur la carte)
+    - ![Lots of editors in ui](assets/images/Lots_of_editors.jpg)
+    - ![Two editors in ui](assets/images/two_editors.jpg)
   - Sur la **page de l’article**, **toutes** les organisations de **Editors** seront affichées.
 
 **Règles :**
