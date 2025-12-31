@@ -1,4 +1,11 @@
+# title: ConvergENS User Docs
+# description: Reference guides for organisers using the Directus CMS
+# theme: jekyll-theme-minimal
+
 title: ConvergENS User Docs
-description: Reference guides for organisers using the Directus CMS
-theme: jekyll-theme-minimal
+description: Guides pour les organisateur·ices (CMS)
+remote_theme: just-the-docs/just-the-docs
+
+# Optional nice defaults
+search_enabled: true
 
