@@ -1,6 +1,6 @@
 ---
-title: Accueil
-nav_order: 1
+title: Articles
+nav_order: 3
 ---
 
 # Articles (Directus) — Guide de saisie pour les organisateur·ices
