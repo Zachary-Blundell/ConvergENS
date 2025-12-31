@@ -33,6 +33,6 @@ Si vous êtes bloqué·e par un **champ obligatoire** mais que vous voulez juste
 
 ## Besoin d’aide ?
 
-Si quelque chose n’apparaît pas (tag, organisation, champ manquant) ou si vous pensez ne pas avoir les bons droits, contactez zachary par whatsapp.
+Si quelque chose n’apparaît pas (tag, organisation, champ manquant) ou si vous pensez ne pas avoir les bons droits, contactez Zachary par whatsapp.
 
 ---
