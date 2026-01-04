@@ -7,6 +7,11 @@ nav_order: 2
 
 Directus est l’interface d’administration (“CMS”) qui pilote les contenus de ConvergENS. Il se place **au-dessus de la base de données** : vous manipulez des **collections** (tables), des **items** (lignes) et des **relations** (liens entre collections), avec des droits d’accès gérés par **rôles** et **policies**.
 
+<!-- prettier-ignore-start -->
+- TOC
+{:toc}
+<!-- prettier-ignore-end -->
+
 ## Les concepts clés
 
 ### Collection
