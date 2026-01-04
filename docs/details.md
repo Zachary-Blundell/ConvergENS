@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Details
 nav_order: 5
 ---

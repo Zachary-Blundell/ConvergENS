@@ -1,11 +1,15 @@
 ---
+layout: default
 title: Articles
-nav_order: 3
+nav_order: 4
 ---
 
 # Articles (Directus) — Guide de saisie pour les organisateur·ices
 
 Cette page explique **quoi remplir**, **dans quel ordre**, et **à quoi servent** les champs d’un **Article** dans le CMS Directus.
+
+- TOC
+  {:toc}
 
 ---
 
@@ -122,3 +126,138 @@ Si vous voulez **sauvegarder votre travail** mais qu’un **champ obligatoire** 
 - Ajoutez les co-organisateurs / partenaires qui doivent pouvoir contribuer au texte.
 
 ---
+
+# Needs review zz
+
+## Tag (catégorie)
+
+**Où :** champ “Tag” (liste déroulante)  
+**Obligatoire :** ✅ Oui  
+**Comment choisir :**
+
+- Sélectionnez une catégorie parmi celles proposées.
+- Vous ne pouvez pas créer un tag depuis l’article (création désactivée).
+
+---
+
+## Cover (image de couverture)
+
+**Où :** champ “Cover”  
+**Obligatoire :** ✅ Oui  
+**Rôle :**
+
+- Image affichée sur la carte article et/ou en en-tête de page.
+
+**Bonnes pratiques :**
+
+- Image lisible (mobile-friendly), plutôt en **paysage**.
+- Éviter le texte trop petit incrusté dans l’image.
+
+---
+
+## Translations (FR obligatoire, EN recommandé)
+
+**Où :** champ “Translations”  
+**Obligatoire :** ✅ Oui (FR)  
+**Rôle :**
+
+- Contenu multilingue (au minimum **Title** + **Body**).
+
+**Règles :**
+
+- **FR est nécessaire** (c’est la base).
+- **EN est fortement recommandé** (si vous avez le temps, faites-le).
+- L’UI **par défaut** est en français : assurez-vous de bien remplir l’onglet FR.
+
+**Conseils :**
+
+- **Title** : clair + informatif.
+- **Body** : texte aéré (paragraphes, intertitres, listes, liens).
+
+---
+
+## Published At (date/heure de publication)
+
+**Où :** champ “Published At”  
+**Rôle :**
+
+- Définit la date affichée et/ou l’ordre de tri des articles.
+
+**Conseils :**
+
+- Publication immédiate : mettez la date/heure actuelle.
+- Publication planifiée : date future (selon le comportement du site).
+
+---
+
+## Status (statut)
+
+**Où :** champ “Status”  
+**Options :**
+
+- **draft** : brouillon (non visible publiquement)
+- **published** : publié (visible sur le site)
+- **archived** : retiré du site, conservé en interne
+
+**Bon usage :**
+
+- Restez en **draft** tant que FR (et idéalement EN) n’est pas prêt + cover + tag.
+- Passez en **published** seulement après relecture.
+
+---
+
+## Events (événements liés) — optionnel
+
+**Où :** champ “Events” (liste M2M)  
+**Obligatoire :** ❌ Non  
+**Rôle :**
+
+- Relier l’article à un ou plusieurs événements (annonce, compte-rendu, etc.).
+
+---
+
+## Champ “Collective” (en cours de suppression)
+
+**Statut :** ⚠️ sera retiré dans une future version  
+**Consigne :**
+
+- Si vous le voyez encore, remplissez-le uniquement si le CMS vous l’impose.
+- Sinon : **ignorez-le** et utilisez **Editors**.
+
+---
+
+## Checklist avant publication ✅
+
+Avant de passer **Status → Published**, vérifiez :
+
+- [ ] **Editors** contient au moins 1 organisation (et les bonnes)
+- [ ] **Tag** est choisi
+- [ ] **Cover** est ajoutée et correcte
+- [ ] **FR** (Translations) : titre + contenu complets
+- [ ] **EN** (Translations) : ajouté si possible (fortement recommandé)
+- [ ] **Published At** est cohérent
+- [ ] _(optionnel)_ **Events** liés si pertinent
+
+---
+
+## Dépannage rapide
+
+### “Une organisation doit pouvoir modifier l’article”
+
+➡️ Ajoutez-la dans **Editors**.
+
+### “Je veux retirer l’accès en modification à une organisation”
+
+➡️ Retirez-la de **Editors** (sauf si c’est l’organisation créatrice : elle gardera l’accès).
+
+### “Mon article n’apparaît pas sur le site”
+
+- Vérifiez **Status = published**
+- Vérifiez **Published At** (pas une date future si le site filtre)
+- Vérifiez que **Cover + Tag + FR** sont bien remplis
+
+---
+
+```
+
+```

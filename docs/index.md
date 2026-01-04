@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Accueil
 nav_order: 1
 ---
@@ -25,11 +26,11 @@ Si vous êtes bloqué·e par un **champ obligatoire** mais que vous voulez juste
 
 ## Sections
 
-- [Articles : créer et publier un article](articles.md)
-- [Organisations : mettre à jour votre organisation](organisations.md)
-- [Événements : créer et gérer un événement](events.md)
-- [Socals: créer et gérer un lien réseau social](socials.md)
-- [Détails : comprendre la section “Details”](details.md)
+- [Articles : créer et publier un article](articles.html)
+- [Organisations : mettre à jour votre organisation](organisations.html)
+- [Événements : créer et gérer un événement](events.html)
+- [Socals: créer et gérer un lien réseau social](socials.html)
+- [Détails : comprendre la section “Details”](details.html)
 
 ## Besoin d’aide ?
 

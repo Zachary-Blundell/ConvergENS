@@ -1,4 +1,5 @@
 ---
+layout: default
 title: Mises à jour
 nav_order: 99
 ---

@@ -1,8 +1,7 @@
 ---
+layout: default
 title: Organisations
-nav_order: 2
+nav_order: 3
 ---
 
 # Organisations: How to update your organisations
-
-> TODO
