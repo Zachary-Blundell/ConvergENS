@@ -49,3 +49,5 @@ prisma/*.db
 prisma/*.db-journal
 *.db
 public/uploads
+
+docs/Gemfile*
