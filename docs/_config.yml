@@ -4,9 +4,8 @@ description: Guides pour les organisateur·ices (CMS)
 theme: just-the-docs
 
 # Local dev
-baseurl: ""
-url: "http://127.0.0.1:4000"
-
+# baseurl: ""
+# url: "http://127.0.0.1:4000"
 
 search_enabled: true
 color_scheme: dark
