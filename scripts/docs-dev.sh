@@ -6,7 +6,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
-export BUNDLE_GEMFILE="Gemfile.local"
+export BUNDLE_GEMFILE="docs/Gemfile.local"
 
 # Install/update gems for the local Gemfile
 bundle install
