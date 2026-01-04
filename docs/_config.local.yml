@@ -1,8 +1,13 @@
 title: ConvergENS User Docs
 description: Guides pour les organisateur·ices (CMS)
 
-# github
-remote_theme: just-the-docs/just-the-docs
+# local dev
+theme: just-the-docs
+remote_theme: null
+
+# Local dev
+baseurl: ""
+url: "http://127.0.0.1:4000"
 
 search_enabled: true
 color_scheme: dark
