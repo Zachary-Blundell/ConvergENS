@@ -5,10 +5,6 @@ description: Guides pour les organisateur·ices (CMS)
 theme: just-the-docs
 remote_theme: null
 
-# Local dev
-baseurl: ""
-url: "http://127.0.0.1:4000"
-
 search_enabled: true
 color_scheme: dark
 
@@ -22,13 +18,14 @@ favicon_ico: "/assets/logos/favicon.ico"
 
 # External navigation links
 nav_external_links:
-  - title: ConvergENS CMS
+  - title: ConvergENS éditeur
     url: https://convergensapi.zac.coffee
     hide_icon: false # set to true to hide the external link icon - defaults to false
     opens_in_new_tab: true # set to true to open this link in a new tab - defaults to false
-    
-nav_external_links:
-  - title: ConvergENS
+  - title: ConvergENS site web
     url: https://convergens.zac.coffee
     hide_icon: false # set to true to hide the external link icon - defaults to false
     opens_in_new_tab: true # set to true to open this link in a new tab - defaults to false
+
+kramdown:
+  toc_levels: [1, 2]
