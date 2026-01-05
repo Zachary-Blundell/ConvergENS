@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Événements
-description: Créer et gérer des événements dans Directus : dates, organisation porteuse, co-organisateurs, lieu, traductions et liens vers des articles.
+description: Créer et gérer des événements dans Directus (dates, organisation porteuse, co-organisateurs, lieu, traductions et liens vers des articles.)
 nav_order: 5
 ---
 

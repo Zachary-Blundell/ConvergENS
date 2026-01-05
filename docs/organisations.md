@@ -17,7 +17,9 @@ Elle sert à afficher une identité publique (nom, logo, couleur, description), 
 
 Dans Directus : **Contenu → collectives**.
 
-Selon votre rôle, vous verrez soit toutes les organisations, soit uniquement celles auxquelles vous avez accès.
+Selon votre filtre, vous verrez soit toutes les organisations, soit uniquement celles auxquelles vous avez accès.
+
+Clicking on your organisation you will see all the feilds related to your organisation and you will be able to update them.
 
 ---
 
@@ -140,7 +142,6 @@ Ces champs sont gérés par Directus et sont **cachés** :
    - `translations` (au moins FR)
    - `email` / `website` (si disponible)
    - `socials` (si applicable)
-   - `organizers` (ajouter les personnes concernées)
 4. Mettre `status` en :
    - `draft` tant que ce n’est pas prêt
    - puis `published` une fois validé
@@ -164,3 +165,9 @@ Ces champs sont gérés par Directus et sont **cachés** :
 
 ### “Le lien du site ne marche pas”
 - Vérifiez que `website` commence bien par `https://`
+- 
+
+I need add that the organiszers can have multiple but is noramlly just the user and I often the same name as the organisations. This can be be multiple user if at some point another user is involved in both groups and they have decided to comanage the collective or if ever there is need for a second account. this is all handeled by the web master or zachary who is the admin
+normal organisers can not change this and should have to worry about it.
+
+

@@ -4,36 +4,60 @@ title: Accueil
 nav_order: 1
 ---
 
-# Documentation Organisateur·ices (Directus)
+# Documentation Organisateur·ices
 
 Bienvenue 👋  
-Ces pages expliquent **comment remplir le CMS Directus** pour publier du contenu sur le site (articles, événements, organisations…).
+Ces pages expliquent **comment fonctionne l'éditeur du site**, soit l'interface qui vous permet de **publier/modifier** **du contenu sur le site** (page, articles, événements, …).
 
-## Comment utiliser cette documentation
+<!-- prettier-ignore-start -->
+- TOC 
+{:toc} 
+<!-- prettier-ignore-end -->
 
-- Chaque section correspond à un écran / un formulaire dans Directus.
-- Vous pouvez lire les pages dans l’ordre, ou aller directement à ce dont vous avez besoin.
-- Les champs **obligatoires** sont indiqués avec ✅.
-- Quand une consigne est importante (droits d’accès, visibilité sur le site, ordre de remplissage), elle est mise en évidence.
+# Vue d’ensemble
 
-## Sauvegarder sans stress
+Il existe **3 espaces** distincts, chacun avec un rôle différent :
 
-Si vous êtes bloqué·e par un **champ obligatoire** mais que vous voulez juste **sauvegarder et revenir plus tard** :
+1. **Le site web (le “front”)** :  
+   [https://convergens.zac.coffee](https://convergens.zac.coffee)  
+   C’est la **version publique** visible par tout le monde.  
+   On y consulte les pages du site, les articles, les événements, etc.  
+   > Vous ne modifiez rien directement ici : tout se fait via l’éditeur.
 
-1. Mettez une valeur provisoire (n’importe laquelle) dans le champ bloquant
-2. Laissez l’article en **`draft`** (brouillon)
-3. Sauvegardez, puis corrigez plus tard avant publication
+   ![Aperçu du site ConvergENS](./assets/images/index/website.png)
 
-## Sections
+2. **L'Éditeur** :  
+   [https://convergensapi.zac.coffee](https://convergensapi.zac.coffee)  
+   C’est l’interface “back-office” qui sert à **créer, modifier et publier** le contenu :  
+   - organisations (collectives)  
+   - articles  
+   - événements  
+   - tags  
+   - liens de réseaux sociaux  
+   > C’est ici que vous travaillez pour que le contenu apparaisse ensuite sur le site web.
 
-- [Articles : créer et publier un article](articles.html)
-- [Organisations : mettre à jour votre organisation](organisations.html)
-- [Événements : créer et gérer un événement](events.html)
-- [Socals: créer et gérer un lien réseau social](socials.html)
-- [Détails : comprendre la section “Details”](details.html)
+   ![Aperçu de L'Éditeur](./assets/images/index/cms.png)
 
-## Besoin d’aide ?
+3. **Cette documentation (où vous êtes actuellement)** :  
+   [https://zachary-blundell.github.io/ConvergENS/](https://zachary-blundell.github.io/ConvergENS/)  
+   C’est le **mode d’emploi** : des explications pas-à-pas pour utiliser l’éditeur, comprendre les champs, et résoudre les problèmes fréquents.  
 
-Si quelque chose n’apparaît pas (tag, organisation, champ manquant) ou si vous pensez ne pas avoir les bons droits, contactez Zachary par whatsapp.
+# Comment utiliser cette documentation ?
 
----
+- Structure : 
+  - "Accueil" : vous êtes dessus !
+  - "Comprendre l'éditeur : les bases de ConvergENS" : introduction rapide
+  - Puis chacune des 6 sections suivantes correspond à un écran / un formulaire sur l'éditeur du site
+  - Une section est ensuite consacrée aux mises à jour
+  - Enfin en cliquant sur "ConvergENS éditeur", vous accédez directement à l'éditeur du site et en cliquant sur "ConvergENS site web" vous êtes redirigé.es sur ce qu'on appelle le *front*, c'est-à-dire la partie visible du site.
+- Vous pouvez lire la documentation dans l’ordre, ou aller directement à ce dont vous avez besoin.
+- Les consignes importantes (visibilité sur le site, droits, ordre de remplissage) sont mises en évidence.
+
+# Besoin d’aide ?
+
+Si malgré cette documentation, vous ne parvenez pas à effectuer la tâche souhaitée, contactez Zachary sur WhatsApp.  
+Pour aller plus vite :
+
+- envoyez une **capture d’écran**
+- indiquez la page sur laquelle vous êtes en train de travailler
+- ce que vous essayez de faire (1 phrase)
