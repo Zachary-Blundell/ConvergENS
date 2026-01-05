@@ -15,4 +15,4 @@ bundle install
 bundle exec jekyll serve \
   --config _config.yml,_config.local.yml \
   --port "${PORT:-4000}" \
-  --host "${HOST:-127.0.0.1}"
+  --host "${HOST:-0.0.0.0}"
