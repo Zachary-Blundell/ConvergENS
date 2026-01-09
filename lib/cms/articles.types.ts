@@ -6,7 +6,7 @@ import { CollectiveForUIRaw, DirectusImage, Id } from "./types";
 export type ArticleTranslationRaw = {
   languages_code: string;
   title?: string | null;
-  body?: string | null;
+  body?: string | null; // This will be html data
   description?: string | null;
 };
 
@@ -90,7 +90,7 @@ export type ArticleFlat = {
   published_at: Date; // ISO datetime should never be null due to default value
 
   title: string;
-  body: string;
+  body: string; // This will be html data
 
   // Cover
   coverUrl: string | null;
