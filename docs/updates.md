@@ -10,6 +10,11 @@ Cette page regroupe les **nouveautés**, **changements**, et **informations impo
 
 > Astuce : quand une mise à jour change une règle de saisie (ex: champs obligatoires, droits d’accès), elle sera décrite ici avec des actions concrètes à appliquer.
 
+<!-- prettier-ignore-start -->
+- TOC
+{:toc}
+<!-- prettier-ignore-end -->
+
 ---
 
 ## Dernières mises à jour
@@ -56,4 +61,3 @@ Cette page regroupe les **nouveautés**, **changements**, et **informations impo
   - [Événements](events.md)
   - [Details](details.md)
 
----

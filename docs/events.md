@@ -7,6 +7,12 @@ nav_order: 5
 
 La collection `events` sert à gérer les **événements** affichés sur ConvergENS : titre/description (traductions), dates, lieu, organisation porteuse et co-organisateurs, ainsi que les liens vers des articles associés.
 
+<!-- prettier-ignore-start -->
+
+- TOC
+{:toc}
+<!-- prettier-ignore-end -->
+
 ## Où trouver les événements ?
 
 Dans Directus : **Contenu → events**.
@@ -115,15 +121,6 @@ Ces champs sont gérés par Directus (création / mise à jour) :
 ## Dépannage rapide
 
 ### “Je ne vois pas mon événement sur le site”
-
-- Vérifiez `status = published`
-- Vérifiez que les champs obligatoires sont bien renseignés (`collective`, `organisers`, `start_at`, `end_at`, `translations`)
-- Vérifiez que vous regardez la bonne période (calendrier / filtres)
-
-### “Je ne peux pas sélectionner une organisation dans organisers”
-
-- Selon votre rôle, les permissions peuvent limiter la liste d’organisations visibles/sélectionnables
-- Contactez un admin si une org manque dans la liste
 
 ### “Mon événement n’apparaît pas au bon endroit dans le calendrier”
 

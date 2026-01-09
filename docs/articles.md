@@ -8,8 +8,10 @@ nav_order: 4
 
 Cette page explique **quoi remplir**, **dans quel ordre**, et **à quoi servent** les champs d’un **Article** dans le CMS Directus.
 
+<!-- prettier-ignore-start -->
 - TOC
-  {:toc}
+{:toc}
+<!-- prettier-ignore-end -->
 
 ---
 

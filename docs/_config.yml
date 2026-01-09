@@ -1,12 +1,8 @@
 title: ConvergENS User Docs
 description: Guides pour les organisateur·ices (CMS)
 
-theme: just-the-docs
-
-# Local dev
-baseurl: ""
-url: "http://127.0.0.1:4000"
-
+# github
+remote_theme: just-the-docs/just-the-docs
 
 search_enabled: true
 color_scheme: dark
@@ -25,8 +21,6 @@ nav_external_links:
     url: https://convergensapi.zac.coffee
     hide_icon: false # set to true to hide the external link icon - defaults to false
     opens_in_new_tab: true # set to true to open this link in a new tab - defaults to false
-    
-nav_external_links:
   - title: ConvergENS
     url: https://convergens.zac.coffee
     hide_icon: false # set to true to hide the external link icon - defaults to false
