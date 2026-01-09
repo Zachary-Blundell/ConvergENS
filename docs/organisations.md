@@ -1,12 +1,14 @@
 ---
 layout: default
 title: Organisation (Collective)
-description: Créer et gérer une organisation dans Directus (identité, contacts, type, organisateurs, réseaux sociaux et publication.)
+description: Créer et mettre à jour une organisation dans l'éditeur du site (nom, logo, type, textes, contacts et liens).
 nav_order: 3
 ---
 
-Une **Organisation** (collection `collectives`) représente un groupe/collectif associé à ConvergENS.  
-Elle sert à afficher une identité publique (nom, logo, couleur, description), des informations de contact, et à relier des personnes (organizers) ainsi que des éléments associés (articles, réseaux sociaux).
+# Organisation (Collective)
+
+Une **Organisation** (collection `collectives`) représente un groupe associé à ConvergENS.  
+Elle sert à afficher une identité publique (nom, logo, couleur, textes), des informations de contact, et des liens vers d’autres éléments (réseaux sociaux, articles, etc.).
 
 <!-- prettier-ignore-start -->
 - TOC
@@ -15,159 +17,204 @@ Elle sert à afficher une identité publique (nom, logo, couleur, description), 
 
 ## Où trouver les organisations ?
 
-Dans Directus : **Contenu → collectives**.
+Dans l’éditeur l'éditeur du site : **Contenu → collectives**.
 
-Selon votre filtre, vous verrez soit toutes les organisations, soit uniquement celles auxquelles vous avez accès.
+Selon vos droits et vos filtres, vous verrez soit plusieurs organisations, soit uniquement la vôtre.
 
-Clicking on your organisation you will see all the feilds related to your organisation and you will be able to update them.
+👉 En cliquant sur votre organisation, vous ouvrez sa **fiche** : vous verrez tous les champs et pourrez les mettre à jour.
 
 ---
 
-## Champs principaux
+# À remplir en priorité (obligatoire)
+✅ = obligatoire
 
-### Statut
+> Objectif : en remplissant cette partie, vous pouvez déjà **enregistrer** et revenir plus tard.
 
-- **status** *(obligatoire)* : `published` / `draft` / `archived`
+## Statut ✅
+
+- **Nom dans l'éditeur du site** : `status`
+- **À quoi ça sert** : décide si l’organisation est visible sur le site.
+- **Valeurs** : `published` / `draft` / `archived`
 
 Bon réflexe :
-- laissez en **draft** tant que l’organisation n’est pas prête
-- passez en **published** quand elle doit apparaître sur le site
-- utilisez **archived** pour retirer une organisation sans la supprimer
+- laissez en **draft** (brouillon) tant que l’organisation n’est pas prête
+- passez en **published** (publié) quand elle doit apparaître sur le site
+- utilisez **archived** (archivé) pour la retirer sans la supprimer
 
 ---
 
-## Identité de l’organisation
+# Identité ✅
 
-### Nom
+![Champs Nom et Slug](./assets/images/organisations/champs-nom-slug.png)
 
-- **name** *(obligatoire)* : nom affiché publiquement
+## Nom ✅
 
-### Slug (lien)
-
-- **slug** *(obligatoire)* : identifiant lisible utilisé dans les URLs  
-  Il est généré à partir de `name` (extension type “slug”).
-
-> Conseil : évitez de modifier le `slug` après publication (cela peut casser des liens).
-
-### Logo
-
-- **logo** *(obligatoire)* : image (fichier)  
-  Le fichier est enregistré dans le dossier configuré pour les logos.
-
-> Conseil : privilégiez une image carrée, lisible en petit format.
-
-### Couleur
-
-- **color** *(obligatoire)* : couleur associée à l’organisation  
-  Elle peut être utilisée pour l’identité visuelle sur le site (badges, accents, etc.).
-
-### Type d’organisation
-
-- **type** *(obligatoire)* : relation vers `collective_type`  
-  Dans Directus, vous choisissez un type existant (création désactivée).
+- **Nom dans l'éditeur du site** : `name`
+- **À quoi ça sert** : nom affiché publiquement sur le site.
+- **Exemple** : “The Debug Duck Society”
 
 ---
 
-## Traductions (contenu multilingue)
+## Slug (lien) ✅
 
-- **translations** *(obligatoire)* : contenu traduit de l’organisation  
-  Interface “Translations”, avec français par défaut (`fr-FR`).
+- **Nom dans l'éditeur du site** : `slug`
+- **À quoi ça sert** : c’est le “nom pour le lien”, utilisé dans l’adresse du site.
+![Exemple d’URL avec slug](./assets/images/organisations/url.png)
 
-Vous y trouverez les champs textuels traduits (ex : nom public, description, etc. — selon le modèle configuré).
+Un **slug**, c’est le petit texte dans l’adresse (URL) qui identifie une page de façon lisible.
 
-> Astuce : si vous ne renseignez pas une langue, le site peut afficher un fallback selon sa logique (souvent FR).
+- Il ressemble souvent au nom, mais en version simplifiée : minuscules, sans accents, avec des tirets.
+- Il sert à fabriquer l’URL.
+
+Exemple :
+- Nom : **"The Debug Duck Society"**
+- Slug : **`debug-duck-society`**
+- URL : `https://convergens.net/organisations/debug-duck-society`
+
+
+### Les deux boutons à côté du slug
+- ✏️ **Crayon** : modifier le slug à la main
+- 🪄 **Baguette magique** : générer automatiquement un slug à partir du nom
+
+> Conseil : évitez de modifier le slug après publication (cela change le lien).
 
 ---
 
-## Coordonnées (optionnel)
+## Logo ✅
 
-Ces champs sont facultatifs mais recommandés pour permettre le contact :
-
-- **email**
-- **phone**
-- **website**
+- **Nom dans l'éditeur du site** : `logo`
+- **À quoi ça sert** : image de l’organisation (logo).
+- **Conseil** : privilégiez une image carrée, lisible (idéalement **500×500**).
 
 ---
 
-## Relations (liens avec d’autres contenus)
+## Couleur ✅
 
-### Organizers (personnes liées à l’organisation)
+- **Nom dans l'éditeur du site** : `color`
+- **À quoi ça sert** : couleur associée à l’organisation (badges, accents, boutons… sur le site).
 
-- **organizers** *(obligatoire)* : relation **M2M**  
-  Permet d’associer des utilisateurs/organisateurs à l’organisation.
+---
 
-Selon la configuration des droits, cette relation peut aussi contrôler :
-- qui peut voir/modifier l’organisation
-- quelles organisations un utilisateur peut sélectionner ailleurs (ex : événements)
+## Type d’organisation ✅
 
-### Réseaux sociaux
+- **Nom dans l'éditeur du site** : `type`
+- **À quoi ça sert** : indique la catégorie de l’organisation et détermine **où elle apparaît** sur la page “Organisations” du site.
+- **Choix possibles** :
+  - **Association**
+  - **Parti**
+  - **Syndicat**
+  - **Club**
 
-- **socials** *(optionnel)* : relation **M2M**  
-  Chaque entrée est généralement un couple “type” + “URL”.
+> Conseil : choisissez le type qui correspond le mieux. En cas de doute, demandez à Zachary.
 
-Dans la liste, l’affichage suit le template :  
-`TYPE URL : https://...`
+---
+
+# Traductions ✅
+
+- **Nom dans l'éditeur du site** : `translations`
+- **À quoi ça sert** : textes affichés sur le site, dans chaque langue.
+
+> À savoir :
+> - **Le français est obligatoire.**
+> - **L’anglais est fortement recommandé.**
+> - L’interface ouvre le **français par défaut**, donc :
+>   1) complétez **FR** en premier,  
+>   2) puis ajoutez / complétez **EN** si possible.
+
+## Résumé (100 caractères)
+
+- **Nom dans l'éditeur du site** : (dans `translations`) `summary`
+- **Où ça s’affiche** : cartes / aperçus (liste des organisations).
+- **Objectif** : une phrase simple, très courte.
+
+Exemple :
+- “Association étudiante qui organise des débats et des ateliers.”
+
+## Description (page de l’organisation)
+
+- **Nom dans l'éditeur du site** : (dans `translations`) `description`
+- **Où ça s’affiche** : page détaillée de l’organisation.
+- **Vous pouvez** : titres, gras, listes, liens, images.
+
+➡️ Pour apprendre à utiliser l’éditeur de texte : **[voir le guide de l’éditeur de texte](wysisyg.html)**
+
+> Conseil : mettez l’essentiel dans les premières lignes, puis ajoutez les détails en dessous.
+
+### Astuce “traduction automatique”
+> Si vous utilisez DeepL (ou une IA), supprimez les phrases ajoutées automatiquement du type :
+> - “Voici la traduction : …”
+> - “Voici votre texte traduit : …”
+> - “Traduction fournie par DeepL”
+> - “Translated with DeepL”
+> - “Voici une version améliorée / réécrite…”
+> - “Bien sûr ! / Avec plaisir !”
+
+---
+
+## Organizers (qui gère l’organisation)
+**Ceci est à titre informatif et ne doit pas vous inquiéter ni vous préoccuper, car vous n'avez aucun moyen d'y changer quoi que ce soit.**
+
+- **Nom dans l'éditeur du site** : `organizers`
+- **À quoi ça sert** : définit qui a accès à cette organisation dans l’éditeur.
+
+> À noter : il peut y avoir **plusieurs** organizers, mais la plupart du temps il n’y en a **qu’un seul** (souvent un compte avec le même nom que l’organisation).  
+> On ajoute plusieurs organizers uniquement si une deuxième personne rejoint l’équipe et que vous décidez de gérer l’organisation à deux, ou s’il faut un deuxième compte.
+>
+> ⚠️ La gestion des organizers est faite par admin / webmestre.  
+> Les organisateur·ices “classiques” ne peuvent pas modifier ce champ — et n’ont pas besoin de s’en occuper.
+
+---
+
+# Coordonnées (optionnel)
+
+Ces champs sont facultatifs mais utiles :
+
+## Réseaux sociaux
+
+- **Nom dans l'éditeur du site** : `socials`
+- **À quoi ça sert** : ajouter des liens (Instagram, YouTube…).
 
 > Conseil : ajoutez uniquement des liens officiels et vérifiez qu’ils sont publics.
 
-### Articles
+## Email
+- **Nom dans l'éditeur du site** : `email`
+- **À quoi ça sert** : contact public.
 
-- **articles** : relation **O2M** (masquée dans l’interface)  
-  Ce champ est **hidden** dans Directus : vous ne l’éditez pas ici.
+## Téléphone
+- **Nom dans l'éditeur du site** : `phone`
+- **À quoi ça sert** : contact public.
 
-En pratique, les articles liés à une organisation sont généralement gérés depuis la collection `articles` (ex : via une relation “editors” ou équivalent).
-
----
-
-## Champs techniques (automatiques)
-
-Ces champs sont gérés par Directus et sont **cachés** :
-
-- **id** : identifiant interne
-- **user_created**, **date_created**
-- **user_updated**, **date_updated**
+## Site web
+- **Nom dans l'éditeur du site** : `website`
+- **À quoi ça sert** : lien vers le site officiel.
+> Conseil : commencez par `https://`
 
 ---
 
-## Procédure recommandée (création / mise à jour)
+# Procédure pas à pas
 
-1. **Contenu → collectives → Créer**
-2. Renseigner :
-   - `name`
-   - `slug` (généré, à vérifier)
-   - `logo`
-   - `color`
-   - `type`
-3. Compléter :
-   - `translations` (au moins FR)
-   - `email` / `website` (si disponible)
-   - `socials` (si applicable)
-4. Mettre `status` en :
-   - `draft` tant que ce n’est pas prêt
-   - puis `published` une fois validé
+1. Aller dans **Contenu → collectives**
+2. Ouvrir votre organisation (ou cliquer **Créer** si vous êtes autorisé·e)
+3. Remplir en priorité :
+   - `name`, `slug`, `logo`, `color`, `type`, `translations`
+4. Sauvegarder
+5. Passer `status` à **published** quand c’est prêt
 
 ---
 
-## Dépannage rapide
+# Dépannage rapide
 
-### “Je ne vois pas mon organisation”
+## “Je ne vois pas mon organisation”
 - Vérifiez que vous êtes dans **Contenu → collectives**
 - Vérifiez qu’un **filtre** n’est pas actif
-- Selon votre rôle, il est possible que vous ne puissiez voir **que** certaines organisations (permissions/policies)
+- Selon votre rôle, il est possible que vous ne voyiez **que** certaines organisations (c’est normal)
 
-### “Je ne peux pas sélectionner une personne dans organizers”
-- Cela dépend des droits sur les utilisateurs / sur la table de jonction M2M
-- Contactez un admin si l’utilisateur n’apparaît pas dans la liste
+## “Je ne peux pas changer organizers”
+- C’est normal : c’est géré par Zachary (admin). Contactez-le si besoin.
 
-### “Le logo est flou / mal cadré”
+## “Le logo est flou / mal cadré”
 - Essayez une image plus grande, idéalement carrée
-- Évitez les logos trop détaillés (ils deviennent illisibles en petit)
+- Évitez les logos trop détaillés (illisibles en petit)
 
-### “Le lien du site ne marche pas”
+## “Le lien du site ne marche pas”
 - Vérifiez que `website` commence bien par `https://`
-- 
-
-I need add that the organiszers can have multiple but is noramlly just the user and I often the same name as the organisations. This can be be multiple user if at some point another user is involved in both groups and they have decided to comanage the collective or if ever there is need for a second account. this is all handeled by the web master or zachary who is the admin
-normal organisers can not change this and should have to worry about it.
-
-
