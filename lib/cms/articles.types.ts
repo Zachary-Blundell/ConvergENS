@@ -21,21 +21,30 @@ export type EventArticleInfoRaw = {
   start_at: string;
   end_at: string
   all_day: boolean;
-  location_address: string;
-  location: string;
+  location_address?: string;
+  location?: string;
   translations?: EventTranslationForArticleRaw[];
 };
 
+export type EventArticleInfoFlat = {
+  id: Id;
+  start_at: Date;
+  end_at: Date
+  all_day: boolean;
+  location_address?: string;
+  location?: string;
+  translations?: EventTranslationForArticleRaw[];
+};
 
 // M2M: articles ↔ collectives (editors)
-// Editors junction: articles ↔ collectives (or users ↔ collectives depending on your schema)
+// Editors junction: articles ↔ collectives (or users ↔ collectives depending on the schema)
 export type ArticleEditorRowRaw = {
   collectives_id: CollectiveForUIRaw;
 };
 
 // M2M: events ↔ articles
 export type ArticleEventRowRaw = {
-  event_id: EventArticleInfoRaw;
+  events_id: EventArticleInfoRaw;
 };
 
 // Main Article type
@@ -80,8 +89,6 @@ export type CardArticleFlat = {
     start_at: Date;
     end_at: Date;
     all_day: boolean | null;
-    location_address: string | null;
-    location: string | null;
   }>;
 };
 
@@ -114,9 +121,7 @@ export type ArticleFlat = {
     id: Id;
     title: string;
     start_at: Date;
-    end_at: Date;
-    all_day: boolean | null;
-    location_address: string | null;
-    location: string | null;
+    end_at: Date
+    all_day: boolean;
   }>;
 };

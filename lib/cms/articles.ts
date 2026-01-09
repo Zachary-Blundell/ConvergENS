@@ -3,7 +3,6 @@ import { readItems, aggregate, readItem } from '@directus/sdk';
 import { directus } from '../directus';
 import { buildAssetUrl, DEFAULT_LOCALE, pickTranslation, PLACEHOLDER_LOGO, type ItemsQuery } from './utils';
 import type { ArticleEventRowRaw, ArticleFlat, ArticleRaw, CardArticleFlat } from './articles.types';
-import { isObject, objectLogger } from '../utils';
 import { flattenArticle, flattenArticlesForCards } from './articles.utils';
 
 export const perPageConstant = 12;
@@ -35,7 +34,6 @@ export async function getArticlesRaw(req?: ItemsQuery): Promise<ArticleRaw[]> {
   }
 
   const rawArticles = await directus.request<any[]>(readItems('articles', req));
-  objectLogger(rawArticles, "rawArticles from getArticlesRaw: ")
   return rawArticles as ArticleRaw[];
 }
 
@@ -140,6 +138,13 @@ export async function getArticleById(
         { collectives_id: ['id', 'name', 'slug', 'color', { logo: ['id', 'width', 'height'] }] },
       ],
     },
+
+    // M2M: articles ↔ events 
+    {
+      events: [
+        { events_id: ['id', { translations: ['title'] }, 'start_at', 'end_at', 'all_day'] },
+      ],
+    },
     { tag: ['id', 'color', { translations: ['languages_code', 'name'] }] },
     { translations: ['languages_code', 'title', 'body'] },
   ];
@@ -163,5 +168,8 @@ export async function getArticleById(
 
   const rawArticle = await directus.request<ArticleRaw>(readItem('articles', articleId, req));
 
-  return flattenArticle(rawArticle, locale);
+  const flat = flattenArticle(rawArticle, locale);
+  return flat;
+
+  // return flattenArticle(rawArticle, locale);
 }

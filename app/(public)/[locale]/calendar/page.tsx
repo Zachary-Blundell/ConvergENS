@@ -22,13 +22,14 @@ export default async function Page({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams?: Promise<{ cursor: string }>;
+  searchParams?: Promise<{ cursor?: string, event?: string }>;
 }) {
   const t = await getTranslations('CalendarPage');
   const { locale } = await params;
 
   // Pull the raw cursor from the querystring (may be missing/invalid).
-  const { cursor } = await (searchParams || Promise.resolve({ cursor: '' }));
+  // const { cursor, } = await (searchParams || Promise.resolve({ cursor: '' }));
+  const { cursor = '', event = '' } = await (searchParams || Promise.resolve({ cursor: '', event: '' }));
 
   // Normalize the cursor. If it's empty/invalid, default to the current month.
   // Use Europe/Paris as the reference timezone for month boundaries.
@@ -45,8 +46,13 @@ export default async function Page({
 
   // If the incoming cursor isn't canonical, redirect to the canonical URL
   // (stabilizes URLs and prevents duplicate content).
+  // if (cursor !== canonical) {
+  //   redirect(`/${locale}/calendar?cursor=${canonical}`);
+  // }
   if (cursor !== canonical) {
-    redirect(`/${locale}/calendar?cursor=${canonical}`);
+    const qs = new URLSearchParams({ cursor: canonical });
+    if (event) qs.set('event', event);
+    redirect(`/${locale}/calendar?${qs.toString()}`);
   }
 
   // Compute the visible 6x7 grid window and load events for that range.
@@ -111,6 +117,7 @@ export default async function Page({
           locale={locale}
           cursor={canonical}
           events={monthsEvents}
+          selectedEventId={event || null}
           className="max-w-7xl"
         />
       </div>
