@@ -3,9 +3,9 @@ import * as React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import HtmlContent from '@/components/HtmlContent';
-import { getArticle } from '@/lib/cms/articles';
 import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
+import { getArticleById } from '@/lib/cms/articles';
 
 function formatDate(iso: string, locale: string) {
   try {
@@ -25,7 +25,15 @@ export default async function ArticlePage({
   params: Promise<{ locale: string; id: string }>;
 }) {
   const { locale, id } = await params;
-  const article = await getArticle(id, locale);
+
+  // Accept only positive integers
+  if (!/^\d+$/.test(id)) notFound();
+
+  const articleId = Number(id);
+  // Handle huge numbers / weird edge cases
+  if (!Number.isSafeInteger(articleId) || articleId <= 0) notFound();
+
+  const article = await getArticleById({ articleId, locale });
   if (!article) notFound(); // from next/navigation
 
   const t = await getTranslations('ArticlesPage');

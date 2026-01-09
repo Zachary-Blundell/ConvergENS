@@ -317,3 +317,4 @@ Ces champs sont gérés par Directus (création / mise à jour) :
 ### “Mon événement n’apparaît pas au bon endroit dans le calendrier”
 - Vérifiez `start_at` / `end_at` (timezone, jour/heure, inversion début/fin)
 - Si `all_day` est activé, vérifiez que les dates correspondent à une journée complète
+

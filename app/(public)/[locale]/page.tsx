@@ -7,7 +7,7 @@ import reactStringReplace from 'react-string-replace';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { getHome } from '@/lib/cms/homepage';
 import OrganisationsRow from '@/components/OrganisationsRow';
-import { getArticleCards } from '@/lib/cms/articles';
+// import { getArticleCards } from '@/lib/cms/articles';
 
 import { ArticleCardCarousel } from '@/components/ArticleCarousel';
 
@@ -75,13 +75,13 @@ export default async function HomePage() {
 
   const t = home?.translations;
   const tFallback = await getTranslations('Home');
-  const carouselArticles = await getArticleCards(
-    {
-      locale,
-      page: 1,
-      numberOfArticles: 6
-    }
-  );
+  // const carouselArticles = await getArticleCards(
+  //   {
+  //     locale,
+  //     page: 1,
+  //     numberOfArticles: 6
+  //   }
+  // );
 
   return (
     <div className="flex w-full flex-col items-center justify-center bg-surface-1">
@@ -214,10 +214,10 @@ export default async function HomePage() {
       <h2 className="p-5 text-center text-3xl sm:text-4xl md:text-5xl text-highlight">
         {tFallback('latestArticles')}
       </h2>
-      <ArticleCardCarousel
-        articles={carouselArticles}
-        className="max-w-5/6 mb-8 min-h-[50svh]"
-      />
+      {/* <ArticleCardCarousel */}
+      {/*   articles={carouselArticles} */}
+      {/*   className="max-w-5/6 mb-8 min-h-[50svh]" */}
+      {/* /> */}
     </div>
   );
 }
