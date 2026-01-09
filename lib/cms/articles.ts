@@ -168,8 +168,5 @@ export async function getArticleById(
 
   const rawArticle = await directus.request<ArticleRaw>(readItem('articles', articleId, req));
 
-  const flat = flattenArticle(rawArticle, locale);
-  return flat;
-
-  // return flattenArticle(rawArticle, locale);
+  return flattenArticle(rawArticle, locale);
 }
