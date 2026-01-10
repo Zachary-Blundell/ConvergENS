@@ -83,13 +83,13 @@ export type CardArticleFlat = {
     logoHeight: number | null;
   }>;
 
-  events: Array<{
-    id: Id;
-    title: string;
-    start_at: Date;
-    end_at: Date;
-    all_day: boolean | null;
-  }>;
+  // events: Array<{
+  //   id: Id;
+  //   title: string;
+  //   start_at: Date;
+  //   end_at: Date;
+  //   all_day: boolean | null;
+  // }>;
 };
 
 export type ArticleFlat = {
