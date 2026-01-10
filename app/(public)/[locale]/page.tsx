@@ -10,6 +10,8 @@ import OrganisationsRow from '@/components/OrganisationsRow';
 // import { getArticleCards } from '@/lib/cms/articles';
 
 import { ArticleCardCarousel } from '@/components/ArticleCarousel';
+import { getArticleCards } from '@/lib/cms/articles';
+import { objectLogger } from '@/lib/utils';
 
 /* ---------------- Utilities ---------------- */
 
@@ -75,13 +77,14 @@ export default async function HomePage() {
 
   const t = home?.translations;
   const tFallback = await getTranslations('Home');
-  // const carouselArticles = await getArticleCards(
-  //   {
-  //     locale,
-  //     page: 1,
-  //     numberOfArticles: 6
-  //   }
-  // );
+  const carouselArticles = await getArticleCards(
+    {
+      locale,
+      page: 1,
+      numberOfArticles: 6
+    }
+  );
+  objectLogger(carouselArticles)
 
   return (
     <div className="flex w-full flex-col items-center justify-center bg-surface-1">
@@ -144,7 +147,6 @@ export default async function HomePage() {
       <section className="container mx-auto space-y-20 px-4 py-16">
         {/* Row 1 – image left, text right */}
         <div className="grid items-center gap-10 sm:grid-cols-2">
-          {/* <div className="scroll-fade-in aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700" /> */}
           <Image
             src={home?.about_row1_img.url}
             alt="About image 1"
@@ -172,7 +174,6 @@ export default async function HomePage() {
               {t?.about_row2_body ?? tFallback('about.row2.body')}
             </p>
           </div>
-          {/* <div className="scroll-fade-in order-1 aspect-[16/9] rounded-md bg-slate-200 dark:bg-slate-700 sm:order-2" /> */}
 
           <Image
             src={home?.about_row2_img.url}
@@ -214,10 +215,11 @@ export default async function HomePage() {
       <h2 className="p-5 text-center text-3xl sm:text-4xl md:text-5xl text-highlight">
         {tFallback('latestArticles')}
       </h2>
-      {/* <ArticleCardCarousel */}
-      {/*   articles={carouselArticles} */}
-      {/*   className="max-w-5/6 mb-8 min-h-[50svh]" */}
-      {/* /> */}
+
+      <ArticleCardCarousel
+        articles={carouselArticles.data}
+        className="max-w-5/6 mb-8 min-h-[50svh]"
+      />
     </div>
   );
 }
