@@ -7,15 +7,15 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { ArticleCard as TArticleCard } from '@/lib/cms/articles';
-import ArticleCard from './ArticleCard';
 import { cn } from '@/lib/utils';
+import { CardArticleFlat } from '@/lib/cms/articles.types';
+import ArticleCard from './ArticleCard';
 
 export function ArticleCardCarousel({
   articles,
   className,
 }: {
-  articles: Array<TArticleCard>;
+  articles: Array<CardArticleFlat>;
   className?: string;
 }) {
   return (
