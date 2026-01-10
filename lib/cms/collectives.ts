@@ -8,7 +8,7 @@ import {
   pickTranslation,
   PLACEHOLDER_LOGO,
 } from './utils';
-import { ArticleCard, ArticleRaw } from './articles';
+import { ArticleRaw, CardArticleFlat } from './articles.types';
 
 export type CollectiveTranslation = {
   languages_code: string;
@@ -74,7 +74,7 @@ export type CollectiveFlat = {
   summary?: string | null;
   description?: string | null;
   socials?: { type: string; url: string }[];
-  articles: Array<ArticleCard>;
+  articles: Array<CardArticleFlat>;
 };
 
 export type CollectiveUI = {
@@ -475,25 +475,40 @@ export async function getCollectiveBySlug(
     articles: (c.articles ?? []).map((a: ArticleRaw) => ({
       id: String(a.id),
       title: pickTranslation(a.translations, locale)?.title ?? '',
-      coverUrl: buildAssetUrl(a.cover.id) ?? PLACEHOLDER_LOGO,
-      coverWidth: Number(a.cover.width),
-      coverHeight: Number(a.cover.height),
 
-      tag: {
-        id: a.tag?.id ?? '',
-        name: pickTranslation(a.tag?.translations, locale)?.name ?? '',
-        color: a.tag?.color ?? null,
-      },
-      collective: {
-        id: String(c.id),
-        name: c.name,
-        slug: c.slug,
-        color: c.color,
-        logoUrl: buildAssetUrl(c.logo.id) ?? PLACEHOLDER_LOGO,
-        logoWidth: c.logo.width,
-        logoHeight: c.logo.height,
-      },
-      published_at: String(a.published_at),
+      coverUrl: a.cover?.id ? buildAssetUrl(a.cover.id) : PLACEHOLDER_LOGO,
+      coverWidth: a.cover?.width != null ? Number(a.cover.width) : null,
+      coverHeight: a.cover?.height != null ? Number(a.cover.height) : null,
+      coverDescription: a.cover?.description ?? null,
+
+      tag: a.tag
+        ? {
+          id: a.tag.id,
+          name: pickTranslation(a.tag.translations, locale)?.name ?? '',
+          color: a.tag.color ?? null,
+        }
+        : null,
+
+      editors:
+        a.editors?.flatMap((row: any) => {
+          const ed = row?.collectives_id;
+          if (!ed) return [];
+          const logoId = ed.logo?.id ?? null;
+
+          return [
+            {
+              id: String(ed.id),
+              name: ed.name ?? '',
+              slug: ed.slug ?? '',
+              color: ed.color ?? '',
+              logoUrl: logoId ? buildAssetUrl(logoId) : PLACEHOLDER_LOGO,
+              logoWidth: ed.logo?.width ?? null,
+              logoHeight: ed.logo?.height ?? null,
+            },
+          ];
+        }) ?? [],
+
+      published_at: new Date(a.published_at),
     })),
   };
 }
