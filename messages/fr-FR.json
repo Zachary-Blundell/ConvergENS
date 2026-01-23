@@ -159,6 +159,16 @@
       "close": "Fermer"
     }
   },
+  "Components": {
+    "AddToCalendar": {
+      "button": "Ajouter au calendrier",
+      "google": "Google Agenda",
+      "outlook": "Outlook (Outlook.com)",
+      "office365": "Office 365",
+      "yahoo": "Yahoo Calendar",
+      "ics": "Télécharger le fichier .ics"
+    }
+  },
   "404": {
     "badgeLabel": "Information",
     "title": "Page introuvable",

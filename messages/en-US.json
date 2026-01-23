@@ -159,6 +159,16 @@
       "close": "Close"
     }
   },
+  "Components": {
+    "AddToCalendar": {
+      "button": "Add to calendar",
+      "google": "Google Calendar",
+      "outlook": "Outlook (Outlook.com)",
+      "office365": "Office 365",
+      "yahoo": "Yahoo Calendar",
+      "ics": "Download .ics"
+    }
+  },
   "404": {
     "badgeLabel": "Information",
     "title": "Page not found",

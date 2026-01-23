@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import type { CalendarEventFlat } from '@/lib/cms/events.types';
+import { AddToCalendarButton } from '@/components/AddToCalendarButton';
 
 export type EventModalProps = {
   event: CalendarEventFlat;
@@ -92,6 +93,23 @@ export default function EventModal({
           )}
         </div>
 
+        <div className="mt-3">
+          <AddToCalendarButton
+            event={{
+              uid: event.id,
+              title: event.title,
+              description: event.description,
+              start: event.start_at,
+              end: event.end_at,
+              allDay: event.all_day,
+              location: event.location_address
+                ? `${event.location ?? ''} — ${event.location_address}`
+                : event.location,
+              url: typeof window !== 'undefined' ? window.location.href : undefined,
+            }}
+            align="left"
+          />
+        </div>
         {event.location && (
           <div className="mt-3 text-sm text-fg-primary">
             <span className="font-medium">{t('event.locationLabel')}</span>
