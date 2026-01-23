@@ -49,7 +49,6 @@ export default async function OrganisationsPage({
           {items.map((org) => (
             <OrganisationCard
               key={org.id}
-              id={org.id}
               name={org.name}
               logoW={org.logoWidth ?? undefined}
               logoH={org.logoHeight ?? undefined}
@@ -57,6 +56,10 @@ export default async function OrganisationsPage({
               logoUrl={org.logoUrl ?? undefined}
               slug={org.slug}
               color={org.color ?? undefined}
+              altLogo={t('altLogo', { name: org.name })}
+              viewPageLabel={t('viewPage')}
+              viewPageTitle={t('viewPageTitle', { name: org.name })}
+              viewPageAria={t('viewPageAria', { name: org.name })}
             />
           ))}
         </div>
