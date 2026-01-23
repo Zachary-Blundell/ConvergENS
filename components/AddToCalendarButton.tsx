@@ -137,13 +137,10 @@ export function AddToCalendarButton({
   return (
     <div ref={rootRef} className={`relative inline-flex ${className}`}>
       <Button
-        asChild
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="menu"
         aria-expanded={open}
         className="rounded-md px-3 py-2 text-sm border border-outline text-fg-primary bg-highlight hover:bg-highlight-400 hover:shadow-l hover:scale-110 md:text-md "
-
-      // className="w-full h-12 md:h-14 px-6 md:px-8 text-fg-primary bg-highlight hover:bg-highlight-400 hover:shadow-l hover:scale-110 md:text-lg tracking-wide uppercase"
       >
         <div>
           {label ?? t('button')}
