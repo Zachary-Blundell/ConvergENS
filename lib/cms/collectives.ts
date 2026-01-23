@@ -193,12 +193,7 @@ export async function getOrganisationCards(
       logoUrl: buildAssetUrl(i.logo) ?? PLACEHOLDER_LOGO,
       logoWidth: Number(i.logo.width),
       logoHeight: Number(i.logo.height),
-      email: i.email ?? null,
-      phone: i.phone ?? null,
-      website: i.website ?? null,
       summary: collectiveTr?.summary ?? null,
-      description: collectiveTr?.description ?? null,
-      socials: i.socials ?? [],
     };
     return result;
   });
