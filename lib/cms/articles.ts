@@ -142,7 +142,17 @@ export async function getArticleById(
     // M2M: articles ↔ events 
     {
       events: [
-        { events_id: ['id', { translations: ['title'] }, 'start_at', 'end_at', 'all_day'] },
+        {
+          events_id: [
+            'id',
+            { translations: ['languages_code', 'title', 'description'] },
+            'start_at',
+            'end_at',
+            'all_day',
+            'location',
+            'location_address'
+          ]
+        }
       ],
     },
     { tag: ['id', 'color', { translations: ['languages_code', 'name'] }] },
@@ -158,6 +168,14 @@ export async function getArticleById(
       translations: {
         _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
         _limit: 2,
+      },
+    },
+    events: {
+      events_id: {
+        translations: {
+          _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+          _limit: 2,
+        },
       },
     },
   };

@@ -13,27 +13,29 @@ export type ArticleTranslationRaw = {
 export type EventTranslationForArticleRaw = {
   languages_code: string;
   title: string | null;
+  description?: string | null;
 };
 
 
 export type EventArticleInfoRaw = {
   id: Id;
   start_at: string;
-  end_at: string
-  all_day: boolean;
-  location_address?: string;
-  location?: string;
-  translations?: EventTranslationForArticleRaw[];
+  end_at: string;
+  all_day: boolean | null;
+  location?: string | null;
+  location_address?: string | null;
+  translations?: EventTranslationForArticleRaw[] | null;
 };
 
 export type EventArticleInfoFlat = {
   id: Id;
+  title: string;
+  description?: string | null;
   start_at: Date;
-  end_at: Date
-  all_day: boolean;
-  location_address?: string;
-  location?: string;
-  translations?: EventTranslationForArticleRaw[];
+  end_at: Date;
+  all_day: boolean | null;
+  location?: string | null;
+  location_address?: string | null;
 };
 
 // M2M: articles ↔ collectives (editors)
@@ -82,14 +84,6 @@ export type CardArticleFlat = {
     logoWidth: number | null;
     logoHeight: number | null;
   }>;
-
-  // events: Array<{
-  //   id: Id;
-  //   title: string;
-  //   start_at: Date;
-  //   end_at: Date;
-  //   all_day: boolean | null;
-  // }>;
 };
 
 export type ArticleFlat = {
@@ -120,8 +114,11 @@ export type ArticleFlat = {
   events: Array<{
     id: Id;
     title: string;
+    description?: string | null;
     start_at: Date;
-    end_at: Date
-    all_day: boolean;
+    end_at: Date;
+    all_day: boolean | null;
+    location?: string | null;
+    location_address?: string | null;
   }>;
 };

@@ -1,5 +1,5 @@
 import { isObject } from "../utils";
-import { ArticleEventRowRaw, ArticleFlat, ArticleRaw, CardArticleFlat } from "./articles.types";
+import { ArticleEventRowRaw, ArticleFlat, ArticleRaw, CardArticleFlat, EventArticleInfoFlat } from "./articles.types";
 import { buildAssetUrl, pickTranslation, PLACEHOLDER_LOGO } from "./utils";
 
 function flattenEditors(rawArticle: ArticleRaw) {
@@ -25,9 +25,8 @@ function flattenEditors(rawArticle: ArticleRaw) {
   );
 }
 
-function flattenEvents(rawArticle: ArticleRaw, locale: string) {
-
-  const flat = (
+function flattenEvents(rawArticle: ArticleRaw, locale: string): EventArticleInfoFlat[] {
+  return (
     rawArticle.events?.flatMap((row: ArticleEventRowRaw) => {
       const event = row.events_id;
       if (!isObject(event)) return [];
@@ -38,14 +37,16 @@ function flattenEvents(rawArticle: ArticleRaw, locale: string) {
         {
           id: event.id,
           title: eventTr?.title ?? '',
+          description: eventTr?.description ?? null,
           start_at: new Date(event.start_at),
           end_at: new Date(event.end_at),
           all_day: event.all_day ?? null,
+          location: event.location ?? null,
+          location_address: event.location_address ?? null,
         },
       ];
     }) ?? []
   );
-  return flat
 }
 
 function flattenCover(cover: ArticleRaw['cover']) {
