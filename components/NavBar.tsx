@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import {
   Sheet,
   SheetContent,
@@ -18,6 +17,7 @@ import LocaleSwitcher from './LocaleSwitcher';
 import { usePathname } from 'next/navigation';
 import { HiMenuAlt3 } from 'react-icons/hi';
 import Logo from './logo';
+import Link from 'next/link';
 
 /** i18n keys */
 type LinkKey = 'organisations' | 'articles' | 'calendar' | 'newspaper' | 'home';
@@ -78,8 +78,8 @@ export default function NavBar() {
               <ul className="flex gap-8 text-sm">
                 {DEFAULT_LINKS.map((link, index) => (
                   <li key={index}>
+
                     <Link
-                      prefetch={false}
                       href={link.href}
                       className="text-fg-primary hover:text-fg-muted bg-surface-3 shadow-s rounded-lg p-2 block duration-150 border-0.5 border-outline"
                     >
