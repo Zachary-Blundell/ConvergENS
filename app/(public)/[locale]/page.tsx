@@ -7,11 +7,9 @@ import reactStringReplace from 'react-string-replace';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { getHome } from '@/lib/cms/homepage';
 import OrganisationsRow from '@/components/OrganisationsRow';
-// import { getArticleCards } from '@/lib/cms/articles';
 
 import { ArticleCardCarousel } from '@/components/ArticleCarousel';
 import { getArticleCards } from '@/lib/cms/articles';
-import { objectLogger } from '@/lib/utils';
 
 /* ---------------- Utilities ---------------- */
 
@@ -84,7 +82,6 @@ export default async function HomePage() {
       numberOfArticles: 6
     }
   );
-  objectLogger(carouselArticles)
 
   return (
     <div className="flex w-full flex-col items-center justify-center bg-surface-1">
