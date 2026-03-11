@@ -5,7 +5,7 @@ export const PLACEHOLDER_LOGO = '/images/placeholder.png';
 /* shared helpers */
 
 export function pickTranslation<T extends { languages_code: string }>(
-  tr: T[] | undefined,
+  tr: T[] | null | undefined,
   locale: string,
   fallback = DEFAULT_LOCALE,
 ) {

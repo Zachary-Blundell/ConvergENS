@@ -1,73 +1,34 @@
 // lib/cms/articles.ts
-import { readItem, readItems } from '@directus/sdk';
+import { readItems, aggregate, readItem } from '@directus/sdk';
 import { directus } from '../directus';
-import {
-  buildAssetUrl,
-  DEFAULT_LOCALE,
-  ItemsQuery,
-  pickTranslation,
-  PLACEHOLDER_LOGO,
-} from './utils';
-import { TagTranslation } from './tags';
+import { buildAssetUrl, DEFAULT_LOCALE, pickTranslation, PLACEHOLDER_LOGO, type ItemsQuery } from './utils';
+import type { ArticleEventRowRaw, ArticleFlat, ArticleRaw, CardArticleFlat } from './articles.types';
+import { flattenArticle, flattenArticlesForCards } from './articles.utils';
+import { objectLogger } from '../utils';
 
-export const perPage: number = 12;
+export const perPageConstant = 12;
 
-export type ArticleTranslation = {
-  languages_code: string;
-  title?: string | null;
-  body?: string | null; // body in schema but not needed for the card grid
+// Package data with some extra info for ui
+type Paged<T> = {
+  data: T[];
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
 };
 
-export type ArticleRaw = {
-  id?: string;
-  published_at?: string | null;
-  cover?: { id: string; width?: number | null; height?: number | null } | null;
-  collective?: {
-    id?: string;
-    name?: string | null;
-    slug?: string | null;
-    color?: string | null;
-    logo?: { id: string; width?: number | null; height?: number | null } | null;
-  } | null;
-  tag?: {
-    id?: string;
-    color?: string | null;
-    translations?: TagTranslation[];
-  } | null;
-  translations?: ArticleTranslation[];
-};
+interface ArticleCardsParameters {
+  locale: string;
+  page: number;
+  tagId?: number;
+  organisationId?: number;
+  numberOfArticles?: number;
+}
 
-export type ArticleFlat = {
-  //flattened
-  id: string;
-  title: string;
-  body: string;
-  // cover
-  coverUrl: string | null;
-  coverWidth: number | null;
-  coverHeight: number | null;
-  // tag
-  tag: {
-    id: string | null;
-    name: string | null; // localized
-    color: string | null;
-  };
-  // collective
-  collective: {
-    id: string | null;
-    name: string | null;
-    slug: string | null;
-    color: string | null;
-    logoUrl: string | null;
-    logoWidth: number | null;
-    logoHeight: number | null;
-  };
-  published_at?: string | null;
-};
 
 export async function getArticlesRaw(req?: ItemsQuery): Promise<ArticleRaw[]> {
   if (!req) {
-    // if req is not defined return everything
+    // if req is not defined return everything helpful for testing
     req = {
       fields: ['*'],
     };
@@ -77,302 +38,156 @@ export async function getArticlesRaw(req?: ItemsQuery): Promise<ArticleRaw[]> {
   return rawArticles as ArticleRaw[];
 }
 
-export async function getArticleCount(): Promise<number> {
-  const req: ItemsQuery = {
-    aggregate: { count: '*' },
-  };
-  const count: Array<{ count: string }> = await directus.request<any[]>(
-    readItems('articles', req),
-  );
-
-  return parseInt(count[0].count);
-}
-
-/* Article cards */
-export type ArticleCard = {
-  //flattened
-  id: string;
-  title: string;
-  // cover
-  coverUrl: string | null;
-  coverWidth: number | null;
-  coverHeight: number | null;
-  // tag
-  tag: {
-    id: string | null;
-    name: string | null; // localized
-    color: string | null;
-  };
-  // collective
-  collective: {
-    id: string | null;
-    name: string | null;
-    slug: string | null;
-    color: string | null;
-    logoUrl: string | null;
-    logoWidth: number | null;
-    logoHeight: number | null;
-  };
-  published_at?: string | null;
-};
 export async function getArticleCards(
-  locale: string,
-  page: number,
-  tagId?: string,
-  collectiveId?: string,
-): Promise<ArticleCard[]> {
-  // we get everything but the body text
-  const req: ItemsQuery = {
-    fields: [
-      'id',
-      'published_at',
-      { cover: ['id', 'width', 'height'] },
-      {
-        collective: [
-          'id',
-          'name',
-          'slug',
-          'color',
-          { logo: ['id', 'width', 'height'] },
-        ],
-      },
-      { tag: ['id', 'color', { translations: ['languages_code', 'name'] }] },
-      { translations: ['languages_code', 'title'] },
-    ],
-    filter: {
-      tag: { id: { _eq: tagId } },
-      collective: { id: { _eq: collectiveId } },
-      status: { _eq: 'published' },
-    },
-    deep: {
-      translations: {
-        _filter: {
-          languages_code: {
-            _eq: locale,
-          },
-        },
-      },
-      tags: {
-        translations: {
-          _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
-          _limit: 2,
-        },
-      },
-    },
-    sort: ['-published_at'],
+  {
+    locale,
     page,
-    limit: perPage,
-  };
+    tagId,
+    organisationId,
+    numberOfArticles = perPageConstant,
+  }: ArticleCardsParameters
+): Promise<Paged<CardArticleFlat>> {
+  const limit = numberOfArticles;
 
-  const rows = await getArticlesRaw(req);
-
-  return rows.map((i: ArticleRaw): ArticleCard => {
-    const articleTr = pickTranslation(i.translations, locale);
-    const tagTr = pickTranslation(i.tag.translations, locale);
-    const result = {
-      id: String(i.id),
-      title: String(articleTr?.title ?? null),
-
-      coverUrl: buildAssetUrl(i.cover.id) ?? PLACEHOLDER_LOGO,
-      coverWidth: Number(i.cover.width),
-      coverHeight: Number(i.cover.height),
-      tag: {
-        id: i.tag.id,
-        color: i.tag.color,
-        name: tagTr.name,
+  // Build filter safely
+  const filter: any = { status: { _eq: 'published' } };
+  if (tagId != null) filter.tag = { id: { _eq: tagId } };
+  if (organisationId != null) {
+    filter.editors = {
+      _some: {
+        organisation_id: { id: { _eq: organisationId } },
       },
-      collective: {
-        id: i.collective.id,
-        name: i.collective.name,
-        slug: i.collective.slug,
-        color: i.collective.color,
-        logoUrl: buildAssetUrl(i.collective.logo.id) ?? PLACEHOLDER_LOGO,
-        logoWidth: i.collective.logo.width,
-        logoHeight: i.collective.logo.height,
-      },
-      published_at: String(i.published_at),
     };
-    return result;
-  });
-}
-
-export async function getArticle(
-  articleId: string,
-  locale: string,
-): Promise<ArticleFlat> {
-  // we get everything but the body text
-  const req: ItemsQuery = {
-    fields: [
-      'id',
-      'published_at',
-      { cover: ['id', 'width', 'height'] },
-      {
-        collective: [
-          'id',
-          'name',
-          'slug',
-          'color',
-          { logo: ['id', 'width', 'height'] },
-        ],
-      },
-      { tag: ['id', 'color', { translations: ['languages_code', 'name'] }] },
-      { translations: ['languages_code', 'title', 'body'] },
-    ],
-    deep: {
-      translations: {
-        _filter: {
-          languages_code: {
-            _eq: locale,
-          },
-        },
-      },
-      tags: {
-        translations: {
-          _filter: { languages_code: { _in: [locale] } },
-        },
-      },
-    },
-  };
-  try {
-    const articleRaw: ArticleRaw = await directus.request<ArticleRaw>(
-      readItem('articles', articleId, req),
-    );
-
-    if (!articleRaw) return null;
-
-    const articleTr = pickTranslation(articleRaw.translations, locale);
-    const tagTr = articleRaw.tag
-      ? pickTranslation(articleRaw.tag.translations, locale)
-      : null;
-
-    const coverId = articleRaw.cover?.id ?? null;
-    const coverUrl = coverId ? buildAssetUrl(coverId) : PLACEHOLDER_LOGO;
-
-    const logoId = articleRaw.collective?.logo?.id ?? null;
-    const logoUrl = logoId ? buildAssetUrl(logoId) : PLACEHOLDER_LOGO;
-
-    const article: ArticleFlat = {
-      id: String(articleRaw.id),
-      title: String(articleTr?.title ?? ''),
-      body: String(articleTr?.body ?? ''),
-
-      coverUrl,
-      coverWidth: Number(articleRaw.cover?.width ?? 0),
-      coverHeight: Number(articleRaw.cover?.height ?? 0),
-
-      tag: {
-        id: articleRaw.tag?.id ?? null,
-        name: tagTr?.name ?? null,
-        color: articleRaw.tag?.color ?? null,
-      },
-
-      collective: {
-        id: articleRaw.collective?.id ?? null,
-        name: articleRaw.collective?.name ?? '',
-        slug: articleRaw.collective?.slug ?? '',
-        color: articleRaw.collective?.color ?? null,
-        logoUrl,
-        logoWidth: Number(articleRaw.collective?.logo?.width ?? 0),
-        logoHeight: Number(articleRaw.collective?.logo?.height ?? 0),
-      },
-
-      published_at: String(articleRaw.published_at ?? ''),
-    };
-
-    return article;
-  } catch (err: any) {
-    // Detect Directus "record not found" (SDK/REST variants)
-    const code =
-      err?.errors?.[0]?.extensions?.code ||
-      err?.response?.status ||
-      err?.status;
-
-    // Common patterns: 404, or Directus code like "RECORD_NOT_FOUND"
-    const isNotFound =
-      code === 404 ||
-      code === 'RECORD_NOT_FOUND' ||
-      err?.message?.toLowerCase?.().includes('not found');
-
-    if (isNotFound) return null;
-
-    return null;
   }
+
+  const fields = [
+    'id',
+    'published_at',
+    { cover: ['id', 'width', 'height'] },
+
+    // M2M: articles ↔ organisations via editors
+    {
+      editors: [
+        { organisation_id: ['id', 'name', 'slug', 'color', { logo: ['id', 'width', 'height'] }] },
+      ],
+    },
+    { tag: ['id', 'color', { translations: ['languages_code', 'name'] }] },
+    { translations: ['languages_code', 'title'] },
+  ];
+
+  const deep = {
+    translations: {
+      _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+      _limit: 2,
+    },
+    tag: {
+      translations: {
+        _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+        _limit: 2,
+      },
+    },
+  };
+
+  // Stable sort helps avoid duplicates when multiple items share the same published_at
+  const sort = ['-published_at', '-id'];
+
+  // Combine both calls for the articles and the total number of articles
+  const [rawArticles, countRows] = await Promise.all([
+    directus.request<ArticleRaw[]>(
+      readItems('articles', { fields, deep, filter, sort, page, limit } as ItemsQuery)
+    ),
+    directus.request<any[]>(
+      aggregate('articles', {
+        aggregate: { count: '*' },
+        query: { filter },
+      })
+    ),
+  ]);
+
+  const total = Number(countRows?.[0]?.count ?? 0);
+  const totalPages = Math.max(1, Math.ceil(total / limit));
+
+  return {
+    data: flattenArticlesForCards(rawArticles, locale),
+    page,
+    limit,
+    total,
+    totalPages,
+  };
 }
 
-export async function getArticleCarousel(
-  locale: string,
-  numberOfArticles: number,
-  collectiveId?: string,
-): Promise<ArticleCard[]> {
-  // we get everything but the body text
-  const req: ItemsQuery = {
-    fields: [
-      'id',
-      'published_at',
-      { cover: ['id', 'width', 'height'] },
-      {
-        collective: [
-          'id',
-          'name',
-          'slug',
-          'color',
-          { logo: ['id', 'width', 'height'] },
-        ],
-      },
-      { tag: ['id', 'color', { translations: ['languages_code', 'name'] }] },
-      { translations: ['languages_code', 'title'] },
-    ],
-    filter: {
-      collective: { id: { _eq: collectiveId } },
-      status: { _eq: 'published' },
+interface articleByIdParameters {
+  locale: string;
+  articleId: number;
+}
+
+export async function getArticleById(
+  {
+    articleId,
+    locale,
+  }: articleByIdParameters
+): Promise<ArticleFlat> {
+
+  const fields = [
+    'id',
+    'published_at',
+    { cover: ['id', 'width', 'height'] },
+
+    // M2M: articles ↔ organisation via editors
+    {
+      editors: [
+        { organisation_id: ['id', 'name', 'slug', 'color', { logo: ['id', 'width', 'height'] }] },
+      ],
     },
-    deep: {
+
+    // M2M: articles ↔ events 
+    {
+      events: [
+        {
+          events_id: [
+            'id',
+            { translations: ['languages_code', 'title', 'description'] },
+            'start_at',
+            'end_at',
+            'all_day',
+            'location',
+            'location_address'
+          ]
+        }
+      ],
+    },
+    { tag: ['id', 'color', { translations: ['languages_code', 'name'] }] },
+    { translations: ['languages_code', 'title', 'content'] },
+  ];
+
+  const deep = {
+    translations: {
+      _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+      _limit: 2,
+    },
+    tag: {
       translations: {
-        _filter: {
-          languages_code: {
-            _eq: locale,
-          },
-        },
+        _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
+        _limit: 2,
       },
-      tags: {
+    },
+    events: {
+      events_id: {
         translations: {
           _filter: { languages_code: { _in: [locale, DEFAULT_LOCALE] } },
           _limit: 2,
         },
       },
     },
-    sort: ['-published_at'],
-    limit: numberOfArticles,
   };
 
-  const rows = await getArticlesRaw(req);
+  const filter = { id: { _eq: articleId }, status: { _eq: 'published' } };
 
-  return rows.map((i: ArticleRaw): ArticleCard => {
-    const articleTr = pickTranslation(i.translations, locale);
-    const tagTr = pickTranslation(i.tag.translations, locale);
-    const result = {
-      id: String(i.id),
-      title: String(articleTr?.title ?? null),
+  const req: ItemsQuery = { fields, deep, filter, };
 
-      coverUrl: buildAssetUrl(i.cover.id) ?? PLACEHOLDER_LOGO,
-      coverWidth: Number(i.cover.width),
-      coverHeight: Number(i.cover.height),
-      tag: {
-        id: i.tag.id,
-        color: i.tag.color,
-        name: tagTr.name,
-      },
-      collective: {
-        id: i.collective.id,
-        name: i.collective.name,
-        slug: i.collective.slug,
-        color: i.collective.color,
-        logoUrl: buildAssetUrl(i.collective.logo.id) ?? PLACEHOLDER_LOGO,
-        logoWidth: i.collective.logo.width,
-        logoHeight: i.collective.logo.height,
-      },
-      published_at: String(i.published_at),
-    };
-    return result;
-  });
+  const rawArticle = await directus.request<ArticleRaw>(readItem('articles', articleId, req));
+
+  // objectLogger(rawArticle, "raw article: ")
+
+  return flattenArticle(rawArticle, locale);
 }

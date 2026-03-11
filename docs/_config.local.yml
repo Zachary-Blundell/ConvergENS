@@ -1,0 +1,31 @@
+title: ConvergENS User Docs
+description: Guides pour les organisateur·ices (CMS)
+
+# local dev
+theme: just-the-docs
+remote_theme: null
+
+search_enabled: true
+color_scheme: dark
+
+# Enable or disable the side/mobile menu globally
+# Nav menu can also be selectively enabled or disabled using page variables or the minimal layout
+nav_enabled: true
+# # Set a path/url to a logo that will be displayed instead of the title
+logo: "/assets/logos/ArrowStarWhite.png"
+# # Set a path/url to a favicon that will be displayed by the browser
+favicon_ico: "/assets/logos/favicon.ico"
+
+# External navigation links
+nav_external_links:
+  - title: ConvergENS éditeur
+    url: https://convergensapi.zac.coffee
+    hide_icon: false # set to true to hide the external link icon - defaults to false
+    opens_in_new_tab: true # set to true to open this link in a new tab - defaults to false
+  - title: ConvergENS site web
+    url: https://convergens.zac.coffee
+    hide_icon: false # set to true to hide the external link icon - defaults to false
+    opens_in_new_tab: true # set to true to open this link in a new tab - defaults to false
+
+kramdown:
+  toc_levels: [1, 2]

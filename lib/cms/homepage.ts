@@ -101,7 +101,7 @@ export type FlatHomePage = {
 export async function getHome(locale: string): Promise<FlatHomePage> {
   try {
     const homePageRaw: RawHomePage = await directus.request<RawHomePage>(
-      readSingleton('homepage', {
+      readSingleton('Homepage', {
         fields: [
           'hero_bg.id',
           'hero_bg.height',

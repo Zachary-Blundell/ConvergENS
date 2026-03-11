@@ -1,27 +1,31 @@
-// app/[locale]/collectives/[slug]/page.tsx
-import { getCollectiveBySlug } from '@/lib/cms/collectives';
+// app/[locale]/organisations/[slug]/page.tsx
+import { getOrganisationBySlug } from '@/lib/cms/organisations';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Globe, Mail, Phone } from 'lucide-react';
 import { Separator } from '@radix-ui/react-select';
 import HtmlContent from '@/components/HtmlContent';
+// import { ArticleCardCarousel } from '@/components/ArticleCarousel';
+import { getTranslations } from 'next-intl/server';
 import { ArticleCardCarousel } from '@/components/ArticleCarousel';
 
-export default async function CollectivePage({
+export default async function OrganisationPage({
   params,
 }: {
   params: Promise<{ slug: string; locale: string }>;
 }) {
   const { slug, locale } = await params;
-  const assoc = await getCollectiveBySlug(slug, locale);
+  const t = await getTranslations('OrganisationsPage');
+  const assoc = await getOrganisationBySlug(slug, locale);
+
 
   if (!assoc) notFound();
 
   return (
     // Main column
-    <div className="container mt-12 mx-auto max-w-5xl px-4 py-8 ">
-      <div className="flex flex-row justify-between ">
+    <div className="container mt-12 mx-auto max-w-5xl px-4 py-8">
+      <div className="flex flex-col min-[600px]:flex-row gap-1 justify-between ">
         {/* Header */}
         <header className="flex flex-col gap-4 sm:flex-row sm:items-start">
           {/* Logo */}
@@ -87,38 +91,34 @@ export default async function CollectivePage({
         </header>
 
         {/* Sidebar */}
-        {assoc.socials.length > 0 ? (
-          <aside className="lg:col-span-1">
-            <div className="p-4 rounded-xl border">
-              <h2 className="text-fg-primary uppercase tracking-wide">
-                Socials
+        {assoc.socials.length > 0 && (
+          <aside className="mt-4 sm:mt-0 lg:col-span-1">
+            <div className="rounded-2xl bg-surface-3/70 shadow-lg p-4 border border-border-subtle">
+              <h2 className="text-fg-primary text-lg uppercase tracking-wide">
+                {t('socials')}
               </h2>
 
-              <ul className="mt-3 space-y-2">
+              <ul className="mt-3 space-y-2.5">
                 {assoc.socials.map((s) => (
                   <li key={s.url}>
                     <a
                       href={s.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="group inline-flex max-w-full items-center gap-2 truncate text-sm hover:underline"
+                      className="group flex items-center justify-between rounded-xl border border-border-subtle/70 bg-surface-1 px-3 py-2 text-sm transition hover:border-[var(--brand)]/80 hover:bg-surface-2"
                     >
-                      <span
-                        className="inline-block h-2.5 w-2.5 rounded-full"
-                        style={{ backgroundColor: 'var(--brand)' }}
-                      />
-                      <span className="truncate">
-                        {prettyPlatform(s.platform)}
-                      </span>
-                      <ExternalLink className="h-3.5 w-3.5 opacity-60 group-hover:opacity-100" />
+                      <div className="flex min-w-0 items-center gap-2">
+                        <span className="truncate text-fg-primary">
+                          {prettyPlatform(s.type)}
+                        </span>
+                      </div>
+                      <ExternalLink className="h-4 w-8 flex-shrink-0 opacity-60 group-hover:opacity-100" />
                     </a>
                   </li>
                 ))}
               </ul>
             </div>
           </aside>
-        ) : (
-          <></>
         )}
       </div>
 
@@ -128,25 +128,26 @@ export default async function CollectivePage({
       {assoc.description ? (
         <div
           className="w-full px-10 py-2 bg-surface-3 border-2 border-outline border-t-outline-highlight
-       rounded-xl hshadow-lg "
-        >
+       rounded-xl shadow-sm" >
           {/* Description */}
           <HtmlContent className="cms-content " html={assoc.description} />
         </div>
       ) : (
-        <div className="flex bg-surface-3 w-100 h-50 items-center rounded-md mx-auto">
+        <div className="flex bg-surface-3 w-full py-10 items-center rounded-md mx-auto">
           <p className="mx-auto my-4 max-w-3xl px-4 text-center text-base sm:text-lg leading-relaxed text-fg-primary">
-            This organisation has not yet provided a description in English.
+            {t('noDescriptionForLocale')}
           </p>
         </div>
       )}
       {assoc.articles.length > 0 ? (
         <section>
           <h2 className="p-5 text-center text-3xl sm:text-4xl md:text-5xl text-highlight">
-            Latest Articles
+            {t('latestArticles')}
           </h2>
           <div className="h-1 w-24 bg-highlight mx-auto mb-2 rounded" />
-          <ArticleCardCarousel articles={assoc.articles} className="my-8 " />
+          <ArticleCardCarousel articles={assoc.articles}
+            className="my-8 w-full "
+          />
         </section>
       ) : (
         <></>

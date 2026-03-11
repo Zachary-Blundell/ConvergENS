@@ -17,7 +17,7 @@ export async function getLegalPage(
 ): Promise<LegalPageFlat | null> {
   try {
     const legalPageRaw = await directus.request<LegalPageRaw>(
-      readSingleton('legalpage', {
+      readSingleton('Legalpage', {
         fields: [
           {
             translations: ['languages_code', 'page_body'],

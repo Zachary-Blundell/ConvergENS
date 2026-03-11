@@ -1,11 +1,13 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
-import type { CalEvent } from '@/lib/cms/events';
+import React, { useEffect, useMemo, useState } from 'react';
 import EventPill from './EventPill';
 import EventModal from './EventModal';
 import DayModal from './DayModal';
 import { addDays, startOfGrid } from '@/lib/date/cursor';
+import { CalendarEventFlat } from '@/lib/cms/events.types';
+import { useRouter } from '@/i18n/navigation';
+import { useSearchParams } from 'next/navigation';
 
 export type CalendarMonthProps = {
   // Month cursor in "YYYY-MM" form (e.g., "2025-10").
@@ -15,8 +17,9 @@ export type CalendarMonthProps = {
   // Start weeks on Monday (EU style). Default: true.
   startOnMonday?: boolean;
   // Events rendered as pills.
-  events?: CalEvent[];
+  events?: CalendarEventFlat[];
   // Max pills shown per day before "+N more". Default: 4.
+  selectedEventId?: string | number;
   maxPills?: number;
   // Extra CSS classes for the root.
   className?: string;
@@ -83,8 +86,8 @@ function ymd(d: Date) {
 // Group events by each day they cover (inclusive).
 // Multi-day events appear on every covered day.
 // A small guard avoids infinite loops on bad data.
-function bucketEventsByDay(events: CalEvent[]): Map<string, CalEvent[]> {
-  const map = new Map<string, CalEvent[]>();
+function bucketEventsByDay(events: CalendarEventFlat[]): Map<string, CalendarEventFlat[]> {
+  const map = new Map<string, CalendarEventFlat[]>();
   for (const ev of events || []) {
     const start = startOfDay(ev.start_at);
     const end = startOfDay(ev.end_at);
@@ -102,40 +105,71 @@ function bucketEventsByDay(events: CalEvent[]): Map<string, CalEvent[]> {
   return map;
 }
 
-// CalendarMonth: 6x7 month grid with event pills and modals.
 export default function CalendarMonth({
   cursor,
   locale,
   startOnMonday = true,
   events = [],
+  selectedEventId,
   className,
   maxPills = 4,
 }: CalendarMonthProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const { year, month } = parseCursor(cursor);
   const first = toDate(year, month - 1, 1);
   const gridStart = startOfGrid(first, startOnMonday);
   const today = new Date();
 
-  const labels = weekdayLabels(
-    locale || (typeof navigator !== 'undefined' ? navigator.language : 'en-US'),
-    startOnMonday,
-  );
+  const resolvedLocale =
+    locale || (typeof navigator !== 'undefined' ? navigator.language : 'en-US');
 
-  // Precompute per-day buckets so rendering stays cheap.
+  const labels = weekdayLabels(resolvedLocale, startOnMonday);
+
   const buckets = useMemo(() => bucketEventsByDay(events), [events]);
 
-  const [openEvent, setOpenEvent] = useState<CalEvent | null>(null);
+  const [openEvent, setOpenEvent] = useState<CalendarEventFlat | null>(null);
   const [openDay, setOpenDay] = useState<Date | null>(null);
+
+  // URL -> UI: open/close modal when selectedEventId changes
+  useEffect(() => {
+    if (selectedEventId == null || selectedEventId === '') {
+      setOpenEvent(null);
+      return;
+    }
+    const found = events.find((e) => String(e.id) === String(selectedEventId));
+    setOpenEvent(found ?? null);
+  }, [selectedEventId, events]);
+
+  function replaceQuery(next: URLSearchParams) {
+    router.replace(`/calendar?${next.toString()}`, { scroll: false });
+  }
+
+  function openEventAndUrl(ev: CalendarEventFlat) {
+    setOpenEvent(ev);
+    setOpenDay(null); // optional: close day modal if open
+
+    const next = new URLSearchParams(searchParams.toString());
+    next.set('cursor', cursor);
+    next.set('event', String(ev.id));
+    replaceQuery(next);
+  }
+
+  function closeEventAndUrl() {
+    setOpenEvent(null);
+
+    const next = new URLSearchParams(searchParams.toString());
+    next.set('cursor', cursor);
+    next.delete('event');
+    replaceQuery(next);
+  }
 
   function handleDayClick(date: Date) {
     setOpenDay(date);
   }
 
-  // Always render 42 cells (6 weeks) to cover any month layout.
-  const cells: Date[] = Array.from({ length: 42 }, (_, i) =>
-    addDays(gridStart, i),
-  );
-
+  const cells: Date[] = Array.from({ length: 42 }, (_, i) => addDays(gridStart, i));
   const monthIndex = month - 1;
 
   return (
@@ -150,15 +184,13 @@ export default function CalendarMonth({
       </div>
 
       {/* Day grid */}
-      <div className="grid grid-cols-7 gap-1 rounded-xl m-3 p-2 bg-surface-2 overflow-hidden ">
+      <div className="grid grid-cols-7 gap-1 rounded-xl m-3 p-2 bg-surface-2 overflow-hidden">
         {cells.map((date) => {
           const inMonth = date.getMonth() === monthIndex;
           const isToday = sameDay(date, today);
 
           const base = 'aspect-square bg-surface-3 p-2 text-sm ';
-          const muted = inMonth
-            ? 'text-fg-primary'
-            : 'text-fg-muted opacity-60';
+          const muted = inMonth ? 'text-fg-primary' : 'text-fg-muted opacity-60';
           const ring = isToday ? 'ring-1 ring-highlight/60' : '';
 
           const key = ymd(date);
@@ -184,27 +216,27 @@ export default function CalendarMonth({
             >
               <div className="flex items-start justify-between">
                 <span
-                  className={`inline-flex h-6 w-6 items-center justify-center rounded-full ${
-                    isToday ? 'bg-highlight text-white' : ''
-                  }`}
+                  className={`inline-flex h-6 w-6 items-center justify-center rounded-full ${isToday ? 'bg-highlight text-white' : ''
+                    }`}
                 >
                   {date.getDate()}
                 </span>
               </div>
 
-              {/* Event pills (up to maxPills) */}
               {dayEvents.length > 0 && (
                 <div className="mt-1 flex-1 overflow-hidden">
                   <ul className="space-y-1">
                     {visible.map((ev) => (
-                      <li key={String(ev.id)}>
-                        <EventPill
-                          event={ev}
-                          locale={locale}
-                          onClickAction={(e) => setOpenEvent(e)}
-                        />
-                      </li>
+                      <EventPill
+                        key={ev.id}
+                        event={ev}
+                        locale={locale}
+                        onClickAction={() => {
+                          openEventAndUrl(ev);
+                        }}
+                      />
                     ))}
+
                     {hiddenCount > 0 && (
                       <li>
                         <div
@@ -221,7 +253,7 @@ export default function CalendarMonth({
                               setOpenDay(date);
                             }
                           }}
-                          className="w-full truncate rounded-md bg-stone-50 px-2 py-1 text-left text-xs text-stone-600  cursor-pointer"
+                          className="w-full truncate rounded-md bg-stone-50 px-2 py-1 text-left text-xs text-stone-600 cursor-pointer"
                         >
                           +{hiddenCount} more
                         </div>
@@ -242,14 +274,16 @@ export default function CalendarMonth({
           events={buckets.get(ymd(openDay)) || []}
           locale={locale}
           onCloseAction={() => setOpenDay(null)}
-          onEventClickAction={(ev) => setOpenEvent(ev)}
+          // ✅ when selecting an event from DayModal, also update URL
+          onEventClickAction={(ev) => openEventAndUrl(ev)}
         />
       )}
+
       {openEvent && (
         <EventModal
           event={openEvent}
           locale={locale}
-          onCloseAction={() => setOpenEvent(null)}
+          onCloseAction={closeEventAndUrl}
         />
       )}
     </div>

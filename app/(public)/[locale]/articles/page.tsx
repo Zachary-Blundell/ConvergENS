@@ -1,30 +1,26 @@
-// [local]/articles
-// ConvergENS Articles-page
-
 import {
-  ArticleCard,
   getArticleCards,
-  getArticleCount,
-  perPage as perPage,
+  perPageConstant,
 } from '@/lib/cms/articles';
-import { ArticleCardGrid } from '@/components/ArticleCard';
 import { getAllTagsForUI } from '@/lib/cms/tags';
 import FiltersBar from './FiltersBar';
 import Pagination from '@/components/Pagination';
 import { getTranslations } from 'next-intl/server';
-import { getAllCollectivesForUI } from '@/lib/cms/collectives';
+import { CardArticleFlat } from '@/lib/cms/articles.types';
+import { ArticleCardGrid } from '@/components/ArticleCard';
+import { getAllOrganisationsForUI } from '@/lib/cms/organisations';
 
 async function ShowCards({
+  t,
   articles,
   currentPage,
   articleCount,
 }: {
-  articles: Array<ArticleCard>;
+  t: (key: string) => string;
+  articles: Array<CardArticleFlat>;
   currentPage: number;
   articleCount: number;
 }) {
-  const t = await getTranslations('ArticlesPage');
-
   if (articles.length === 0) {
     return (
       <div className="p-10 flex justify-center align-middle h-[50vh]">
@@ -35,11 +31,12 @@ async function ShowCards({
       </div>
     );
   }
+
   return (
     <>
       <ArticleCardGrid items={articles} />
       <Pagination
-        perPage={perPage}
+        perPage={perPageConstant}
         currentPage={currentPage}
         count={articleCount}
       />
@@ -52,25 +49,31 @@ export default async function ArticlesPage({
   searchParams,
 }: {
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ page: string; tag: string; organisation: string }>;
+  searchParams: Promise<{ page?: string; tag?: string; organisation?: string }>;
 }) {
-  const { locale } = await params;
-  const { page, tag, organisation } = await searchParams;
+  const [{ locale }, sp] = await Promise.all([params, searchParams]);
 
-  const currentPage = page ? parseInt(page) : 1;
-  const currentTag = tag ? parseInt(tag) : null;
-  const currentOrganisation = organisation ? parseInt(organisation) : null;
 
-  const articles = await getArticleCards(
-    locale,
-    currentPage,
-    tag,
-    organisation,
-  );
-  const articleCount = await getArticleCount();
+  const currentPage = sp.page ? Number(sp.page) : 1;
+  const currentTag = sp.tag ? Number(sp.tag) : null;
+  const currentOrganisation = sp.organisation ? Number(sp.organisation) : null;
 
-  const tagOptions = await getAllTagsForUI(locale);
-  const organisationOptions = await getAllCollectivesForUI();
+  const [t, articlesData, tagOptions, organisationOptions] =
+    await Promise.all([
+      getTranslations('ArticlesPage'),
+      getArticleCards({
+        locale,
+        page: currentPage,
+        tagId: currentTag,
+        collectiveId: currentOrganisation,
+        numberOfArticles: perPageConstant,
+      }),
+      getAllTagsForUI(locale),
+      getAllOrganisationsForUI(),
+    ]);
+
+  const articles = articlesData.data;
+  const articleCount = articlesData.total;
 
   return (
     <main className="flex flex-col gap-6 p-6">
@@ -82,6 +85,7 @@ export default async function ArticlesPage({
         selectedOrganisation={currentOrganisation}
       />
       <ShowCards
+        t={t}
         articles={articles}
         currentPage={currentPage}
         articleCount={articleCount}

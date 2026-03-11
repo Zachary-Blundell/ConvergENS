@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import {
   Sheet,
   SheetContent,
@@ -7,6 +6,7 @@ import {
   SheetHeader,
   SheetTitle,
   SheetDescription,
+  SheetClose,
 } from './ui/sheet';
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden';
 import React from 'react';
@@ -17,9 +17,10 @@ import LocaleSwitcher from './LocaleSwitcher';
 import { usePathname } from 'next/navigation';
 import { HiMenuAlt3 } from 'react-icons/hi';
 import Logo from './logo';
+import Link from 'next/link';
 
 /** i18n keys */
-type LinkKey = 'organisations' | 'articles' | 'calendar' | 'newspaper';
+type LinkKey = 'organisations' | 'articles' | 'calendar' | 'newspaper' | 'home';
 
 export type LinkItem = {
   href: `/${string}`;
@@ -32,6 +33,8 @@ export const DEFAULT_LINKS: readonly LinkItem[] = [
   { href: '/calendar', labelKey: 'calendar' },
   { href: '/newspaper', labelKey: 'newspaper' },
 ] as const;
+
+const HOME_LINK: LinkItem = { href: '/', labelKey: 'home' };
 
 export default function NavBar() {
   const [menuState] = React.useState(false);
@@ -56,7 +59,7 @@ export default function NavBar() {
           className={cn(
             'bg-surface-1/90 mx-auto mt-2 max-w-6xl px-6 transition-all duration-300 lg:px-12',
             isScrolled &&
-              'bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5',
+            'bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5',
           )}
         >
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
@@ -75,8 +78,8 @@ export default function NavBar() {
               <ul className="flex gap-8 text-sm">
                 {DEFAULT_LINKS.map((link, index) => (
                   <li key={index}>
+
                     <Link
-                      prefetch={false}
                       href={link.href}
                       className="text-fg-primary hover:text-fg-muted bg-surface-3 shadow-s rounded-lg p-2 block duration-150 border-0.5 border-outline"
                     >
@@ -128,25 +131,35 @@ function MobileMenu() {
             </SheetDescription>
           </VisuallyHidden>
         </SheetHeader>
-
         <div className="mt-4 space-y-4">
           <nav
             className="flex flex-col gap-1"
             aria-label={t('primaryNav', { default: 'Primary' })}
           >
+            <SheetClose asChild key={HOME_LINK.href}>
+              <Link
+                href={HOME_LINK.href}
+                aria-current={pathname === HOME_LINK.href ? 'page' : undefined}
+                className="rounded-md px-3 py-2 text-fg-primary hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                {t(HOME_LINK.labelKey)}
+              </Link>
+            </SheetClose>
             {DEFAULT_LINKS.map((link) => {
               const isActive = pathname === link.href;
               return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  aria-current={isActive ? 'page' : undefined}
-                  className="rounded-md px-3 py-2 text-fg-primary hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  {t(link.labelKey)}
-                </Link>
+                <SheetClose asChild key={link.href}>
+                  <Link
+                    href={link.href}
+                    aria-current={isActive ? 'page' : undefined}
+                    className="rounded-md px-3 py-2 text-fg-primary hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                  >
+                    {t(link.labelKey)}
+                  </Link>
+                </SheetClose>
               );
             })}
+
           </nav>
 
           <div className="mx-5 pt-3 border-t mt-4 flex items-center gap-3">

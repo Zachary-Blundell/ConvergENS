@@ -1,13 +1,14 @@
 'use client';
 
 import React from 'react';
-import type { CalEvent } from '@/lib/cms/events';
 import Image from 'next/image';
 import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
+import type { CalendarEventFlat } from '@/lib/cms/events.types';
+import { AddToCalendarButton } from '@/components/AddToCalendarButton';
 
 export type EventModalProps = {
-  event: CalEvent;
+  event: CalendarEventFlat;
   onCloseAction: () => void;
   locale?: string;
   zIndex?: number;
@@ -27,7 +28,7 @@ function fmtRange(locale: string, a: Date, b: Date) {
         minute: '2-digit',
       }).formatRange(a, b);
     }
-  } catch {}
+  } catch { }
   return `${fmtTime(locale, a)} – ${fmtTime(locale, b)}`;
 }
 function fmtDayLong(locale: string, d: Date) {
@@ -49,12 +50,10 @@ export default function EventModal({
 
   const resolvedLocale =
     locale || (typeof navigator !== 'undefined' ? navigator.language : 'en-US');
-  const color = event.collective?.color || '#64748b';
 
-  const hasLogo = Boolean(event.collective?.logoUrl);
-  const fallbackName = t('collective.fallbackName');
-  const nameOrSlug =
-    event.collective?.name ?? event.collective?.slug ?? fallbackName;
+  const organisers = event.organisers ?? [];
+  const articles = event.articles ?? [];
+  const fallbackName = t('organisation.fallbackName');
 
   return (
     <div
@@ -64,39 +63,53 @@ export default function EventModal({
     >
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
       <div
-        className="relative w-full max-w-lg rounded-2xl p-4 shadow-xl bg-surface-2 border-1 border-outline"
+        className="relative w-full max-w-lg rounded-2xl shadow-xl bg-surface-2 border-1 border-outline max-h-[calc(100vh-2rem)] overflow-y-auto no-scrollbar p-3"
         onClick={(e) => e.stopPropagation()}
       >
-        <header className="flex items-start justify-between gap-4">
+        <header className="sticky top-0 z-20 flex items-start justify-between gap-4 ">
           <div className="min-w-0">
-            {/* title */}
             <h3 className="text-3xl bg-surface-3 shadow-s p-1 px-2 rounded-lg">
               {event.title}
             </h3>
-
-            {/* time and date */}
-            <div className="mt-1 text-sm text-fg-primary">
-              {event.all_day ? (
-                <span>{t('event.allDay')}</span>
-              ) : (
-                <span className="text-xl">
-                  {fmtDayLong(resolvedLocale, event.start_at)} ·{' '}
-                  {fmtRange(resolvedLocale, event.start_at, event.end_at)}
-                </span>
-              )}
-            </div>
           </div>
 
-          {/* close button */}
           <button
             onClick={onCloseAction}
-            className="shrink-0 rounded-md px-2 py-1 text-sm text-fg-primary hover:bg-highlight"
+            className="shrink-0 rounded-md px-2 py-1 text-sm text-fg-primary bg-surface-2 hover:bg-highlight"
             aria-label={t('nav.close')}
           >
             {t('nav.close')}
           </button>
         </header>
 
+        <div className="mt-1 text-sm text-fg-primary">
+          {event.all_day ? (
+            <span>{t('event.allDay')}</span>
+          ) : (
+            <span className="text-xl">
+              {fmtDayLong(resolvedLocale, event.start_at)} ·{' '}
+              {fmtRange(resolvedLocale, event.start_at, event.end_at)}
+            </span>
+          )}
+        </div>
+
+        <div className="mt-3">
+          <AddToCalendarButton
+            event={{
+              uid: event.id,
+              title: event.title,
+              description: event.description,
+              start: event.start_at,
+              end: event.end_at,
+              allDay: event.all_day,
+              location: event.location_address
+                ? `${event.location ?? ''} — ${event.location_address}`
+                : event.location,
+              url: typeof window !== 'undefined' ? window.location.href : undefined,
+            }}
+            align="left"
+          />
+        </div>
         {event.location && (
           <div className="mt-3 text-sm text-fg-primary">
             <span className="font-medium">{t('event.locationLabel')}</span>
@@ -113,45 +126,97 @@ export default function EventModal({
           </div>
         )}
 
-        {/* Collective chip */}
-        {(event.collective?.name || event.collective?.slug) && (
-          <div className="mt-2 inline-flex items-center gap-2 text-sm text-fg-muted">
-            {hasLogo ? (
-              // Avatar with colored ring + offset background
-              <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-surface-3">
-                <span
-                  className="relative block h-7 w-7 overflow-hidden rounded-full"
-                  style={{ boxShadow: `0 0 0 2px ${color}` }} // colored ring
-                >
-                  <Image
-                    src={event.collective!.logoUrl!}
-                    alt={t('collective.logoAlt', { name: nameOrSlug })}
-                    fill
-                    sizes="32px"
-                    className="object-cover"
-                  />
-                </span>
-              </span>
-            ) : (
-              <span
-                className="inline-block h-2.5 w-2.5 rounded-full"
-                style={{ backgroundColor: color }}
-                aria-hidden
-              />
-            )}
 
-            {event.collective?.slug ? (
-              <Link
-                href={`/collectives/${event.collective.slug}`}
-                onClick={(e) => e.stopPropagation()}
-                onKeyDown={(e) => e.stopPropagation()}
-                className="hover:underline relative z-10"
-              >
-                {nameOrSlug}
-              </Link>
-            ) : (
-              <span>{nameOrSlug}</span>
-            )}
+        {articles.length > 0 && (
+          <div className="mt-3">
+            <p className="text-sm text-fg-muted mb-2">
+              {t('event.articlesLabel')}
+            </p>
+
+            <div className="flex flex-wrap gap-2">
+              {articles.map((art) => {
+                const title = art.title ?? fallbackName;
+
+                return (
+                  <div
+                    key={art.id}
+                    className="inline-flex items-center gap-2 rounded-sm border border-outline bg-surface-3 px-2 py-1 text-sm text-fg-primary"
+                  >
+                    {art.id ? (
+                      <Link
+                        href={`/articles/${art.id}`}
+                        onClick={(e) => e.stopPropagation()}
+                        onKeyDown={(e) => e.stopPropagation()}
+                        className="hover:underline relative z-1"
+                      >
+                        {title}
+                      </Link>
+                    ) : (
+                      <span>{title}</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        {/* Organisers */}
+        {organisers.length > 0 && (
+          <div className="mt-3">
+            <p className="text-sm text-fg-muted mb-2">
+              {t('event.organisersLabel', { defaultMessage: 'Organisers' })}
+            </p>
+
+            <div className="flex flex-wrap gap-2">
+              {organisers.map((org) => {
+                const color = org.color ?? '#64748b';
+                const hasLogo = Boolean(org.logoUrl);
+                const nameOrSlug = org.name ?? org.slug ?? fallbackName;
+
+                return (
+                  <div
+                    key={org.id}
+                    className="inline-flex items-center gap-2 rounded-full border border-outline bg-surface-3 px-2 py-1 text-sm text-fg-muted"
+                  >
+                    {hasLogo ? (
+                      <span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-surface-3">
+                        <span
+                          className="relative block h-6 w-6 overflow-hidden rounded-full"
+                          style={{ boxShadow: `0 0 0 2px ${color}` }}
+                        >
+                          <Image
+                            src={org.logoUrl!}
+                            alt={t('organisation.logoAlt', { name: nameOrSlug })}
+                            fill
+                            sizes="24px"
+                            className="object-cover"
+                          />
+                        </span>
+                      </span>
+                    ) : (
+                      <span
+                        className="inline-block h-2.5 w-2.5 rounded-full"
+                        style={{ backgroundColor: color }}
+                        aria-hidden
+                      />
+                    )}
+
+                    {org.slug ? (
+                      <Link
+                        href={`/organisations/${org.slug}`}
+                        onClick={(e) => e.stopPropagation()}
+                        onKeyDown={(e) => e.stopPropagation()}
+                        className="hover:underline relative z-1"
+                      >
+                        {nameOrSlug}
+                      </Link>
+                    ) : (
+                      <span>{nameOrSlug}</span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         )}
       </div>
