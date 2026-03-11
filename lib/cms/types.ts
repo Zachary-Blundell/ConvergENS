@@ -5,12 +5,12 @@ export type MaybeExpanded<T> = Id | T;
 
 export type DirectusImage = {
   id: string;
-  description?: string | null;
   width?: number | null;
   height?: number | null;
+  description?: string | null;
 };
 
-export type CollectiveForUIRaw = {
+export type OrganisationForUIRaw = {
   id: Id;
   name?: string | null;
   slug?: string | null;

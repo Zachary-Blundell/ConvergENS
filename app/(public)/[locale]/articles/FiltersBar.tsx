@@ -11,12 +11,12 @@ import {
   ReactNode,
 } from 'react';
 import { useTranslations } from 'next-intl';
-import { CollectiveUI } from '@/lib/cms/collectives';
+import { OrganisationUI } from '@/lib/cms/organisations';
 
 type Id = string | number;
 type Option = { id: Id; label: string };
 
-function toOptionsFromOrganisations(items: CollectiveUI[]): Option[] {
+function toOptionsFromOrganisations(items: OrganisationUI[]): Option[] {
   return items.map((c) => ({ id: c.id, label: c.name }));
 }
 function toOptionsFromTags(items: TagUI[]): Option[] {
@@ -106,7 +106,7 @@ export default function FiltersBar({
   selectedTag,
   selectedOrganisation,
 }: {
-  organisations: CollectiveUI[];
+  organisations: OrganisationUI[];
   tags: TagUI[];
   selectedTag?: Id;
   selectedOrganisation?: Id;

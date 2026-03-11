@@ -151,12 +151,20 @@
     "backToArticles": "← Retour aux articles",
     "FiltersBar": {
       "groups": {
-        "organisations": "organisations :",
+        "organisations": "Organisations :",
         "tags": "Tags :"
       },
       "all": "Tous",
       "categories": "Catégories",
       "close": "Fermer"
+    },
+    "meta": {
+      "editors": "Éditeurs",
+      "noEditors": "Aucun éditeur",
+      "published": "Publié",
+      "linkedEvents": "Événements liés",
+      "noLinkedEvents": "Aucun événement lié",
+      "editorLogoAlt": "Logo de {name}"
     }
   },
   "Components": {

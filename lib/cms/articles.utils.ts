@@ -1,11 +1,25 @@
-import { isObject } from "../utils";
-import { ArticleEventRowRaw, ArticleFlat, ArticleRaw, CardArticleFlat, EventArticleInfoFlat } from "./articles.types";
+import { isObject, objectLogger } from "../utils";
+import { ArticleEditorRowRaw, ArticleEventRowRaw, ArticleFlat, ArticleRaw, CardArticleFlat, EventArticleInfoFlat } from "./articles.types";
 import { buildAssetUrl, pickTranslation, PLACEHOLDER_LOGO } from "./utils";
 
 function flattenEditors(rawArticle: ArticleRaw) {
+
+  objectLogger(rawArticle.editors, "here rawArticle.editors coming in to flattenEditors: ")
+  // {
+  //    "organisation_id": {
+  //      "id": 7,
+  //      "name": "ConvergENS",
+  //      "slug": "converg-ens",
+  //      "color": "#FF621F",
+  //      "logo": {
+  //        "id": "f51b5ce6-4572-41f5-89ea-58a8356fcef9",
+  //        "width": 500,
+  //        "height": 500
+  //      }
+  //    }
   return (
-    rawArticle.editors?.flatMap((row) => {
-      const c = row.collectives_id;
+    rawArticle.editors?.flatMap((row: ArticleEditorRowRaw) => {
+      const c = row.organisation_id;
       if (!isObject(c)) return [];
 
       const logoId = c.logo?.id ?? null;
@@ -61,8 +75,8 @@ function flattenCover(cover: ArticleRaw['cover']) {
 function flattenTag(tag: ArticleRaw['tag'], locale: string) {
   const tagTr = pickTranslation(tag?.translations, locale);
   return {
-    id: tag.id,
-    color: tag.color,
+    id: tag?.id,
+    color: tag?.color,
     name: tagTr?.name ?? '',
   };
 }
@@ -91,11 +105,16 @@ export function flattenArticlesForCards(rows: ArticleRaw[], locale: string): Car
 }
 
 export function flattenArticle(rawArticle: ArticleRaw, locale: string): ArticleFlat {
+
+  objectLogger(rawArticle.editors, "here rawArticle.editors coming in to flattenEvents: ")
   const base = flattenArticleBase(rawArticle, locale);
   const articleTr = pickTranslation(rawArticle.translations, locale);
 
+  // objectLogger(articleTr, "here is the picked translations: ")
+  objectLogger(base, "here is the picked base: ")
+
   return {
     ...base,
-    body: articleTr?.body ?? '',
+    content: articleTr?.content ?? '',
   };
 }

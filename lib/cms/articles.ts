@@ -4,6 +4,7 @@ import { directus } from '../directus';
 import { buildAssetUrl, DEFAULT_LOCALE, pickTranslation, PLACEHOLDER_LOGO, type ItemsQuery } from './utils';
 import type { ArticleEventRowRaw, ArticleFlat, ArticleRaw, CardArticleFlat } from './articles.types';
 import { flattenArticle, flattenArticlesForCards } from './articles.utils';
+import { objectLogger } from '../utils';
 
 export const perPageConstant = 12;
 
@@ -20,7 +21,7 @@ interface ArticleCardsParameters {
   locale: string;
   page: number;
   tagId?: number;
-  collectiveId?: number;
+  organisationId?: number;
   numberOfArticles?: number;
 }
 
@@ -42,7 +43,7 @@ export async function getArticleCards(
     locale,
     page,
     tagId,
-    collectiveId,
+    organisationId,
     numberOfArticles = perPageConstant,
   }: ArticleCardsParameters
 ): Promise<Paged<CardArticleFlat>> {
@@ -51,10 +52,10 @@ export async function getArticleCards(
   // Build filter safely
   const filter: any = { status: { _eq: 'published' } };
   if (tagId != null) filter.tag = { id: { _eq: tagId } };
-  if (collectiveId != null) {
+  if (organisationId != null) {
     filter.editors = {
       _some: {
-        collectives_id: { id: { _eq: collectiveId } },
+        organisation_id: { id: { _eq: organisationId } },
       },
     };
   }
@@ -64,10 +65,10 @@ export async function getArticleCards(
     'published_at',
     { cover: ['id', 'width', 'height'] },
 
-    // M2M: articles ↔ collectives via editors
+    // M2M: articles ↔ organisations via editors
     {
       editors: [
-        { collectives_id: ['id', 'name', 'slug', 'color', { logo: ['id', 'width', 'height'] }] },
+        { organisation_id: ['id', 'name', 'slug', 'color', { logo: ['id', 'width', 'height'] }] },
       ],
     },
     { tag: ['id', 'color', { translations: ['languages_code', 'name'] }] },
@@ -132,10 +133,10 @@ export async function getArticleById(
     'published_at',
     { cover: ['id', 'width', 'height'] },
 
-    // M2M: articles ↔ collectives via editors
+    // M2M: articles ↔ organisation via editors
     {
       editors: [
-        { collectives_id: ['id', 'name', 'slug', 'color', { logo: ['id', 'width', 'height'] }] },
+        { organisation_id: ['id', 'name', 'slug', 'color', { logo: ['id', 'width', 'height'] }] },
       ],
     },
 
@@ -156,7 +157,7 @@ export async function getArticleById(
       ],
     },
     { tag: ['id', 'color', { translations: ['languages_code', 'name'] }] },
-    { translations: ['languages_code', 'title', 'body'] },
+    { translations: ['languages_code', 'title', 'content'] },
   ];
 
   const deep = {
@@ -185,6 +186,8 @@ export async function getArticleById(
   const req: ItemsQuery = { fields, deep, filter, };
 
   const rawArticle = await directus.request<ArticleRaw>(readItem('articles', articleId, req));
+
+  // objectLogger(rawArticle, "raw article: ")
 
   return flattenArticle(rawArticle, locale);
 }

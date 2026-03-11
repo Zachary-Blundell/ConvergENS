@@ -6,9 +6,9 @@ import { getAllTagsForUI } from '@/lib/cms/tags';
 import FiltersBar from './FiltersBar';
 import Pagination from '@/components/Pagination';
 import { getTranslations } from 'next-intl/server';
-import { getAllCollectivesForUI } from '@/lib/cms/collectives';
 import { CardArticleFlat } from '@/lib/cms/articles.types';
 import { ArticleCardGrid } from '@/components/ArticleCard';
+import { getAllOrganisationsForUI } from '@/lib/cms/organisations';
 
 async function ShowCards({
   t,
@@ -69,7 +69,7 @@ export default async function ArticlesPage({
         numberOfArticles: perPageConstant,
       }),
       getAllTagsForUI(locale),
-      getAllCollectivesForUI(),
+      getAllOrganisationsForUI(),
     ]);
 
   const articles = articlesData.data;

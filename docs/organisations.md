@@ -1,23 +1,24 @@
 ---
 layout: default
-title: Organisation (Collective)
+title: Organisation (Organisation)
 description: Créer et mettre à jour une organisation dans l'éditeur du site (nom, logo, type, textes, contacts et liens).
 nav_order: 3
 ---
 
-# Organisation (Collective)
+# Organisation (Organisation)
 
-Une **Organisation** (collection `collectives`) représente un groupe associé à ConvergENS.  
+Une **Organisation** (collection `organisations`) représente un groupe associé à ConvergENS.  
 Elle sert à afficher une identité publique (nom, logo, couleur, textes), des informations de contact, et des liens vers d’autres éléments (réseaux sociaux, articles, etc.).
 
 <!-- prettier-ignore-start -->
+
 - TOC
 {:toc}
 <!-- prettier-ignore-end -->
 
 ## Où trouver les organisations ?
 
-Dans l’éditeur l'éditeur du site : **Contenu → collectives**.
+Dans l’éditeur l'éditeur du site : **Contenu → organisations**.
 
 Selon vos droits et vos filtres, vous verrez soit plusieurs organisations, soit uniquement la vôtre.
 
@@ -26,6 +27,7 @@ Selon vos droits et vos filtres, vous verrez soit plusieurs organisations, soit 
 ---
 
 # À remplir en priorité (obligatoire)
+
 ✅ = obligatoire
 
 > Objectif : en remplissant cette partie, vous pouvez déjà **enregistrer** et revenir plus tard.
@@ -37,6 +39,7 @@ Selon vos droits et vos filtres, vous verrez soit plusieurs organisations, soit 
 - **Valeurs** : `published` / `draft` / `archived`
 
 Bon réflexe :
+
 - laissez en **draft** (brouillon) tant que l’organisation n’est pas prête
 - passez en **published** (publié) quand elle doit apparaître sur le site
 - utilisez **archived** (archivé) pour la retirer sans la supprimer
@@ -59,7 +62,7 @@ Bon réflexe :
 
 - **Nom dans l'éditeur du site** : `slug`
 - **À quoi ça sert** : c’est le “nom pour le lien”, utilisé dans l’adresse du site.
-![Exemple d’URL avec slug](./assets/images/organisations/url.png)
+  ![Exemple d’URL avec slug](./assets/images/organisations/url.png)
 
 Un **slug**, c’est le petit texte dans l’adresse (URL) qui identifie une page de façon lisible.
 
@@ -67,12 +70,13 @@ Un **slug**, c’est le petit texte dans l’adresse (URL) qui identifie une pag
 - Il sert à fabriquer l’URL.
 
 Exemple :
+
 - Nom : **"The Debug Duck Society"**
 - Slug : **`debug-duck-society`**
 - URL : `https://convergens.net/organisations/debug-duck-society`
 
-
 ### Les deux boutons à côté du slug
+
 - ✏️ **Crayon** : modifier le slug à la main
 - 🪄 **Baguette magique** : générer automatiquement un slug à partir du nom
 
@@ -115,11 +119,12 @@ Exemple :
 - **À quoi ça sert** : textes affichés sur le site, dans chaque langue.
 
 > À savoir :
+>
 > - **Le français est obligatoire.**
 > - **L’anglais est fortement recommandé.**
 > - L’interface ouvre le **français par défaut**, donc :
->   1) complétez **FR** en premier,  
->   2) puis ajoutez / complétez **EN** si possible.
+>   1. complétez **FR** en premier,
+>   2. puis ajoutez / complétez **EN** si possible.
 
 ## Résumé (100 caractères)
 
@@ -128,6 +133,7 @@ Exemple :
 - **Objectif** : une phrase simple, très courte.
 
 Exemple :
+
 - “Association étudiante qui organise des débats et des ateliers.”
 
 ## Description (page de l’organisation)
@@ -141,7 +147,9 @@ Exemple :
 > Conseil : mettez l’essentiel dans les premières lignes, puis ajoutez les détails en dessous.
 
 ### Astuce “traduction automatique”
+
 > Si vous utilisez DeepL (ou une IA), supprimez les phrases ajoutées automatiquement du type :
+>
 > - “Voici la traduction : …”
 > - “Voici votre texte traduit : …”
 > - “Traduction fournie par DeepL”
@@ -152,6 +160,7 @@ Exemple :
 ---
 
 ## Organizers (qui gère l’organisation)
+
 **Ceci est à titre informatif et ne doit pas vous inquiéter ni vous préoccuper, car vous n'avez aucun moyen d'y changer quoi que ce soit.**
 
 - **Nom dans l'éditeur du site** : `organizers`
@@ -177,23 +186,26 @@ Ces champs sont facultatifs mais utiles :
 > Conseil : ajoutez uniquement des liens officiels et vérifiez qu’ils sont publics.
 
 ## Email
+
 - **Nom dans l'éditeur du site** : `email`
 - **À quoi ça sert** : contact public.
 
 ## Téléphone
+
 - **Nom dans l'éditeur du site** : `phone`
 - **À quoi ça sert** : contact public.
 
 ## Site web
+
 - **Nom dans l'éditeur du site** : `website`
 - **À quoi ça sert** : lien vers le site officiel.
-> Conseil : commencez par `https://`
+  > Conseil : commencez par `https://`
 
 ---
 
 # Procédure pas à pas
 
-1. Aller dans **Contenu → collectives**
+1. Aller dans **Contenu → organisations**
 2. Ouvrir votre organisation (ou cliquer **Créer** si vous êtes autorisé·e)
 3. Remplir en priorité :
    - `name`, `slug`, `logo`, `color`, `type`, `translations`
@@ -205,16 +217,20 @@ Ces champs sont facultatifs mais utiles :
 # Dépannage rapide
 
 ## “Je ne vois pas mon organisation”
-- Vérifiez que vous êtes dans **Contenu → collectives**
+
+- Vérifiez que vous êtes dans **Contenu → organisations**
 - Vérifiez qu’un **filtre** n’est pas actif
 - Selon votre rôle, il est possible que vous ne voyiez **que** certaines organisations (c’est normal)
 
 ## “Je ne peux pas changer organizers”
+
 - C’est normal : c’est géré par Zachary (admin). Contactez-le si besoin.
 
 ## “Le logo est flou / mal cadré”
+
 - Essayez une image plus grande, idéalement carrée
 - Évitez les logos trop détaillés (illisibles en petit)
 
 ## “Le lien du site ne marche pas”
+
 - Vérifiez que `website` commence bien par `https://`

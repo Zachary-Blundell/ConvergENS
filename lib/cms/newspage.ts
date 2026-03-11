@@ -50,6 +50,7 @@ export interface NewspaperFlat {
   translations: NewspaperTranslation; // flatenned
 }
 
+
 /** Language-specific fields for the newspaper */
 export interface NewspaperTranslation {
   title: string | null;
@@ -70,7 +71,7 @@ export async function getNewspaperPage(
 ): Promise<NewspaperFlat | null> {
   try {
     const newspaperPageRaw = await directus.request<NewspaperRaw>(
-      readSingleton('newspaper', {
+      readSingleton('Newspaper', {
         fields: [
           'id',
           'banner_img.id',
@@ -111,18 +112,25 @@ export async function getNewspaperPage(
 
     const newspaperPageFlat: NewspaperFlat = {
       id: newspaperPageRaw.id,
-      banner_img: {
-        url: buildAssetUrl(newspaperPageRaw.banner_img.id) ?? PLACEHOLDER_LOGO,
-        height: newspaperPageRaw.banner_img.height,
-        width: newspaperPageRaw.banner_img.width,
-      },
-      current_edition_img: {
-        url:
-          buildAssetUrl(newspaperPageRaw.current_edition_img.id) ??
-          PLACEHOLDER_LOGO,
-        height: newspaperPageRaw.current_edition_img.height,
-        width: newspaperPageRaw.current_edition_img.width,
-      },
+
+      banner_img: newspaperPageRaw.banner_img
+        ? {
+          url: buildAssetUrl(newspaperPageRaw.banner_img.id) ?? PLACEHOLDER_LOGO,
+          height: newspaperPageRaw.banner_img.height,
+          width: newspaperPageRaw.banner_img.width,
+        }
+        : null,
+
+      current_edition_img: newspaperPageRaw.current_edition_img
+        ? {
+          url:
+            buildAssetUrl(newspaperPageRaw.current_edition_img.id) ??
+            PLACEHOLDER_LOGO,
+          height: newspaperPageRaw.current_edition_img.height,
+          width: newspaperPageRaw.current_edition_img.width,
+        }
+        : null,
+
       translations: resolvedT,
     };
 

@@ -157,6 +157,14 @@
       "all": "All",
       "categories": "Categories",
       "close": "Close"
+    },
+    "meta": {
+      "editors": "Editors",
+      "noEditors": "No editors",
+      "published": "Published",
+      "linkedEvents": "Linked events",
+      "noLinkedEvents": "No linked events",
+      "editorLogoAlt": "{name} logo"
     }
   },
   "Components": {

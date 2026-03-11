@@ -1,22 +1,23 @@
-// app/[locale]/collectives/[slug]/page.tsx
-import { getCollectiveBySlug } from '@/lib/cms/collectives';
+// app/[locale]/organisations/[slug]/page.tsx
+import { getOrganisationBySlug } from '@/lib/cms/organisations';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { ExternalLink, Globe, Mail, Phone } from 'lucide-react';
 import { Separator } from '@radix-ui/react-select';
 import HtmlContent from '@/components/HtmlContent';
-import { ArticleCardCarousel } from '@/components/ArticleCarousel';
+// import { ArticleCardCarousel } from '@/components/ArticleCarousel';
 import { getTranslations } from 'next-intl/server';
+import { ArticleCardCarousel } from '@/components/ArticleCarousel';
 
-export default async function CollectivePage({
+export default async function OrganisationPage({
   params,
 }: {
   params: Promise<{ slug: string; locale: string }>;
 }) {
   const { slug, locale } = await params;
   const t = await getTranslations('OrganisationsPage');
-  const assoc = await getCollectiveBySlug(slug, locale);
+  const assoc = await getOrganisationBySlug(slug, locale);
 
 
   if (!assoc) notFound();
@@ -144,7 +145,9 @@ export default async function CollectivePage({
             {t('latestArticles')}
           </h2>
           <div className="h-1 w-24 bg-highlight mx-auto mb-2 rounded" />
-          <ArticleCardCarousel articles={assoc.articles} className="my-8 w-full" />
+          <ArticleCardCarousel articles={assoc.articles}
+            className="my-8 w-full "
+          />
         </section>
       ) : (
         <></>

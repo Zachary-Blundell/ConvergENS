@@ -8,7 +8,7 @@ import {
   PLACEHOLDER_LOGO,
 } from './utils';
 import { CalendarEventFlat, EventRaw } from './events.types';
-import { isObject } from '../utils';
+import { isObject, objectLogger } from '../utils';
 
 export async function getEventsRaw(req?: ItemsQuery): Promise<EventRaw[]> {
   if (!req) {
@@ -37,12 +37,12 @@ export async function getEventsForCalendar(
     "location",
     "location_address",
 
-    // M2M: organisers (junction row id + expanded collective)
+    // M2M: organisers (junction row id + expanded organisation)
     {
       organisers: [
         "id",
         {
-          collectives_id: [
+          organisation_id: [
             "id",
             "status",
             "name",
@@ -117,10 +117,11 @@ export function flattenEventForCalendar(
 ): CalendarEventFlat {
   const tr = pickTranslation(raw.translations, locale);
 
-  // organisers: junction rows -> collectives
+  // organisers: junction rows -> organisations
   const organisers =
     raw.organisers?.flatMap((row) => {
-      const c = row.collectives_id;
+      const c = row.organisation_id;
+
       if (!isObject(c)) return []; // should not happen but just incase
 
       const logoId = c.logo?.id ?? null;
@@ -137,6 +138,7 @@ export function flattenEventForCalendar(
       ];
     }) ?? [];
 
+  objectLogger(organisers, "Here are the flttened organisers")
   // articles: junction rows -> {id,title}
   const articles =
     raw.articles?.flatMap((row) => {

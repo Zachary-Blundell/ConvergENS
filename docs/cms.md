@@ -8,12 +8,13 @@ nav_order: 2
 # Comprendre L'Éditeur — les bases
 
 Bienvenue dans L'Éditeur 🧭  
-C’est un peu **la salle des commandes** du site : vous appuyez sur les bons boutons, et *hop*, le site se met à jour. Promis, pas besoin d’être informaticien·ne — on va y aller tranquillement, étape par étape 🙂
+C’est un peu **la salle des commandes** du site : vous appuyez sur les bons boutons, et _hop_, le site se met à jour. Promis, pas besoin d’être informaticien·ne — on va y aller tranquillement, étape par étape 🙂
 
 L'Éditeur est l’éditeur (CMS) qui permet de **créer**, **modifier** et **publier** le contenu de ConvergENS (articles, événements, organisations…).  
 Tout ce que vous changez ici peut ensuite apparaître sur le site, **à condition de publier**.
 
 <!-- prettier-ignore-start -->
+
 - TOC
 {:toc}
 <!-- prettier-ignore-end -->
@@ -23,17 +24,18 @@ Tout ce que vous changez ici peut ensuite apparaître sur le site, **à conditio
 Dans l’éditeur, tout à gauche, vous verrez une barre avec **5 icônes**.  
 Elles servent à aller dans les grandes sections de L'Éditeur.
 
-
 - 📦 Contenu (On dirait une boîte)
 - 🖼️ Fichiers (Un dossier.)
-- 🌐 Raccourcis  Site web (Front)
-- 📄 Raccourcis  Documentation
+- 🌐 Raccourcis Site web (Front)
+- 📄 Raccourcis Documentation
 - 👥 Utilisateurs
 
 ![Barre de navigation de L'Éditeur](./assets/images/index/navbar.png)
 
 ### 📦 Contenu (On dirait une boîte)
+
 C’est **l’endroit principal** : vous y gérez tout ce qui est publié sur le site, par exemple :
+
 - articles
 - événements
 - organisations
@@ -42,10 +44,12 @@ C’est **l’endroit principal** : vous y gérez tout ce qui est publié sur le
 👉 Si vous ne savez pas où aller, c’est presque toujours ici.
 
 ### 🖼️ Fichiers (Un dossier.)
+
 C’est la **bibliothèque d’images et de documents** (logos, affiches, images d’articles, PDF…).  
 Vous pouvez y retrouver un fichier déjà envoyé, ou en ajouter un nouveau.
 
 ### 🔗 Raccourcis (liens utiles)
+
 Dans notre instance, il y a aussi deux liens personnalisés :
 
 - **🌐 Site web (Front)** : ouvre le **site public**, celui que tout le monde voit.
@@ -54,9 +58,9 @@ Dans notre instance, il y a aussi deux liens personnalisés :
 > Astuce : si vous avez un doute sur “ce que ça rend sur le site”, le lien **Site web (Front)** permet de vérifier rapidement.
 
 ### 👥 Utilisateurs
+
 C’est la liste des comptes qui peuvent accéder à l’éditeur.  
 ⚠️ Cette section est souvent réservée aux personnes qui gèrent l’administration.
-
 
 # Les sections dans **Contenu**
 
@@ -65,40 +69,47 @@ Chaque rubrique correspond à un “type de contenu” du site.
 
 ![Les sections dans Contenu](assets/images/cms/sections.png)
 
-> Les petites flèches **▸ / ▾** indiquent qu’il y a des sous-menus (comme pour **Collectives**).
+> Les petites flèches **▸ / ▾** indiquent qu’il y a des sous-menus (comme pour **Organisations**).
 
 ## 📰 Articles
+
 Ici, vous créez et gérez les **articles** du site.  
 Exemples : annonces, actualités, comptes rendus, pages de contenu.
 
 **Vous utilisez cette rubrique quand vous voulez :**
+
 - écrire un nouvel article
 - modifier un article existant
 - publier / dépublier un article
 
 ---
 
-## 🏷️ Collectives (Organisations)
-Sur le site on dit “**Organisations**”, mais dans L'Éditeur ça s’appelle **Collectives** (nom historique du projet).
+## 🏷️ Organisations (Organisations)
+
+Sur le site on dit “**Organisations**”, mais dans L'Éditeur ça s’appelle **Organisations** (nom historique du projet).
 
 Cette rubrique sert à gérer la **fiche d’une organisation** (nom, logo, couleur, contacts, description…).
 
 Elle a deux sous-sections :
 
 ### 🔖 Mon Organisation
+
 C’est votre **fiche organisation** (celle dont vous faites partie).  
 👉 C’est l’endroit le plus simple pour mettre à jour votre logo, description, liens, etc.
 
 ### 📚 Toutes les organisations…
+
 La liste de **toutes** les organisations.  
 ⚠️ Selon vos droits, vous ne verrez peut-être pas tout — c’est normal.
 
 ---
 
 ## 📅 Events
+
 Ici, vous créez et gérez les **événements** : date/heure, lieu, organisation, co-organisation, et éventuellement les articles liés.
 
 **Vous utilisez cette rubrique quand vous voulez :**
+
 - ajouter un événement
 - changer une date, un lieu, ou une description
 - publier / archiver un événement
@@ -106,22 +117,26 @@ Ici, vous créez et gérez les **événements** : date/heure, lieu, organisation
 ---
 
 ## 📁 Details
+
 Cette rubrique regroupe “les réglages de fond” du site : des listes et options qui servent partout ailleurs, mais que vous n’aurez **presque jamais** besoin de modifier.
 
 On y trouve par exemple :
+
 - les **langues**
-- les **types d’organisation** (collective types)
+- les **types d’organisation** (organisation types)
 - parfois d’autres listes techniques utilisées dans les formulaires
 
-👉 En général : **n’y touchez pas** mais jetez un œil si vous êtes curieux. 
+👉 En général : **n’y touchez pas** mais jetez un œil si vous êtes curieux.
 
 ---
 
 ## 🌐 Socials
+
 Ici, vous gérez les **liens de réseaux sociaux** d’une organisation (YouTube, Facebook, Instagram, etc.).  
 En général : **1 ligne = 1 réseau social + 1 lien**.
 
 **Vous utilisez cette rubrique quand vous voulez :**
+
 - ajouter un lien Instagram / YouTube / etc.
 - corriger un lien
 - supprimer un lien qui n’est plus valable
@@ -168,7 +183,7 @@ Exemples fréquents (ConvergENS) :
 
 ## Avant l'ajout des filtres
 
-![collectives_no_filter](assets/images/cms/collectives_no_filter.jpg)
+![organisations_no_filter](assets/images/cms/organisations_no_filter.jpg)
 
 ## Nous ajoutons un filtre
 
@@ -176,7 +191,7 @@ Exemples fréquents (ConvergENS) :
 
 ## Après l'ajout des filtres
 
-![collectives_filtered](assets/images/cms/collectives_filtered.jpg)
+![organisations_filtered](assets/images/cms/organisations_filtered.jpg)
 ![filters](assets/images/cms/filters.jpg)
 Ce symbole à côté de la recherche indique qu'un filtre est utilisé.
 
@@ -238,4 +253,3 @@ C’est utile pour créer des raccourcis du type :
 - “Événements à venir”
 
 Création :
-

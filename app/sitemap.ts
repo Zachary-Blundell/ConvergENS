@@ -11,21 +11,21 @@ const SITE_URL =
 async function getArticleIds(): Promise<string[]> {
   return [];
 }
-async function getCollectiveSlugs(): Promise<string[]> {
+async function getOrganisationSlugs(): Promise<string[]> {
   return [];
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [articleIds, collectiveSlugs] = await Promise.all([
+  const [articleIds, organisationSlugs] = await Promise.all([
     getArticleIds(),
-    getCollectiveSlugs(),
+    getOrganisationSlugs(),
   ]);
 
   const staticPerLocale = (locale: string) => [
     `/${locale}`,
     `/${locale}/articles`,
     `/${locale}/calendar`,
-    `/${locale}/collectives`,
+    `/${locale}/organisations`,
     `/${locale}/newspaper`,
     `/${locale}/sitemap`,
   ];
@@ -53,10 +53,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
 
-    // Dynamic: collectives
-    for (const slug of collectiveSlugs) {
+    // Dynamic: organisations
+    for (const slug of organisationSlugs) {
       entries.push({
-        url: `${SITE_URL}/${locale}/collectives/${slug}`,
+        url: `${SITE_URL}/${locale}/organisations/${slug}`,
         lastModified: new Date(),
         changeFrequency: "weekly",
         priority: 0.6,

@@ -7,9 +7,11 @@ import reactStringReplace from 'react-string-replace';
 import { getLocale, getTranslations } from 'next-intl/server';
 import { getHome } from '@/lib/cms/homepage';
 import OrganisationsRow from '@/components/OrganisationsRow';
-
 import { ArticleCardCarousel } from '@/components/ArticleCarousel';
 import { getArticleCards } from '@/lib/cms/articles';
+
+// import { ArticleCardCarousel } from '@/components/ArticleCarousel';
+// import { getArticleCards } from '@/lib/cms/articles';
 
 /* ---------------- Utilities ---------------- */
 

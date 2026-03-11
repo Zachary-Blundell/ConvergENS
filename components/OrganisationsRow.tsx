@@ -1,9 +1,9 @@
-import { getCollectiveBadges } from '@/lib/cms/collectives';
+import { getOrganisationBadges } from '@/lib/cms/organisations';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default async function CollectiveRows() {
-  const assoBadges = await getCollectiveBadges();
+export default async function OrganisationRows() {
+  const assoBadges = await getOrganisationBadges();
 
   if (assoBadges !== null) {
     return (

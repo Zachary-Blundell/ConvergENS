@@ -1,6 +1,7 @@
 import { readItems } from '@directus/sdk';
 import { directus } from '../directus';
 import { ItemsQuery, pickTranslation } from './utils';
+import { Id } from './types';
 
 /* Types */
 
@@ -15,7 +16,7 @@ export type TagRaw = {
 };
 
 export type TagFlat = {
-  id: number | null;
+  id: Id;
   name: string | null; // localized
   color: string | null;
 };

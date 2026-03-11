@@ -1,6 +1,6 @@
 // lib/cms/events.types.ts
 
-import { CollectiveForUIRaw, Id } from "./types";
+import { OrganisationForUIRaw, Id } from "./types";
 
 export type EventTranslationRaw = {
   languages_code: string;
@@ -18,9 +18,9 @@ export type ArticleEventInfoRaw = {
   translations?: ArticleTranslationForEventRaw[];
 };
 
-// M2M: events ↔ collectives (organisers)
+// M2M: events ↔ organisations (organisers)
 export type EventOrganiserRowRaw = {
-  collectives_id: CollectiveForUIRaw;
+  organisation_id: OrganisationForUIRaw;
 };
 
 // M2M: events ↔ articles

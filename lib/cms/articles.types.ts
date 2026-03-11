@@ -1,12 +1,12 @@
 // lib/cms/articles.types.ts
 
 import { TagFlat, TagRaw } from "./tags";
-import { CollectiveForUIRaw, DirectusImage, Id } from "./types";
+import { OrganisationForUIRaw, DirectusImage, Id } from "./types";
 
 export type ArticleTranslationRaw = {
   languages_code: string;
   title?: string | null;
-  body?: string | null; // This will be html data
+  content?: string | null; // This will be html data
   description?: string | null;
 };
 
@@ -38,10 +38,10 @@ export type EventArticleInfoFlat = {
   location_address?: string | null;
 };
 
-// M2M: articles ↔ collectives (editors)
-// Editors junction: articles ↔ collectives (or users ↔ collectives depending on the schema)
+// M2M: articles ↔ organisations (editors)
+// Editors junction: articles ↔ organisations (or users ↔ organisations depending on the schema)
 export type ArticleEditorRowRaw = {
-  collectives_id: CollectiveForUIRaw;
+  organisation_id: OrganisationForUIRaw;
 };
 
 // M2M: events ↔ articles
@@ -52,6 +52,7 @@ export type ArticleEventRowRaw = {
 // Main Article type
 export type ArticleRaw = {
   id: Id;
+  status?: string | null;
 
   published_at?: string | null; // ISO datetime should never be null due to default value
   cover?: DirectusImage;
@@ -91,7 +92,7 @@ export type ArticleFlat = {
   published_at: Date; // ISO datetime should never be null due to default value
 
   title: string;
-  body: string; // This will be html data
+  content: string; // This will be html data
 
   // Cover
   coverUrl: string | null;
@@ -122,3 +123,6 @@ export type ArticleFlat = {
     location_address?: string | null;
   }>;
 };
+
+
+

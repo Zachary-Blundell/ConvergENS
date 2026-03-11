@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation';
 import { getTranslations } from 'next-intl/server';
 import { getArticleById } from '@/lib/cms/articles';
 import { EventArticleInfoFlat, EventArticleInfoRaw } from '@/lib/cms/articles.types';
+import { AddToCalendarButton } from '@/components/AddToCalendarButton';
 
 function formatDate(date: Date, locale: string) {
   return new Intl.DateTimeFormat(locale, {
@@ -101,8 +102,8 @@ export default async function ArticlePage({
             <div className="absolute inset-0 bg-gradient-to-tr from-surface-2 to-surface-3" />
           )}
         </div>
-        {/* Body */}
 
+        {/* Content */}
         <div className="p-6">
           {/* Title */}
           <h1 className="text-4xl text-fg-primary">{article.title}</h1>
@@ -113,7 +114,7 @@ export default async function ArticlePage({
               {/* Editors */}
               <div className="min-w-0">
                 <p className="mb-2 text-xs font-medium uppercase tracking-wide text-fg-muted">
-                  Editors
+                  {t('meta.editors')}
                 </p>
 
                 {article.editors?.length ? (
@@ -127,19 +128,19 @@ export default async function ArticlePage({
                           >
                             <span
                               className="relative inline-block h-7 w-7 overflow-hidden rounded-full ring-2 ring-offset-1 ring-offset-white dark:ring-offset-zinc-900"
-                              style={{ ["--tw-ring-color" as any]: ed.color }}
+                              style={{ ['--tw-ring-color' as any]: ed.color }}
                             >
                               {ed.logoUrl ? (
                                 <Image
                                   src={ed.logoUrl}
-                                  alt={`${ed.name} logo`}
+                                  alt={t('meta.editorLogoAlt', { name: ed.name })}
                                   fill
                                   sizes="30px"
                                   className="object-cover"
                                 />
                               ) : (
                                 <span className="grid h-full w-full place-items-center text-xs font-medium text-fg-primary">
-                                  {ed.name?.[0]?.toUpperCase() ?? "?"}
+                                  {ed.name?.[0]?.toUpperCase() ?? '?'}
                                 </span>
                               )}
                             </span>
@@ -149,7 +150,7 @@ export default async function ArticlePage({
                           <span className="inline-flex items-center gap-2">
                             <span
                               className="relative inline-block h-7 w-7 overflow-hidden rounded-full ring-2 ring-offset-1 ring-offset-white dark:ring-offset-zinc-900"
-                              style={{ ["--tw-ring-color" as any]: ed.color }}
+                              style={{ ['--tw-ring-color' as any]: ed.color }}
                             />
                             <span className="truncate">{ed.name}</span>
                           </span>
@@ -158,14 +159,14 @@ export default async function ArticlePage({
                     ))}
                   </div>
                 ) : (
-                  <p className="text-fg-muted">No editors</p>
+                  <p className="text-fg-muted">{t('meta.noEditors')}</p>
                 )}
               </div>
 
               {/* Published */}
               <div className="shrink-0 sm:text-right">
                 <p className="mb-2 text-xs font-medium uppercase tracking-wide text-fg-muted">
-                  Published
+                  {t('meta.published')}
                 </p>
 
                 <time
@@ -181,35 +182,46 @@ export default async function ArticlePage({
             {/* Events */}
             <div className="mt-4">
               <p className="mb-2 text-xs font-medium uppercase tracking-wide text-fg-muted">
-                Linked events
+                {t('meta.linkedEvents')}
               </p>
 
               {article.events?.length ? (
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-col gap-2">
                   {article.events.map((ev) => {
                     const tooltip = formatEventRange(ev, locale);
 
                     return (
+                      <div key={String(ev.id)} className="flex items-center gap-2">
+                        <Link
+                          title={tooltip}
+                          href={calendarEventUrl(locale, ev)}
+                          className="inline-flex min-w-0 items-center gap-2 rounded-full bg-surface-2 px-3 py-1 text-fg-primary hover:underline"
+                        >
+                          <span className="truncate">{ev.title}</span>
+                        </Link>
 
-                      <Link
-                        key={String(ev.id)}
-                        title={tooltip}
-                        href={calendarEventUrl(locale, ev)}
-                        className="inline-flex items-center gap-2 rounded-full bg-surface-2 px-3 py-1 text-fg-primary hover:underline"
-                      >
-                        <span className="truncate">{ev.title}</span>
-
-                        {ev.all_day ? (
-                          <span className="rounded-full bg-surface-3 px-2 py-0.5 text-[11px] text-fg-muted">
-                            all-day
-                          </span>
-                        ) : null}
-                      </Link>
+                        <AddToCalendarButton
+                          align="right"
+                          className="shrink-0"
+                          event={{
+                            uid: String(ev.id),
+                            title: ev.title,
+                            description: ev.description ?? null,
+                            start: new Date(ev.start_at),
+                            end: new Date(ev.end_at),
+                            allDay: ev.all_day ?? false,
+                            location: ev.location_address
+                              ? `${ev.location ?? ''} — ${ev.location_address}`
+                              : ev.location ?? null,
+                            url: calendarEventUrl(locale, ev),
+                          }}
+                        />
+                      </div>
                     );
                   })}
                 </div>
               ) : (
-                <p className="text-fg-muted">No linked events</p>
+                <p className="text-fg-muted">{t('meta.noLinkedEvents')}</p>
               )}
             </div>
           </div>
@@ -217,9 +229,8 @@ export default async function ArticlePage({
           {/* Divider */}
           <hr className="my-6 border-outline" />
 
-
-          {/* Content (as requested) */}
-          <HtmlContent className="cms-content" html={article.body} />
+          {/* Content */}
+          <HtmlContent className="cms-content" html={article.content} />
         </div>
       </article>
     </main>

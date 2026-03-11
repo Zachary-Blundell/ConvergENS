@@ -1,6 +1,6 @@
 // app/[locale]/organisations/page.tsx
 import { OrganisationCard } from '@/components/OrganisationCard';
-import { getOrganisationCards } from '@/lib/cms/collectives';
+import { getOrganisationCards } from '@/lib/cms/organisations';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
