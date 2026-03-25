@@ -7,9 +7,10 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'convergensapi.zac.coffee',
-        pathname: '**',
+        protocol: 'http',
+        hostname: '95.141.241.120',
+        prot: '8055',
+        // pathname: '**',
       },
     ],
   },
