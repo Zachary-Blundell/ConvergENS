@@ -18,11 +18,13 @@ Elle sert à afficher une identité publique (nom, logo, couleur, textes), des i
 
 ## Où trouver les organisations ?
 
-Dans l’éditeur l'éditeur du site : **Contenu → organisations**.
+Dans l'éditeur du site (CMS) : **Contenu → Organisations**.
+
+![Les sections dans Contenu](assets/images/cms/sections_organisations.png)
 
 Selon vos droits et vos filtres, vous verrez soit plusieurs organisations, soit uniquement la vôtre.
 
-👉 En cliquant sur votre organisation, vous ouvrez sa **fiche** : vous verrez tous les champs et pourrez les mettre à jour.
+👉 En cliquant sur votre organisation, vous ouvrez sa **page** : vous verrez tous les champs et pourrez les mettre à jour.
 
 ---
 
@@ -31,20 +33,6 @@ Selon vos droits et vos filtres, vous verrez soit plusieurs organisations, soit 
 ✅ = obligatoire
 
 > Objectif : en remplissant cette partie, vous pouvez déjà **enregistrer** et revenir plus tard.
-
-## Statut ✅
-
-- **Nom dans l'éditeur du site** : `status`
-- **À quoi ça sert** : décide si l’organisation est visible sur le site.
-- **Valeurs** : `published` / `draft` / `archived`
-
-Bon réflexe :
-
-- laissez en **draft** (brouillon) tant que l’organisation n’est pas prête
-- passez en **published** (publié) quand elle doit apparaître sur le site
-- utilisez **archived** (archivé) pour la retirer sans la supprimer
-
----
 
 # Identité ✅
 
@@ -101,6 +89,8 @@ Exemple :
 
 ## Type d’organisation ✅
 
+![Type d'organisation](./assets/images/organisations/organisation_type.png)
+
 - **Nom dans l'éditeur du site** : `type`
 - **À quoi ça sert** : indique la catégorie de l’organisation et détermine **où elle apparaît** sur la page “Organisations” du site.
 - **Choix possibles** :
@@ -109,7 +99,25 @@ Exemple :
   - **Syndicat**
   - **Club**
 
-> Conseil : choisissez le type qui correspond le mieux. En cas de doute, demandez à Zachary.
+> Conseil : choisissez le type qui correspond le mieux.
+
+> Remarque : ne cliquez pas sur le stylo, car cela ouvrirait la page permettant de modifier le nom de la police et non de choisir une autre police. Cliquez directement sur le nom.
+
+---
+
+## Statut ✅
+
+![Statut d'organisation](./assets/images/cms/status.png)
+
+- **Nom dans l'éditeur du site** : `status`
+- **À quoi ça sert** : décide si l’organisation est visible sur le site.
+- **Valeurs** : `published` / `draft` / `archived`
+
+Bon réflexe :
+
+- laissez en **draft** (brouillon) tant que l’organisation n’est pas prête
+- passez en **published** (publié) quand elle doit apparaître sur le site
+- utilisez **archived** (archivé) pour la retirer sans la supprimer
 
 ---
 
@@ -159,11 +167,11 @@ Exemple :
 
 ---
 
-## Organizers (qui gère l’organisation)
+## Organisateurs (qui gère l’organisation)
 
 **Ceci est à titre informatif et ne doit pas vous inquiéter ni vous préoccuper, car vous n'avez aucun moyen d'y changer quoi que ce soit.**
 
-- **Nom dans l'éditeur du site** : `organizers`
+- **Nom dans l'éditeur du site** : `organisers`
 - **À quoi ça sert** : définit qui a accès à cette organisation dans l’éditeur.
 
 > À noter : il peut y avoir **plusieurs** organizers, mais la plupart du temps il n’y en a **qu’un seul** (souvent un compte avec le même nom que l’organisation).  
@@ -180,10 +188,14 @@ Ces champs sont facultatifs mais utiles :
 
 ## Réseaux sociaux
 
+![champs réseaux sociaux](./assets/images/organisations/socials.png)
+
 - **Nom dans l'éditeur du site** : `socials`
 - **À quoi ça sert** : ajouter des liens (Instagram, YouTube…).
 
 > Conseil : ajoutez uniquement des liens officiels et vérifiez qu’ils sont publics.
+
+➡️ Pour avoir plus d'informations : **[voir le page](socials.html)**
 
 ## Email
 

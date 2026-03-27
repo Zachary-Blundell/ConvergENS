@@ -25,25 +25,25 @@ Dans l’éditeur, tout à gauche, vous verrez une barre avec **5 icônes**.
 Elles servent à aller dans les grandes sections de L'Éditeur.
 
 - 📦 Contenu (On dirait une boîte)
-- 🖼️ Fichiers (Un dossier.)
+- 📁 Fichiers (Un dossier.)
 - 🌐 Raccourcis Site web (Front)
 - 📄 Raccourcis Documentation
 - 👥 Utilisateurs
 
-![Barre de navigation de L'Éditeur](./assets/images/index/navbar.png)
+![Barre de navigation de L'Éditeur](./assets/images/cms/navbar.png)
 
 ### 📦 Contenu (On dirait une boîte)
 
 C’est **l’endroit principal** : vous y gérez tout ce qui est publié sur le site, par exemple :
 
+- organisations
 - articles
 - événements
-- organisations
 - tags, liens de réseaux sociaux, etc.
 
 👉 Si vous ne savez pas où aller, c’est presque toujours ici.
 
-### 🖼️ Fichiers (Un dossier.)
+### 📁 Fichiers (Un dossier.)
 
 C’est la **bibliothèque d’images et de documents** (logos, affiches, images d’articles, PDF…).  
 Vous pouvez y retrouver un fichier déjà envoyé, ou en ajouter un nouveau.
@@ -67,7 +67,7 @@ C’est la liste des comptes qui peuvent accéder à l’éditeur.
 Quand vous cliquez sur **📦 Contenu**, vous voyez une liste de rubriques (comme sur la capture).  
 Chaque rubrique correspond à un “type de contenu” du site.
 
-![Les sections dans Contenu](assets/images/cms/sections.png)
+![Les sections dans Contenu](assets/images/cms/sections_organisations.png)
 
 > Les petites flèches **▸ / ▾** indiquent qu’il y a des sous-menus (comme pour **Organisations**).
 

@@ -26,6 +26,8 @@ Dans Directus : **Contenu → socials**.
 
 ### Type (obligatoire)
 
+![Les sections dans Contenu](./assets/images/cms/sections_organisations.png)
+
 - **type** _(obligatoire)_ : plateforme du réseau social  
   Choix disponibles :
   - `youtube` (YouTube)
