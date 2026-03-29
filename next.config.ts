@@ -7,9 +7,8 @@ const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'http',
-        hostname: '95.141.241.120',
-        prot: '8055',
+        protocol: 'https',
+        hostname: 'cms.convergens.org',
         // pathname: '**',
       },
     ],
