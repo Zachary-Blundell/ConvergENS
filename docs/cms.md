@@ -10,7 +10,9 @@ nav_order: 2
 Bienvenue dans L'Éditeur 🧭  
 C’est un peu **la salle des commandes** du site : vous appuyez sur les bons boutons, et _hop_, le site se met à jour. Promis, pas besoin d’être informaticien·ne — on va y aller tranquillement, étape par étape 🙂
 
-L'Éditeur est l’éditeur (CMS) qui permet de **créer**, **modifier** et **publier** le contenu de ConvergENS (articles, événements, organisations…).  
+![Aperçu de L'Éditeur](./assets/images/general/cms.png)
+
+L'Éditeur est l’éditeur (CMS) qui permet de **créer**, **modifier** et **publier** le contenu de ConvergENS (détais de l'organisations, articles, événements…).  
 Tout ce que vous changez ici peut ensuite apparaître sur le site, **à condition de publier**.
 
 <!-- prettier-ignore-start -->
@@ -30,7 +32,7 @@ Elles servent à aller dans les grandes sections de L'Éditeur.
 - 📄 Raccourcis Documentation
 - 👥 Utilisateurs
 
-![Barre de navigation de L'Éditeur](./assets/images/cms/navbar.png)
+![Barre de navigation de L'Éditeur](./assets/images/general/navbar.png)
 
 ### 📦 Contenu (On dirait une boîte)
 
@@ -39,7 +41,8 @@ C’est **l’endroit principal** : vous y gérez tout ce qui est publié sur le
 - organisations
 - articles
 - événements
-- tags, liens de réseaux sociaux, etc.
+
+![Barre de navigation contenu](./assets/images/organisation/sections_organisations.png)
 
 👉 Si vous ne savez pas où aller, c’est presque toujours ici.
 
@@ -48,6 +51,8 @@ C’est **l’endroit principal** : vous y gérez tout ce qui est publié sur le
 C’est la **bibliothèque d’images et de documents** (logos, affiches, images d’articles, PDF…).  
 Vous pouvez y retrouver un fichier déjà envoyé, ou en ajouter un nouveau.
 
+![Barre de navigation fichier](./assets/images/general/files.png)
+
 ### 🔗 Raccourcis (liens utiles)
 
 Dans notre instance, il y a aussi deux liens personnalisés :
@@ -55,42 +60,33 @@ Dans notre instance, il y a aussi deux liens personnalisés :
 - **🌐 Site web (Front)** : ouvre le **site public**, celui que tout le monde voit.
 - **📄 Documentation** : ouvre **ce guide** (la page où vous êtes en ce moment).
 
+![Barre de navigation links](./assets/images/general/links.png)
+
 > Astuce : si vous avez un doute sur “ce que ça rend sur le site”, le lien **Site web (Front)** permet de vérifier rapidement.
 
 ### 👥 Utilisateurs
 
 C’est la liste des comptes qui peuvent accéder à l’éditeur.  
 ⚠️ Cette section est souvent réservée aux personnes qui gèrent l’administration.
+![Barre de navigation Utilisateurs](./assets/images/general/users.png)
 
 # Les sections dans **Contenu**
 
 Quand vous cliquez sur **📦 Contenu**, vous voyez une liste de rubriques (comme sur la capture).  
 Chaque rubrique correspond à un “type de contenu” du site.
 
-![Les sections dans Contenu](assets/images/cms/sections_organisations.png)
+![Les sections dans Contenu](./assets/images/organisation/sections_organisations.png)
 
 > Les petites flèches **▸ / ▾** indiquent qu’il y a des sous-menus (comme pour **Organisations**).
-
-## 📰 Articles
-
-Ici, vous créez et gérez les **articles** du site.  
-Exemples : annonces, actualités, comptes rendus, pages de contenu.
-
-**Vous utilisez cette rubrique quand vous voulez :**
-
-- écrire un nouvel article
-- modifier un article existant
-- publier / dépublier un article
-
----
+> ![Les sous-menus dans organisations](./assets/images/organisation/sub-menus.png)
 
 ## 🏷️ Organisations (Organisations)
 
-Sur le site on dit “**Organisations**”, mais dans L'Éditeur ça s’appelle **Organisations** (nom historique du projet).
-
-Cette rubrique sert à gérer la **fiche d’une organisation** (nom, logo, couleur, contacts, description…).
+Cette rubrique sert à gérer la **page d’une organisation** (nom, logo, couleur, contacts, description…).
 
 Elle a deux sous-sections :
+
+![Les sous-menus dans organisations](./assets/images/organisation/sub-menus.png)
 
 ### 🔖 Mon Organisation
 
@@ -104,9 +100,26 @@ La liste de **toutes** les organisations.
 
 ---
 
+## 📰 Articles
+
+Ici, vous créez et gérez les **articles** du site.  
+Exemples : annonces, actualités, comptes rendus, pages de contenu.
+
+![Les sections dans articles](./assets/images/articles/section_articles.png)
+
+**Vous utilisez cette rubrique quand vous voulez :**
+
+- écrire un nouvel article
+- modifier un article existant
+- publier / dépublier un article
+
+---
+
 ## 📅 Events
 
 Ici, vous créez et gérez les **événements** : date/heure, lieu, organisation, co-organisation, et éventuellement les articles liés.
+
+![Le section events](./assets/images/events/section_events.png)
 
 **Vous utilisez cette rubrique quand vous voulez :**
 
@@ -116,34 +129,34 @@ Ici, vous créez et gérez les **événements** : date/heure, lieu, organisation
 
 ---
 
-## 📁 Details
+<!-- ## 📁 Details -->
+<!---->
+<!-- Cette rubrique regroupe “les réglages de fond” du site : des listes et options qui servent partout ailleurs, mais que vous n’aurez **presque jamais** besoin de modifier. -->
+<!---->
+<!-- On y trouve par exemple : -->
+<!---->
+<!-- - les **langues** -->
+<!-- - les **types d’organisation** (organisation types) -->
+<!-- - parfois d’autres listes techniques utilisées dans les formulaires -->
+<!---->
+<!-- 👉 En général : **n’y touchez pas** mais jetez un œil si vous êtes curieux. -->
+<!---->
+<!-- --- -->
+<!---->
+<!-- ## 🌐 Socials -->
+<!---->
+<!-- Ici, vous gérez les **liens de réseaux sociaux** d’une organisation (YouTube, Facebook, Instagram, etc.).   -->
+<!-- En général : **1 ligne = 1 réseau social + 1 lien**. -->
+<!---->
+<!-- **Vous utilisez cette rubrique quand vous voulez :** -->
+<!---->
+<!-- - ajouter un lien Instagram / YouTube / etc. -->
+<!-- - corriger un lien -->
+<!-- - supprimer un lien qui n’est plus valable -->
+<!---->
+<!-- --- -->
 
-Cette rubrique regroupe “les réglages de fond” du site : des listes et options qui servent partout ailleurs, mais que vous n’aurez **presque jamais** besoin de modifier.
-
-On y trouve par exemple :
-
-- les **langues**
-- les **types d’organisation** (organisation types)
-- parfois d’autres listes techniques utilisées dans les formulaires
-
-👉 En général : **n’y touchez pas** mais jetez un œil si vous êtes curieux.
-
----
-
-## 🌐 Socials
-
-Ici, vous gérez les **liens de réseaux sociaux** d’une organisation (YouTube, Facebook, Instagram, etc.).  
-En général : **1 ligne = 1 réseau social + 1 lien**.
-
-**Vous utilisez cette rubrique quand vous voulez :**
-
-- ajouter un lien Instagram / YouTube / etc.
-- corriger un lien
-- supprimer un lien qui n’est plus valable
-
----
-
-# Et maintenant ?
+# Et maintenant ? Stop 🛑
 
 Pour commencer simplement, je vous conseille de passer à la section suivante : **mettre à jour votre organisation**.
 
@@ -152,20 +165,27 @@ Une fois que votre organisation est à jour, vous pourrez revenir ici plus tard 
 
 ➡️ Prochaine étape : [Organisations → Mon Organisation](organisations.html)
 
-# Explorer une collection (liste d’items)
+# Section avancée : Explorer une collection (liste d’items)
 
 Dans une collection, vous retrouvez généralement :
 
+![ou est le recherche et filtre](./assets/images/general/where_search_filter.png)
+![search_filter](./assets/images/general/search_filter.png)
+
 - une **barre de recherche**
-- un bouton **Filtrer**
+- un bouton **filtrer**
 - des actions de **tri**
 - le choix des **colonnes visibles** (selon layout)
 - un bouton **Créer** (si autorisé)
 
 ## Recherche vs filtre
 
-- **Recherche** : rapide, utile pour un titre, un slug, un mot-clé
-- **Filtre** : précis, combinable, réutilisable (utile pour “tous les brouillons”, “événements futurs”, “articles d’un tag”)
+- **Recherche** : rapide, utile pour un titre, un slug, un mot-clé  
+  ![bouton de recherche](./assets/images/general/search_button.png)
+  ![bar de recherche](./assets/images/general/search_bar.png)
+- **Filtre** : précis, combinable, réutilisable (utile pour “tous les brouillons”, “événements futurs”, “articles d’un tag”)  
+  ![bouton de filtre](./assets/images/general/filter_button.png)
+  ![bar de filtre](./assets/images/general/filter_bar.png)
 
 ---
 
