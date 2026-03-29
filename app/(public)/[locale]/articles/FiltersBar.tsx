@@ -11,7 +11,7 @@ import {
   ReactNode,
 } from 'react';
 import { useTranslations } from 'next-intl';
-import { OrganisationUI } from '@/lib/cms/organisations';
+import { OrganisationUI } from '@/lib/cms/organisations.types';
 
 type Id = string | number;
 type Option = { id: Id; label: string };

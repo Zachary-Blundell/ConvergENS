@@ -65,7 +65,8 @@ export default async function ArticlesPage({
         locale,
         page: currentPage,
         tagId: currentTag,
-        collectiveId: currentOrganisation,
+        organisationId: currentOrganisation,
+
         numberOfArticles: perPageConstant,
       }),
       getAllTagsForUI(locale),

@@ -31,7 +31,7 @@ Il existe **3 espaces** distincts, chacun avec un rôle différent :
 2. **L'Éditeur** :  
    [https://cms.convergens.org](https://cms.convergens.org)  
    C’est l’interface “back-office” qui sert à **créer, modifier et publier** le contenu :
-   - organisations (collectives)
+   - organisations
    - articles
    - événements
      > C’est ici que vous travaillez pour que le contenu apparaisse ensuite sur le site web.

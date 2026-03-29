@@ -8,9 +8,12 @@ import {
   pickTranslation,
   PLACEHOLDER_LOGO,
 } from './utils';
-import { ArticleCard, ArticleRaw } from './articles';
+import { ArticleRaw, CardArticleFlat, EventArticleInfoRaw } from './articles.types';
+import { flattenArticlesForCards } from './articles.utils';
+import { Id } from './types';
+import { ArticleEventInfoRaw, EventRaw } from './events.types';
 
-export type CollectiveTranslation = {
+export type OrganisationTranslation = {
   languages_code: string;
   summary?: string | null;
   description?: string | null;
@@ -34,7 +37,7 @@ export type ArticleTranslation = {
   title?: string | null;
 };
 
-export type CollectiveRaw = {
+export type OrganisationRaw = {
   id: number;
   name?: string | null;
   slug?: string | null;
@@ -47,12 +50,13 @@ export type CollectiveRaw = {
   email?: string | null;
   phone?: string | null;
   website?: string | null;
-  translations?: CollectiveTranslation[];
+  translations?: OrganisationTranslation[];
   socials?: { platform: string; url: string }[];
   articles?: ArticleRaw[];
+  events?: EventRaw[];
 };
 
-export type CollectiveFlat = {
+export type OrganisationFlat = {
   id: string;
   name: string;
   slug: string;
@@ -74,16 +78,17 @@ export type CollectiveFlat = {
   summary?: string | null;
   description?: string | null;
   socials?: { platform: string; url: string }[];
-  articles: Array<ArticleCard>;
+  articles: Array<CardArticleFlat>;
+  events: Array<ArticleEventInfoRaw>;
 };
 
-export type CollectiveUI = {
+export type OrganisationUI = {
   id: string | number;
   name: string;
   color: string;
 };
 
-export type CollectiveBadge = {
+export type OrganisationBadge = {
   id: string | number;
   slug: string;
   name: string;
@@ -93,9 +98,9 @@ export type CollectiveBadge = {
   color: string;
 };
 
-export async function getCollectivesRaw(
+export async function getOrganisationsRaw(
   req?: ItemsQuery,
-): Promise<CollectiveRaw[]> {
+): Promise<OrganisationRaw[]> {
   if (!req) {
     // if req is not defined return everything
     req = {
@@ -103,13 +108,13 @@ export async function getCollectivesRaw(
     };
   }
 
-  const rawCollectives = await directus.request<any[]>(
-    readItems('collectives', req),
+  const rawOrganisations = await directus.request<any[]>(
+    readItems('organisation', req),
   );
-  return rawCollectives as CollectiveRaw[];
+  return rawOrganisations as OrganisationRaw[];
 }
 
-/* Collective cards */
+/* Organisation cards */
 export type OrganisationCard = {
   //flattened
   id: string;
@@ -173,10 +178,10 @@ export async function getOrganisationCards(
     },
   };
 
-  const rows = await getCollectivesRaw(req);
+  const rows = await getOrganisationsRaw(req);
 
-  return rows.map((i: CollectiveRaw): OrganisationCard => {
-    const collectiveTr = pickTranslation(i.translations, locale);
+  return rows.map((i: OrganisationRaw): OrganisationCard => {
+    const organisationTr = pickTranslation(i.translations, locale);
     const typeTr = pickTranslation(i.type.translations, locale);
     const result: OrganisationCard = {
       id: String(i.id),
@@ -195,15 +200,15 @@ export async function getOrganisationCards(
       email: i.email ?? null,
       phone: i.phone ?? null,
       website: i.website ?? null,
-      summary: collectiveTr?.summary ?? null,
-      description: collectiveTr?.description ?? null,
+      summary: organisationTr?.summary ?? null,
+      description: organisationTr?.description ?? null,
       socials: i.socials ?? [],
     };
     return result;
   });
 }
 
-export async function getCollectiveBadges(): Promise<CollectiveBadge[]> {
+export async function getOrganisationBadges(): Promise<OrganisationBadge[]> {
   const req: ItemsQuery = {
     fields: [
       'id',
@@ -215,7 +220,7 @@ export async function getCollectiveBadges(): Promise<CollectiveBadge[]> {
     filter: { status: { _eq: 'published' } },
   };
   try {
-    const rows = await getCollectivesRaw(req);
+    const rows = await getOrganisationsRaw(req);
     return rows.map((i) => {
       const result = {
         id: String(i.id),
@@ -244,28 +249,19 @@ export async function getCollectiveBadges(): Promise<CollectiveBadge[]> {
     if (isNotFound) return null;
 
     return [];
-    //   return {
-    //       id: null,
-    //       name: null,
-    //       slug: null,
-    //       color:  null,
-    //       logoUrl:  PLACEHOLDER_LOGO,
-    //       logoWidth:  null,
-    //       logoHeight: null,
-    // }
   }
 }
 
-export async function getAllCollectivesForUI(): Promise<CollectiveUI[]> {
+export async function getAllOrganisationsForUI(): Promise<OrganisationUI[]> {
   const req: ItemsQuery = {
     fields: ['id', 'name', 'color'],
   };
 
-  const rawCollective = await directus.request<CollectiveRaw[]>(
-    readItems('collectives', req),
+  const rawOrganisation = await directus.request<OrganisationRaw[]>(
+    readItems('organisation', req),
   );
 
-  return rawCollective.map((c) => {
+  return rawOrganisation.map((c) => {
     return {
       id: c.id,
       name: c.name,
@@ -274,13 +270,13 @@ export async function getAllCollectivesForUI(): Promise<CollectiveUI[]> {
   });
 }
 
-export async function getCollectiveBySlug(
+export async function getOrganisationBySlug(
   slug: string,
   locale = DEFAULT_LOCALE,
-): Promise<CollectiveFlat | null> {
+): Promise<OrganisationFlat | null> {
   // 1) Find the primary key by slug (and published)
   const found = await directus.request<{ id: string }[]>(
-    readItems('collectives', {
+    readItems('organisation', {
       fields: ['id'],
       filter: { slug: { _eq: slug }, status: { _eq: 'published' } },
       limit: 1,
@@ -290,8 +286,8 @@ export async function getCollectiveBySlug(
   if (!id) return null;
 
   // 2) Fetch the single item by primary key (+ related articles)
-  const c = await directus.request<CollectiveRaw>(
-    readItem('collectives', id, {
+  const c = await directus.request<OrganisationRaw>(
+    readItem('organisation', id, {
       fields: [
         'id',
         'name',
@@ -309,7 +305,7 @@ export async function getCollectiveBySlug(
         'phone',
         'website',
         { socials: ['type', 'url'] },
-        // O2M alias pulling articles tied to this collective
+        // O2M alias pulling articles tied to this organisation
         {
           articles: [
             'id',
@@ -334,7 +330,7 @@ export async function getCollectiveBySlug(
           _sort: ['-published_at'],
           _limit: 12,
           translations: { _filter: { languages_code: { _in: [locale] } } },
-          collective: { fields: ['id', 'slug', 'name'] },
+          organisation: { fields: ['id', 'slug', 'name'] },
         },
       },
     }),
@@ -365,28 +361,7 @@ export async function getCollectiveBySlug(
     website: c.website ?? null,
     socials: c.socials ?? [],
 
-    articles: (c.articles ?? []).map((a: ArticleRaw) => ({
-      id: String(a.id),
-      title: pickTranslation(a.translations, locale)?.title ?? '',
-      coverUrl: buildAssetUrl(a.cover.id) ?? PLACEHOLDER_LOGO,
-      coverWidth: Number(a.cover.width),
-      coverHeight: Number(a.cover.height),
-
-      tag: {
-        id: a.tag?.id ?? '',
-        name: pickTranslation(a.tag?.translations, locale)?.name ?? '',
-        color: a.tag?.color ?? null,
-      },
-      collective: {
-        id: String(c.id),
-        name: c.name,
-        slug: c.slug,
-        color: c.color,
-        logoUrl: buildAssetUrl(c.logo.id) ?? PLACEHOLDER_LOGO,
-        logoWidth: c.logo.width,
-        logoHeight: c.logo.height,
-      },
-      published_at: String(a.published_at),
-    })),
+    articles: flattenArticlesForCards(c.articles, locale),
+    events: c.events ?? [],
   };
 }

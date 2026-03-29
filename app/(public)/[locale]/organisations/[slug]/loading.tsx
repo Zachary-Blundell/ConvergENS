@@ -1,4 +1,4 @@
-// app/[locale]/collectives/[slug]/loading.tsx
+// app/[locale]/organisations/[slug]/loading.tsx
 import React from 'react';
 
 function Pulse({ className }: { className: string }) {
