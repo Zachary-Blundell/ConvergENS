@@ -7,7 +7,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel';
-import { cn, objectLogger } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import { CardArticleFlat } from '@/lib/cms/articles.types';
 import ArticleCard from './ArticleCard';
 
@@ -18,7 +18,6 @@ export function ArticleCardCarousel({
   articles: Array<CardArticleFlat>;
   className?: string;
 }) {
-  objectLogger(articles, "here are the articles recived")
   return (
     <Carousel
       // className="max-w-5/6 flex items-center"

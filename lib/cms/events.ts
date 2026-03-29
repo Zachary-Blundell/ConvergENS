@@ -8,7 +8,7 @@ import {
   PLACEHOLDER_LOGO,
 } from './utils';
 import { CalendarEventFlat, EventRaw } from './events.types';
-import { isObject, objectLogger } from '../utils';
+import { isObject } from '../utils';
 
 export async function getEventsRaw(req?: ItemsQuery): Promise<EventRaw[]> {
   if (!req) {
@@ -138,7 +138,6 @@ export function flattenEventForCalendar(
       ];
     }) ?? [];
 
-  objectLogger(organisers, "Here are the flttened organisers")
   // articles: junction rows -> {id,title}
   const articles =
     raw.articles?.flatMap((row) => {
