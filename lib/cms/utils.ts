@@ -23,7 +23,7 @@ export function buildAssetUrl(
   if (!fileId) return null;
   if (fileId === undefined) return null;
 
-  const base = process.env.DIRECTUS_API_ENDPOINT;
+  const base = process.env.NEXT_PUBLIC_DIRECTUS_ASSET_BASE_URL;
 
   const id = typeof fileId === 'string' ? fileId : fileId.id;
   return `${base}/assets/${id}`;
