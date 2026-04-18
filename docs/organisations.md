@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Organisation (Organisation)
-description: Créer et mettre à jour une organisation dans l'éditeur du site (nom, logo, type, textes, contacts et liens).
+title: Organisation
+description: Créer et mettre à jour une organisation (nom, logo, type, textes, contacts et liens).
 nav_order: 3
 ---
 
-# Organisation (Organisation)
+# Organisation
 
-Une **Organisation** (collection `organisations`) représente un groupe associé à ConvergENS.  
+Une **Organisation** représente un groupe associé à ConvergENS.  
 Elle sert à afficher une identité publique (nom, logo, couleur, textes), des informations de contact, et des liens vers d’autres éléments (réseaux sociaux, articles, etc.).
 
 <!-- prettier-ignore-start -->
