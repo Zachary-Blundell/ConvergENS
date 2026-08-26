@@ -11,7 +11,6 @@ import {
 import { ArticleRaw, CardArticleFlat } from './articles.types';
 import { OrganisationBadge, OrganisationFlat, OrganisationRaw, OrganisationUI } from './organisations.types';
 import { Id } from './types';
-import { objectLogger } from '../utils';
 
 export async function getOrganisationsRaw(
   req?: ItemsQuery,
@@ -204,7 +203,6 @@ export async function getOrganisationBySlug(
   );
   const id = found?.[0]?.id;
   if (!id) return null;
-  objectLogger(found, "found organisation id: ")
 
   const c = await directus.request<OrganisationRaw>(
     readItem('organisation', id, {

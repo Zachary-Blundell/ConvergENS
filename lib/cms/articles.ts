@@ -4,7 +4,6 @@ import { directus } from '../directus';
 import { buildAssetUrl, DEFAULT_LOCALE, pickTranslation, PLACEHOLDER_LOGO, type ItemsQuery } from './utils';
 import type { ArticleEventRowRaw, ArticleFlat, ArticleRaw, CardArticleFlat } from './articles.types';
 import { flattenArticle, flattenArticlesForCards } from './articles.utils';
-import { objectLogger } from '../utils';
 
 export const perPageConstant = 12;
 
@@ -186,8 +185,6 @@ export async function getArticleById(
   const req: ItemsQuery = { fields, deep, filter, };
 
   const rawArticle = await directus.request<ArticleRaw>(readItem('articles', articleId, req));
-
-  // objectLogger(rawArticle, "raw article: ")
 
   return flattenArticle(rawArticle, locale);
 }

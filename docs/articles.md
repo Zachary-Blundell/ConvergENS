@@ -10,39 +10,49 @@ nav_order: 4
 Ce guide explique **quoi remplir**, **dans quel ordre**, et **à quoi servent** les champs d’un **Article** dans le CMS Directus.  
 Objectif : vous permettre de **publier vite**, sans oublier l’essentiel, et de comprendre **qui peut éditer quoi**.
 
+![list des articles](./assets/images/articles/articles_list.png)
+
 <!-- prettier-ignore-start -->
+
 - TOC
 {:toc}
 <!-- prettier-ignore-end -->
 
 ## Où trouver les articles ?
 
-Dans l’éditeur du site : **Contenu → articles**.  
+Dans l’éditeur du site : **Contenu → articles**.
+
+![section article](./assets/images/articles/section_articles.png)
+
 Vous pouvez aussi y accéder depuis un **événement**, via le champ **Articles associés** (sélection / liaison d’articles).
 
-Vous verrez la liste des articles (avec filtres). En ouvrant un article, vous accédez à tous ses champs pour le compléter et le publier.  
+Vous verrez la liste des articles (avec filtres). En ouvrant un article, vous accédez à tous ses champs pour le compléter et le publier.
 
 Pour créer un nouvel article, cliquez sur le gros bouton « + » « Créer un élément ».
-![search filter add button](./assets/images/search-filter-add-button.png) 
 
----
+![search filter add button](./assets/images/general/search_filter.png)
+
+![page](./assets/images/articles/articles_page.png)
 
 # À remplir en priorité (obligatoire)
+
 ✅ = obligatoire
 
 > Objectif : en remplissant cette partie, vous pouvez déjà **enregistrer** et revenir plus tard.
 
 ## Statut ✅
 
+![status](./assets/images/general/status.png)
+
 - **Nom dans l'éditeur du site** : `status`
 - **À quoi ça sert** : décide si l’organisation est visible sur le site.
 - **Valeurs** : `published` / `draft` / `archived`
 
 Bon réflexe :
+
 - laissez en **draft** (brouillon) tant que l’organisation n’est pas prête
 - passez en **published** (publié) quand elle doit apparaître sur le site
 - utilisez **archived** (archivé) pour la retirer sans la supprimer
-
 
 ---
 
@@ -66,37 +76,7 @@ Bon réflexe :
   - (création de tag depuis l’article : **désactivée**)
 - **Exemple** : `Tag = Actualités` / `Tag = Événements`
 - **Conseil** : si vous hésitez, choisissez le tag le plus utile pour quelqu’un qui “tombe” sur l’article.
-> Vous pouvez demander l'ajout de nouvelles tags auprès de l'administrateur du site ou du webmaster.
-
----
-
-## Editors ✅
-
-- **Nom dans l’éditeur du site** : `editors` (champ “Editors”)
-- **À quoi ça sert** : définit **quelles organisations peuvent modifier l’article** et **quelles organisations s’affichent** sur le site.
-- **Comment le remplir** :
-  - ajouter **au moins 1 organisation**
-  - mettre votre organisation **en 1ère** si vous voulez qu’elle apparaisse comme “principale” sur la carte
-  - garder un ordre propre : les **3 premières** sont celles affichées sur les cartes
-- **Exemple** : `Editors = [The Debug Duck Society, Organisation partenaire, Co-organisation]`
-- **Conseil** : n’ajoutez que les organisations qui doivent vraiment **avoir les droits d’édition**.
-
-> Si vous ne voyez que votre organisation et que vous voulez ajouter des co-éditeurs, vérifiez que vous n’avez pas de **filtres/tags** actifs dans la liste.
-
-![Lots of editors in ui](./assets/images/Lots_of_editors.jpg)
-![Two editors in ui](./assets/images/two_editors.jpg)
-
-**Où ça s’affiche** :
-- sur **Tous les articles** : les **3 premières** organisations + le nom de la **1ère**
-- sur la **page article** : **toutes** les organisations listées dans Editors
-
----
-
-### À retenir
-
-- **Obligatoire** : Editors doit contenir **au moins 1 organisation**.
-- **Droits** : toute organisation ajoutée dans Editors peut **modifier** l’article.
-- **Accès** : l’organisation qui **a créé** l’article garde l’accès **même si elle est retirée** des Editors.
+  > Vous pouvez demander l'ajout de nouvelles tags auprès de l'administrateur du site ou du webmaster.
 
 ---
 
@@ -108,8 +88,8 @@ Bon réflexe :
   - importer/choisir une image lisible
   - privilégier un format **paysage** et adapté mobile
 - **Exemple** : photo d’événement, visuel d’annonce, image simple et contrastée
-![article card](./assets/images/articles/article-card.png) 
-![article page](./assets/images/articles/article-page.png) 
+  ![article card](./assets/images/articles/article-card.png)
+  ![article page](./assets/images/articles/article-page.png)
 
 ---
 
@@ -139,9 +119,55 @@ Bon réflexe :
 - **Nom dans l'éditeur du site** : `translations.body` (champ “Body” dans Translations)
 - **Où ça s’affiche** : page détaillée de l’article
 - **Vous pouvez** : titres, listes, liens, images  
-➡️ Voir : **[Guide éditeur de texte](wysisyg.html)**
+  ➡️ Voir : **[Guide éditeur de texte](wysisyg.html)**
 
 > Astuce : supprimez les phrases ajoutées par DeepL/IA du type “Voici la traduction…”.
+
+---
+
+## Auteurs ✅
+
+- **Nom dans l’éditeur du site** : `editors` (champ “Auteurs”)
+- **À quoi ça sert** : définit **quelles organisations peuvent modifier l’article** et **quelles organisations s’affichent** sur le site comme auteur.
+- **Comment le remplir** :
+  - ajouter **au moins 1 organisation**
+  - mettre votre organisation **en 1re** si vous voulez qu’elle apparaisse comme organisation “principale” sur la carte
+  - garder un ordre clair : les **3 premières** sont celles affichées sur les cartes
+- **Exemple** : `Auteurs = [The Debug Duck Society, Organisation partenaire, Co-organisation]`
+- **Conseil** : n’ajoutez que les organisations qui doivent réellement **avoir les droits d’édition**.
+
+> Si vous ne voyez que votre organisation et que vous voulez ajouter des co-auteurs, vérifiez que vous n’avez pas de **filtres/tags** actifs dans la liste.
+
+**Où ça s’affiche** :
+
+- sur **Tous les articles** : les **3 premières** organisations, avec le nom de la **1re** mis en avant
+- sur la **page article** : **toutes** les organisations listées dans Auteurs
+
+### Un auteur
+
+![Un auteur dans cms](./assets/images/articles/one_editor_cms.png)
+![Un auteur dans carte](./assets/images/articles/one_editor_card.png)
+![Un auteur dans article](./assets/images/articles/one_editor_article.png)
+
+### Deux auteur
+
+![Deux auteur dans cms](./assets/images/articles/two_editor_cms.png)
+![Deux auteur dans carte](./assets/images/articles/two_editor_card.png)
+![Deux auteur dans article](./assets/images/articles/two_editor_article.png)
+
+### Plusieurs auteur
+
+![Plusieurs auteur dans cms](./assets/images/articles/many_editor_cms.png)
+![Plusieurs auteur dans carte](./assets/images/articles/many_editor_card.png)
+![Plusieurs auteur dans article](./assets/images/articles/many_editor_article.png)
+
+---
+
+### À retenir
+
+- **Obligatoire** : Auteurs doit contenir **au moins 1 organisation**.
+- **Droits** : toute organisation ajoutée dans Auteurs peut **modifier** l’article.
+- **Accès** : l’organisation qui **a créé** l’article garde l’accès **même si elle est retirée** des Auteurs.
 
 ---
 
@@ -152,17 +178,12 @@ Bon réflexe :
 - **Nom dans l'éditeur du site** : `events` (champ “Events”)
 - **À quoi ça sert** : relier l’article à un ou plusieurs événements (annonce, compte-rendu, etc.).
 - **Quand le remplir** : si l’article concerne clairement un événement.
- 
+
 ### **Créer ou sélectionner un événement :**
+
 - Cliquez sur **New** pour créer un nouvel événement.
 - Si l’événement existe déjà, cliquez sur **Select** pour le choisir.
 - Pour plus de détails, voir : **[Guide des événements](events.html)**.
-
----
-
-## Champs automatiques (ne pas toucher)
-
-- `date_updated`
 
 ---
 

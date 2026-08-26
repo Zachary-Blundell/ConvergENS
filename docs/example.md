@@ -1,15 +1,16 @@
----
-layout: default
-title: <Titre de la page>
-description: <1 phrase claire, non-tech>
-nav_order: 100
----
+<!-- --- -->
+<!-- layout: default -->
+<!-- title: <Titre de la page> -->
+<!-- description: <1 phrase claire, non-tech> -->
+<!-- nav_order: 100 -->
+<!-- --- -->
 
 # <Titre de la page>
 
 <2–3 lignes max : à quoi sert cette page / ce contenu, en mots simples.>
 
 <!-- prettier-ignore-start -->
+
 - TOC
 {:toc}
 <!-- prettier-ignore-end -->
@@ -39,6 +40,7 @@ Dans l’éditeur l'éditeur du site : **Contenu → <collection>**.
 ---
 
 ## <Champ obligatoire 2> ✅
+
 - **Nom dans l'éditeur du site** : `<field_name>`
 - **À quoi ça sert** : …
 - **Exemple** : …
@@ -46,20 +48,23 @@ Dans l’éditeur l'éditeur du site : **Contenu → <collection>**.
 ---
 
 # Traductions ✅
+
 - **FR obligatoire**, **EN recommandé**
 - Remplir **FR d’abord**, puis **EN**
 
 ## <Champ texte court>
+
 - **Nom dans l'éditeur du site** : `summary`
 - **Où ça s’affiche** : cartes / listes
 - **Longueur** : ~100 caractères
 - **Exemple** : “…”
 
 ## <Champ texte long>
+
 - **Nom dans l'éditeur du site** : `description`
 - **Où ça s’affiche** : page détaillée
 - **Vous pouvez** : titres, listes, liens, images
-➡️ Voir : **[Guide éditeur de texte](wysisyg.html)**
+  ➡️ Voir : **[Guide éditeur de texte](wysisyg.html)**
 
 > Astuce : supprimez les phrases ajoutées par DeepL/IA du type “Voici la traduction…”.
 
@@ -68,6 +73,7 @@ Dans l’éditeur l'éditeur du site : **Contenu → <collection>**.
 # Options (facultatif)
 
 ## <Section facultative>
+
 - à remplir si vous avez l’info
 - sinon vous pouvez laisser vide
 
@@ -86,9 +92,11 @@ Dans l’éditeur l'éditeur du site : **Contenu → <collection>**.
 # Dépannage rapide
 
 ## “Je ne vois pas X”
+
 - vérifier les filtres
 - vérifier les droits
 
 ## “Je n’arrive pas à enregistrer”
+
 - champ obligatoire manquant
 - format (URL, date, etc.)

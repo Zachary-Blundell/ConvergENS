@@ -8,8 +8,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'convergensapi.zac.coffee',
-        pathname: '**',
+        hostname: 'cms.convergens.org',
+        // pathname: '**',
       },
     ],
   },

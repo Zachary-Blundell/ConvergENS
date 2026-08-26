@@ -88,25 +88,14 @@ export default async function HomePage() {
   return (
     <div className="flex w-full flex-col items-center justify-center bg-surface-1">
       {/* ---------------- Hero ---------------- */}
-      {/* <Hero */}
-      {/*   title="Build faster. Think clearer." */}
-      {/*   subtitle="A minimal hero section with a full-bleed background image, overlay, and centered CTA." */}
-      {/*   ctaText="Get Started" */}
-      {/*   ctaHref="#get-started" */}
-      {/*   imageUrl={home.hero_bg.url} */}
-      {/* /> */}
-
-      {/* ---------------- Hero ---------------- */}
       <section className="relative h-svh w-full">
-        {home?.hero_bg.url && (
-          <Image
-            src={home?.hero_bg.url}
-            alt=""
-            fill
-            priority
-            className="object-cover z-0"
-          />
-        )}
+        <Image
+          src={home?.hero_bg?.url || "/images/placeholder.png"}
+          alt=""
+          fill
+          priority
+          className="object-cover z-0"
+        />
         {/* ---------------- Organisation Rows---------------- */}
         <OrganisationsRow />
 
@@ -147,7 +136,7 @@ export default async function HomePage() {
         {/* Row 1 – image left, text right */}
         <div className="grid items-center gap-10 sm:grid-cols-2">
           <Image
-            src={home?.about_row1_img.url}
+            src={home?.about_row1_img.url || "/images/placeholder.png"}
             alt="About image 1"
             width={home?.about_row1_img.width ?? 800}
             height={home?.about_row1_img.height ?? 450}
@@ -175,7 +164,7 @@ export default async function HomePage() {
           </div>
 
           <Image
-            src={home?.about_row2_img.url}
+            src={home?.about_row2_img.url || "/images/placeholder.png"}
             alt="About image 2"
             width={home?.about_row2_img.width ?? 800}
             height={home?.about_row2_img.height ?? 450}
@@ -186,7 +175,7 @@ export default async function HomePage() {
         {/* Row 3 – image left, text right */}
         <div className="grid items-center gap-10 sm:grid-cols-2">
           <Image
-            src={home?.about_row3_img.url}
+            src={home?.about_row3_img.url || "/images/placeholder.png"}
             alt="About image 3"
             width={home?.about_row3_img.width ?? 800}
             height={home?.about_row3_img.height ?? 450}

@@ -8,7 +8,7 @@ This application displays articles and content from multiple organizations with 
 
 - Directus CMS integration for dynamic content fetching
 - Multi-language support with next-intl
-- Homepage, articles, organisations, events, and collectives
+- Homepage, articles, organisations, and events
 
 **Design & UI**
 
