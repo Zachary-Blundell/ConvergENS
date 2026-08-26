@@ -1,9 +1,9 @@
----
-layout: default
-title: Réseaux sociaux
-description: Ajouter et gérer les réseaux sociaux d’une organisation dans Directus (collection `socials`).
-nav_order: 6
----
+<!-- --- -->
+<!-- layout: default -->
+<!-- title: Réseaux sociaux -->
+<!-- description: Ajouter et gérer les réseaux sociaux d’une organisation dans Directus (collection `socials`). -->
+<!-- nav_order: 6 -->
+<!-- --- -->
 
 La collection `socials` sert à enregistrer des liens vers les réseaux sociaux (YouTube, Facebook, Twitter, Instagram…) et à les associer à une **organisation** (collection `organisations`).
 

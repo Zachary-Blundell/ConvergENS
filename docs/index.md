@@ -7,7 +7,7 @@ nav_order: 1
 # Documentation Organisateur·ices
 
 Bienvenue 👋  
-Ces pages expliquent **comment fonctionne l'éditeur du site**, soit l'interface qui vous permet de **publier/modifier** **du contenu sur le site** (page, articles, événements, …).
+Ces pages expliquent **comment fonctionne l'éditeur du site** (CMS), soit l'interface qui vous permet de **publier/modifier** **du contenu sur le site** (page, articles, événements, …).
 
 <!-- prettier-ignore-start -->
 
@@ -39,7 +39,7 @@ Il existe **3 espaces** distincts, chacun avec un rôle différent :
    ![Aperçu de L'Éditeur](./assets/images/general/cms.png)
 
 3. **Cette documentation (où vous êtes actuellement)** :  
-   [https://zachary-blundell.github.io/ConvergENS/](https://zachary-blundell.github.io/ConvergENS/)  
+   [https://docs.convergens.org](https://docs.convergens.org)  
    C’est le **mode d’emploi** : des explications pas-à-pas pour utiliser l’éditeur, comprendre les champs, et résoudre les problèmes fréquents.
 
 # Comment utiliser cette documentation ?

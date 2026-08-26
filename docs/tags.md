@@ -1,9 +1,9 @@
----
-layout: default
-title: Tags
-description: Mots-clés pour classer les contenus, avec une info au survol.
-nav_order: 120
----
+<!-- --- -->
+<!-- layout: default -->
+<!-- title: Tags -->
+<!-- description: Mots-clés pour classer les contenus, avec une info au survol. -->
+<!-- nav_order: 120 -->
+<!-- --- -->
 
 # Tags
 
@@ -11,6 +11,7 @@ Les tags servent à **catégoriser les contenus** (articles, événements, etc.)
 Chaque tag a un **nom court** (visible sur la pastille) et peut avoir une **info au survol** (tooltip) pour préciser ce que ça couvre.
 
 <!-- prettier-ignore-start -->
+
 - TOC
 {:toc}
 <!-- prettier-ignore-end -->
@@ -29,7 +30,7 @@ Vous verrez une **liste de tags**. En ouvrant un tag, vous pouvez modifier ses *
 
 ## Nom du tag ✅
 
-- **Nom dans l'éditeur du site** : `name` *(dans les traductions)*
+- **Nom dans l'éditeur du site** : `name` _(dans les traductions)_
 - **À quoi ça sert** : le libellé affiché sur la pastille (le tag visible)
 - **Comment le remplir** :
   - court, clair, **sans parenthèses**
@@ -47,6 +48,7 @@ Vous verrez une **liste de tags**. En ouvrant un tag, vous pouvez modifier ses *
 - Les tags sont souvent visibles partout : mieux vaut des traductions **stables** et **cohérentes**.
 
 ## Nom (texte court)
+
 - **Nom dans l'éditeur du site** : `name`
 - **Où ça s’affiche** : pastilles de tags (cartes, pages, filtres)
 - **Longueur** : court (idéalement < 30 caractères)
@@ -54,6 +56,7 @@ Vous verrez une **liste de tags**. En ouvrant un tag, vous pouvez modifier ses *
 - **Exemple (EN)** : `Performance`
 
 ## Info au survol (tooltip)
+
 - **Nom dans l'éditeur du site** : `tooltip`
 - **Où ça s’affiche** : au survol de la pastille (hover)
 - **Longueur** : 5 à 12 mots (une courte précision)
@@ -71,22 +74,27 @@ Vous verrez une **liste de tags**. En ouvrant un tag, vous pouvez modifier ses *
 # Options (facultatif)
 
 ## Tooltip vide
+
 - si le tag est auto-explicatif (ex : `Projection`, `Réunion`, `Formation`), vous pouvez laisser `tooltip` vide
 - la pastille restera affichée normalement, sans info au survol
 
 ## Suppression de tags (important) ⚠️
+
 Supprimer un tag peut rendre certains contenus **plus difficiles à retrouver**, car ils n’apparaîtront plus dans les pages/filtres par tag.
 
 **Avant de supprimer un tag :**
+
 - identifier quels **articles/événements** utilisent ce tag
 - choisir un **tag de remplacement** (ou plusieurs)
 - **informer les éditeurs/utilisateurs** que ce(s) tag(s) vont être retirés
 
 **Après suppression :**
+
 - les utilisateurs doivent **mettre à jour tous les contenus** qui utilisaient ce tag (en ajoutant un nouveau tag)  
   ➜ sinon ces contenus ne seront plus trouvables via la navigation “par tag”.
 
 **Bonne pratique :**
+
 - au lieu de supprimer, préférez **renommer** le tag ou le **déprécier** (ex : “(ancien) …”) le temps de migrer les contenus, puis supprimer une fois la migration terminée.
 
 ---
@@ -108,23 +116,26 @@ Supprimer un tag peut rendre certains contenus **plus difficiles à retrouver**,
 # Dépannage rapide
 
 ## “Je vois encore des parenthèses dans un tag”
+
 - mettre le texte entre parenthèses dans `tooltip`
 - garder `name` court (sans parenthèses)
 
 ## “Le tooltip ne s’affiche pas”
+
 - vérifier que `tooltip` est rempli dans la bonne langue (FR/EN)
 - vérifier que le tag est bien celui affiché sur la page
 - si besoin : vider le cache / rafraîchir la page
 
 ## “J’ai supprimé un tag et des contenus ont disparu des filtres”
+
 - c’est normal : le tag n’existe plus
 - il faut **retrouver les contenus concernés** et leur attribuer un **nouveau tag**
 - prévenir les éditeurs/utilisateurs si ce n’est pas déjà fait
 
 ## “Je n’arrive pas à enregistrer”
+
 - vérifier que `name` (FR) est bien rempli
 - vérifier que vous éditez bien la **traduction** (pas uniquement l’item racine)
-
 
 <!-- --- -->
 <!-- layout: default -->
