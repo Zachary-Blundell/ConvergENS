@@ -147,7 +147,7 @@ export default async function NewspaperPage() {
                 className="w-full h-12 md:h-14 px-6 md:px-8 text-fg-primary bg-highlight hover:bg-highlight-400 hover:shadow-l hover:scale-110 md:text-lg tracking-wide uppercase"
               >
                 <Link
-                  href="https://www.helloasso.com/associations/ecocampus-ens-ulm/formulaires/3"
+                  href="https://www.helloasso.com/associations/ecocampus-rue-d-ulm-paris-5eme/formulaires/3"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
