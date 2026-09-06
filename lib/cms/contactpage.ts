@@ -4,7 +4,7 @@ import { directus } from '../directus';
 type ContactPageRaw = {
   translations: Array<{
     languages_code: string;
-    page_body?: string | null;
+    body?: string | null;
   }>;
 };
 
@@ -17,10 +17,10 @@ export async function getContactPage(
 ): Promise<ContactPageFlat | null> {
   try {
     const contactPageRaw = await directus.request<ContactPageRaw>(
-      readSingleton('contactpage', {
+      readSingleton('Contactpage', {
         fields: [
           {
-            translations: ['languages_code', 'page_body'],
+            translations: ['languages_code', 'body'],
           },
         ],
         deep: {
@@ -32,7 +32,7 @@ export async function getContactPage(
     );
 
     const contactPageFlat: ContactPageFlat = {
-      body: contactPageRaw.translations?.[0]?.page_body ?? null,
+      body: contactPageRaw.translations?.[0]?.body ?? null,
     };
 
     return contactPageFlat;

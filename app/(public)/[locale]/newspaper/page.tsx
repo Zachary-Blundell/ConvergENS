@@ -7,7 +7,6 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { getNewspaperPage } from '@/lib/cms/newspage';
 import HtmlContent from '@/components/HtmlContent';
-import { objectLogger } from '@/lib/utils';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Newspaper');
@@ -30,7 +29,6 @@ export default async function NewspaperPage() {
   // I want to integrate this api data.
   const newspaper = await getNewspaperPage(lang);
 
-  objectLogger(newspaper, "here is the newspaper object")
   const bannerTitle = newspaper?.translations.title ?? t('banner.title');
   const bannerSubtitle =
     newspaper?.translations.subtitle ?? t('banner.subtitle');
