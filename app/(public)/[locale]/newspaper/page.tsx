@@ -7,6 +7,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { Link } from '@/i18n/navigation';
 import { getNewspaperPage } from '@/lib/cms/newspage';
 import HtmlContent from '@/components/HtmlContent';
+import { objectLogger } from '@/lib/utils';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations('Newspaper');
@@ -29,6 +30,7 @@ export default async function NewspaperPage() {
   // I want to integrate this api data.
   const newspaper = await getNewspaperPage(lang);
 
+  objectLogger(newspaper, "here is the newspaper object")
   const bannerTitle = newspaper?.translations.title ?? t('banner.title');
   const bannerSubtitle =
     newspaper?.translations.subtitle ?? t('banner.subtitle');
@@ -134,7 +136,7 @@ export default async function NewspaperPage() {
                 className="w-full h-12 md:h-14 px-6 md:px-8 text-fg-primary md:text-lg tracking-wide uppercase bg-surface-3 hover:shadow-m hover:scale-105 hover:bg-surface-4"
               >
                 <Link
-                  href="https://www.calameo.com/read/007696511c90f6710f589"
+                  href="https://www.calameo.com/read/007696511aa9a2969564b"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
