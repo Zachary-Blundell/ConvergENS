@@ -10,9 +10,6 @@ import OrganisationsRow from '@/components/OrganisationsRow';
 import { ArticleCardCarousel } from '@/components/ArticleCarousel';
 import { getArticleCards } from '@/lib/cms/articles';
 
-// import { ArticleCardCarousel } from '@/components/ArticleCarousel';
-// import { getArticleCards } from '@/lib/cms/articles';
-
 /* ---------------- Utilities ---------------- */
 
 function renderHighlightOnly(s?: string) {
